@@ -1,0 +1,77 @@
+<div class="sqab_modal">
+  <div id="slide-out-menu">
+    <div style="padding: 8px; text-align: right;"><span class="close-btn">&times;</span></div>
+    <div id="slide-out-menu-body"></div>
+    <!-- <iframe id="my-iframe" style="height:100%;width:100%"></iframe> -->
+  </div>  
+  <div class="sqab_tabs">
+    <div class="setting_icon">
+      <img id="icon"></img>
+    </div>
+      <div class="sqab_tab-header">
+          <div data-color="#00acee" class="active">Shortcuts</div>
+          <div data-color="#FFB562" >Objects</div>
+          <div data-color="#6BCB77" >ListView</div>
+          <div data-color="#FF6B6B" >Add</div>
+        </div>
+      <div class="sqab_tab-indicator"></div>
+      
+      <div class="sqab_tab-body">
+        <p>
+          <input id="yayinput" autocomplete="off" type="text" placeholder="Enter Shortcut" />
+        </p>
+          <div class="sqab_body_shortcuts active">
+                <ul id="suggestions-dropdown" class="suggestions-dropdown"></ul>
+          </div>
+          <div class="sqab_body_add">
+            <div id="loading-screen">
+              <p>Loading...</p>
+            </div>
+            <div id="alert-box" class="alert-box success"><span>success: </span>Save was successful.</div>
+              <p>
+                <div id="sqab_add_section" class="sqab_add_section">
+                  <div class="row" style="display: flex; flex-direction: row;">
+                    <div class="col" style="flex: 1;">
+                      <span style="font-weight:bold">Shortcut's Label:</span><span style="padding: 5px;font-size: 11px;">choose what label to give your shortcut.</span>
+                    </div>
+                    <div class="" style="flex: 1;">
+                      <input id="yaylabel" autocomplete="off" type="text" placeholder="Enter Label" />
+                    </div>
+                  </div>
+                  <div class="row" style="display: flex; flex-direction: row;">
+                    <div class="col" style="flex: 1;">
+                      <span style="font-weight:bold">Shortcut's Type:</span><span style="padding: 5px;font-size: 11px;">choose the type of shortcut.</span>
+                    </div>
+                    <div class="" style="flex: 1;">
+                      <div class="radio-group" style="display:flex;">
+                        <label for="option1" class="radio" style="width: 50%; text-align: center;">
+                          <span>URL</span>
+                          <input style="height: 30px;" type="radio" name="options" id="option1" checked> 
+                        </label>
+                        <label for="option2" class="radio" style="width: 50%; text-align: center;">
+                          <span>Object </span>
+                          <input style="height: 30px;" type="radio" name="options" id="option2"> 
+                        </label>
+                      </div> 
+                    </div>
+                  </div>
+                  <div class="row" style="display: flex; flex-direction: row;">
+                    <div class="col" style="flex: 1;">
+                      <span style="font-weight:bold">Shortcut's Org:</span> <span style="padding: 5px;font-size: 11px;">choose on what org the shortcut will be visible.</span>
+                    </div>
+                    <div class="" style="flex: 1;">
+                      <select id = "targetList"  >  
+                      </select>  
+                    </div>
+                  </div>
+                  <div class="" style="display: flex; flex-direction: row;">
+                    <div class="" style="padding: 10px; flex: 1; text-align: right;">
+                      <button id="addSave">Save</button>
+                    </div>
+                  </div>
+                </div>                                         
+              </p>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,329 @@
+/* body{
+  height: 600px;
+  background-color: #efefef4f;
+  min-width: 430px;
+  overflow: hidden;
+  margin: 0px;
+} */
+
+.sqab_pop_silent{
+  pointer-events: none;
+}
+
+.sqab_pop_header{
+  box-shadow: 0px 0px 10px grey;
+  margin: 0px;
+  padding:5px;
+  padding-left:15px;
+  display:flex;
+}
+
+.sqab_pop_row.sqab_pop_myScInput{
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.sqab_pop_icon{
+  margin-left: auto;
+  order: 2; 
+  margin-right: 5px; 
+  cursor:pointer;
+  border-radius: 30px;
+}
+
+.sqab_pop_collapsible {
+    box-shadow: 0px 0px 10px grey;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+.sqab_pop_active, .sqab_pop_collapsible:hover {
+    background-color: rgb(197, 197, 197);
+    transition: 0.sqab_pop_3s;
+  }
+.sqab_pop_mySc {
+    cursor: pointer;
+  }
+.sqab_pop_hidSecretDiv {
+    display: none;
+  }
+.sqab_pop_showSecretDiv {
+    display:block;
+  }
+.sqab_pop_mySc:hover{
+    cursor: pointer;
+    transition: 0.sqab_pop_3s;
+    width: 100%;
+    background-color: rgb(197, 197, 197);
+  }
+.sqab_pop_content {
+    padding: 0 18px;
+    display: none;
+    
+    background-color: #f1f1f1;
+  }
+
+.sqab_pop_ctrlbtn{
+    color:black;
+    width:100%;
+    border-radius: 5px;
+    text-align: center;
+    padding:5px;
+  }
+  
+.sqab_pop_tags {
+    list-style: none;
+    margin: 0;
+    overflow: hidden; 
+    padding: 0;
+  }
+  
+.sqab_pop_tags li {
+    float: right; 
+  }
+  
+.sqab_pop_tag {
+    background: #f7d8d8;
+    border-radius: 15px;
+    color: rgb(71, 71, 71);
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px 0 10px;
+    position: relative;
+    text-decoration: none;
+    font-size: xx-small;
+  }
+.sqab_pop_tag.sqab_pop_exists {
+    background: #c7c3f6;
+  }
+
+.sqab_pop_tag.sqab_pop_edit{
+    cursor:pointer;
+  }
+
+.sqab_pop_tag.sqab_pop_edit:hover{
+    background: #b3b3b3;
+  }
+
+.sqab_pop_rowContainer{
+    display:flex;
+    width:100%;
+  }
+
+.sqab_pop_addMsg{
+    display:none;
+  }
+.sqab_pop_addMsg.sqab_pop_success{
+    margin: 5px;
+    display:block;
+    background-color:lightgreen;
+    border: 1px solid lightgreen;
+    border-radius: 5px;
+  }
+
+.sqab_pop_addMsg.sqab_pop_error{
+    margin: 5px;
+    display:block;
+    background-color:lightcoral;
+    border: 1px solid lightcoral;
+    border-radius: 5px;
+  }
+
+.sqab_pop_row {
+      box-shadow: 0px 0px 5px grey;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+  }
+
+.sqab_pop_editbtn{
+      cursor: pointer;
+      background-color: #90cd90;
+      width: 20%;
+      color:black;
+      transition: 0.sqab_pop_3s;
+  }
+
+.sqab_pop_editbtn:hover{
+      cursor: pointer;
+      background-color: #90cd90;
+      color:white;
+      width: 40%;
+      transition: 0.sqab_pop_3s;
+  }
+.sqab_pop_deletebtn{
+      cursor: pointer;
+      background-color: #cd9090;
+      width: 30%;
+      color:black;
+      transition: 0.sqab_pop_3s;
+  }
+  
+.sqab_pop_deletebtn:hover{
+      cursor: pointer;
+      background-color: #ce6363;
+      color:white;
+      width: 50%;
+      transition: 0.sqab_pop_3s;
+  }
+.sqab_pop_addbtn{
+      cursor: pointer;
+      background-color:rgb(17, 125, 167) !important;
+      transition: 0.sqab_pop_3s;
+  }
+
+.sqab_pop_addbtn:hover{
+      cursor: pointer;
+      background-color:rgb(60, 194, 248) !important;
+      transition: 0.sqab_pop_3s;
+  }
+
+  #addMySC.sqab_pop_addbtn.sqab_pop_disabled{
+    display: none;
+  }
+
+  #orglist{
+    border-color: black;
+    border-radius: 5px;
+    background-color: rgb(222, 222, 222);
+    text-align: center;
+    padding: 3px;
+    border-width: 2px;
+    border-style: inset;
+  }
+
+  #orglist.sqab_pop_disabled{
+    border-color: #8b8b8b;
+}
+
+
+#orglist.sqab_pop_disabled .sqab_pop_tag{
+  cursor:none;
+  background: #8b8b8b;
+}
+
+  
+label {
+    font-size: 13px;
+    color: #424242;
+    font-weight: 500;
+}
+
+.sqab_pop_btn-color-mode-switch{
+    display: inline-block;
+    margin: 0px;
+    position: relative;
+}
+
+.sqab_pop_btn-color-mode-switch > label.sqab_pop_btn-color-mode-switch-inner{
+    margin: 0px;
+    width: 140px;
+    height: 30px;
+    background: #E0E0E0;
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.sqab_pop_3s ease;
+    /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.sqab_pop_34) inset;*/
+    display: block;
+}
+
+.sqab_pop_btn-color-mode-switch > label.sqab_pop_btn-color-mode-switch-inner:before{
+    content: attr(data-on);
+    position: absolute;
+    font-size: 12px;
+    font-weight: 500;
+    top: 7px;
+    right: 20px;
+
+}
+
+.sqab_pop_shortcutOption:hover{
+  background-color: #65656592;
+  color:white;
+  transition: all 0.sqab_pop_3s ease;
+  padding-left: 10px;
+}
+
+.sqab_pop_btn-color-mode-switch > label.sqab_pop_btn-color-mode-switch-inner:after{
+    content: attr(data-off);
+    width: 70px;
+    height: 16px;
+    background: #fff;
+    border-radius: 26px;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    text-align: center;
+    transition: all 0.sqab_pop_3s ease;
+    box-shadow: 0px 0px 6px -2px #111;
+    padding: 5px 0px;
+}
+
+
+.sqab_pop_btn-color-mode-switch input[type="checkbox"]{
+    width: 50px;
+    height: 25px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    margin: 0px;
+}
+
+.sqab_pop_btn-color-mode-switch input[type="checkbox"]:checked + label.sqab_pop_btn-color-mode-switch-inner{
+    background: #151515;
+    color: #fff;
+}
+
+.sqab_pop_btn-color-mode-switch input[type="checkbox"]:checked + label.sqab_pop_btn-color-mode-switch-inner:after{
+    content: attr(data-on);
+    left: 68px;
+    background: #3c3c3c;
+}
+
+.sqab_pop_btn-color-mode-switch input[type="checkbox"]:checked + label.sqab_pop_btn-color-mode-switch-inner:before{
+    content: attr(data-off);
+    right: auto;
+    left: 20px;
+}
+
+.sqab_pop_hide{
+  display: none;
+}
+
+.sqab_pop_sidepanelchild{
+  z-index: 1001; 
+  cursor: pointer;
+  position: absolute; 
+  width: 100%;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+}
+
+.sqab_pop_suggestionDiv{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.sqab_pop_inputClass{
+  color:black;
+  width:100%;
+  border-radius: 5px;
+  background-color:rgb(222, 222, 222);
+  text-align: center;
+  padding:5px;
+}
+

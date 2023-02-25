@@ -1,0 +1,31 @@
+{
+    "name": "Salesforce Quick Access Bar",
+    "description": "Easy access to Salesforce's Setup page options and Object Manager's Objects via a quick access bar on all Lightning pages",
+    "version": "1.0.9",
+    "manifest_version": 3,
+    "permissions": [
+        "storage","tabs","activeTab"
+    ],
+    "action": {
+        "default_icon": "resources/icon16.png" ,
+        "default_popup": "extension-popup.html"
+    }, 
+    "icons": {
+        "16": "resources/icon16.png",
+        "32": "resources/icon32.png",
+        "48": "resources/icon48.png",
+        "128": "resources/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],
+            "js": ["new-modal-index.js"],
+            "css": ["new-modal-index.css","extension-popup.css"],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["data/*.json","extension-popup.css","extension-popup.html","extension-popup.js","data-handler.js","navigation-handler.js","save-handler.js","suggestions-handler.js","new-modal-index.css","new-modal-index.html","resources/*.png","resources/*.svg"],
+        "matches": ["https://*.lightning.force.com/*"]
+    }]
+}

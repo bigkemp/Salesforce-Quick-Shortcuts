@@ -1,0 +1,69 @@
+<html>
+  <head>
+      <script type="module" src="extension-popup.js"></script>
+      <link type = 'text/css' rel = 'stylesheet' href = 'extension-popup.css'> 
+      <!-- <link type="text/css" rel="stylesheet" href="./extension-popup.css">
+      <script type="module" src="./extension-popup.js"></script> -->
+  </head>
+  <body style="width: 100%;height: 600px; background-color: #efefef4f; min-width: 430px; overflow: hidden; margin: 0px;">
+  <div>
+    <div class="sqab_pop_header">
+      <div>
+        <div>
+          <h3 style="margin: 0;">Salesforce Quick Access Bar</h3>
+        </div>
+        <div> 
+          ver 1.0.8
+        </div>
+      </div>
+      <image data-type="Settings" class="sqab_pop_btn sqab_pop_icon" src="resources/settings2.svg"></image>
+    </div>
+      <div id="quite" style="padding:10px;">
+        <div style="display: flex;"> 
+          <button type="button" id="btnShortcuts" style="display:inline;" data-type="Shortcuts" class="sqab_pop_btn sqab_pop_collapsible">Saved Shortcuts</button>
+          <button type="button" id="btnObjects" style="display:inline;" data-type="Objects" class="sqab_pop_btn sqab_pop_collapsible">Saved Objects</button>
+          <button type="button" id="btnOrgs" style="display:inline;" data-type="Orgs" class="sqab_pop_btn sqab_pop_collapsible">Saved Orgs</button>
+        </div>
+      </div>
+      <div class="sqab_pop_header">
+        <div>
+          <div>
+            <h3 class="sqab_pop_contentTitleText" style="margin: 0;margin-top: 5px;"></h3>
+          </div>
+        </div>
+        <image data-type="Add" class="sqab_pop_addButton sqab_pop_btn sqab_pop_icon sqab_pop_hide" src="resources/add.svg"></image>
+      </div>
+      <div class="sqab_pop_content sqab_pop_contentPage" id="mainMenu">
+      </div>
+      <div class="sqab_pop_content sqab_pop_contentAdd">
+        <p>
+          <div class="sqab_pop_addMsg"></div>
+          <input class="sqab_pop_inputClass sqab_pop_inputlabel" type="text" placeholder="Enter Label" id="addMySCtext" name="addmyShortcut"><br/>
+          <input class="sqab_pop_inputClass sqab_pop_inputvalue" type="text" placeholder="Enter Custom Url" id="addMySCtextURL" name="addmyShortcutURL">
+          <div id="orglist" class="sqab_pop_orglist sqab_pop_hide"></div>
+          <button class="addbtn inputClass" id="addMySC">Add</button>
+        </p>
+      </div>
+      <div class="sqab_pop_content sqab_pop_contentSettings">
+        <p>
+          <b style="background: #d5d5d5; border-radius: 5px;">Change Hotkey:</b>
+          <div style="display: flex;">
+            <div class="sqab_pop_ctrlbtn" style="border:1px solid rgb(222, 222, 222);width:25%">CTRL</div> 
+            <div class="sqab_pop_ctrlbtn" style="width:10%">+</div> 
+            <input style="display: inline;width:65%;" class="sqab_pop_inputClass" type="text" placeholder="Click on any key" id="newHotKey">
+          </div>
+        </p>
+        <p>
+          <b style="background: #d5d5d5; border-radius: 5px;">Tab Settings:</b><br/>
+          <input style="margin-top: 10px;" type="checkbox" checked id="openLinksAsNewTab">
+          Open links in new Tab
+        </p>
+        <p>
+          <b style="background: #d5d5d5; border-radius: 5px;">Shortcuts Settings:</b><br/>
+          <input style="margin-top: 10px;" type="checkbox" id="alwaysShowCustoms">
+          Show `All` custom shortcuts/objects on unsaved orgs.
+        </p>
+      </div>
+  </div>
+  </body>
+</html>

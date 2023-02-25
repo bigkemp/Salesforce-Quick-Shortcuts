@@ -1,0 +1,1622 @@
+{
+  "defaults":[
+     {
+        "name":"Setup Home"
+     },
+     {
+        "name":"Service Setup Assistant"
+     },
+     {
+        "name":"Multi-Factor Authentication Assistant"
+     },
+     {
+        "name":"Release Updates"
+     },
+     {
+        "name":"Lightning Experience Transition Assistant"
+     },
+     {
+        "name":"New Salesforce Mobile App QuickStart"
+     },
+     {
+        "name":"Optimizer"
+     },
+     {
+        "name":"Users.Permission Set Groups"
+     },
+     {
+        "name":"Users.Permission Sets"
+     },
+     {
+        "name":"Users.Profiles"
+     },
+     {
+        "name":"Users.Public Groups"
+     },
+     {
+        "name":"Users.Queues"
+     },
+     {
+        "name":"Users.Roles"
+     },
+     {
+        "name":"Users.User Management Settings"
+     },
+     {
+        "name":"Users.Users"
+     },
+     {
+        "name":"Data.Big Objects"
+     },
+     {
+        "name":"Data.Data Export"
+     },
+     {
+        "name":"Data.Data Integration Metrics"
+     },
+     {
+        "name":"Data.Data Integration Rules"
+     },
+     {
+        "name":"Data.Duplicate Management.Duplicate Error Logs"
+     },
+     {
+        "name":"Data.Duplicate Management.Duplicate Jobs"
+     },
+     {
+        "name":"Data.Duplicate Management.Duplicate Rules"
+     },
+     {
+        "name":"Data.Duplicate Management.Matching Rules"
+     },
+     {
+        "name":"Export Articles for Translation"
+     },
+     {
+        "name":"Import Article Translations"
+     },
+     {
+        "name":"Import Articles"
+     },
+     {
+        "name":"Mass Delete Records"
+     },
+     {
+        "name":"Mass Reassign Account Teams"
+     },
+     {
+        "name":"Mass Reassign Opportunity Teams"
+     },
+     {
+        "name":"Mass Transfer Approval Requests"
+     },
+     {
+        "name":"Mass Transfer Records"
+     },
+     {
+        "name":"Mass Update Addresses"
+     },
+     {
+        "name":"Picklist Settings"
+     },
+     {
+        "name":"Schema Settings"
+     },
+     {
+        "name":"State and Country/Territory Picklists"
+     },
+     {
+        "name":"Storage Usage"
+     },
+     {
+        "name":"Email.Apex Exception Email"
+     },
+     {
+        "name":"Email.Classic Email Templates"
+     },
+     {
+        "name":"Email.Classic Letterheads"
+     },
+     {
+        "name":"Email.Compliance BCC Email"
+     },
+     {
+        "name":"Email.DKIM Keys"
+     },
+     {
+        "name":"Email.Deliverability"
+     },
+     {
+        "name":"Email.Email Address Internationalization"
+     },
+     {
+        "name":"Email.Email Attachments"
+     },
+     {
+        "name":"Email.Email Delivery Settings.Email Domain Filters"
+     },
+     {
+        "name":"Email.Email Delivery Settings.Email Relays"
+     },
+     {
+        "name":"Email Footers"
+     },
+     {
+        "name":"Email to Salesforce"
+     },
+     {
+        "name":"Enhanced Email"
+     },
+     {
+        "name":"Filter Email Tracking"
+     },
+     {
+        "name":"Gmail Integration and Sync"
+     },
+     {
+        "name":"Lightning Email Templates"
+     },
+     {
+        "name":"Mail Merge Templates"
+     },
+     {
+        "name":"Organization-Wide Addresses"
+     },
+     {
+        "name":"Outlook Configurations"
+     },
+     {
+        "name":"Outlook Integration and Sync"
+     },
+     {
+        "name":"Send through External Email Services"
+     },
+     {
+        "name":"Test Deliverability"
+     },
+     {
+        "name":"Apps.App Manager"
+     },
+     {
+        "name":"Apps.AppExchange Marketplace"
+     },
+     {
+        "name":"Apps.Connected Apps.Connected Apps OAuth Usage"
+     },
+     {
+        "name":"Apps.Connected Apps.Manage Connected Apps"
+     },
+     {
+        "name":"Lightning Bolt.Flow Category"
+     },
+     {
+        "name":"Lightning Bolt.Lightning Bolt Solutions"
+     },
+     {
+        "name":"Mobile Apps.Salesforce.Salesforce Branding"
+     },
+     {
+        "name":"Mobile Apps.Salesforce.Salesforce Navigation"
+     },
+     {
+        "name":"Mobile Apps.Salesforce.Salesforce Notifications"
+     },
+     {
+        "name":"Mobile Apps.Salesforce.Salesforce Offline"
+     },
+     {
+        "name":"Mobile Apps.Salesforce.Salesforce Settings"
+     },
+     {
+        "name":"Packaging.Installed Packages"
+     },
+     {
+        "name":"Packaging.Package Manager"
+     },
+     {
+        "name":"Packaging.Package Usage"
+     },
+     {
+        "name":"Feature Settings.Analytics.Analytics.Allowlist"
+     },
+     {
+        "name":"Feature Settings.Analytics.Analytics.Auto-Installed Apps"
+     },
+     {
+        "name":"Feature Settings.Analytics.Analytics.Getting Started"
+     },
+     {
+        "name":"Feature Settings.Analytics.Analytics.Settings"
+     },
+     {
+        "name":"Einstein Discovery.Usage"
+     },
+     {
+        "name":"Reports & Dashboards.Access Policies"
+     },
+     {
+        "name":"Reports & Dashboards.Historical Trending"
+     },
+     {
+        "name":"Reports & Dashboards.Report Types"
+     },
+     {
+        "name":"Reports & Dashboards.Reporting Snapshots"
+     },
+     {
+        "name":"Reports & Dashboards.Reports and Dashboards Settings"
+     },
+     {
+        "name":"Chatter.Chatter Settings"
+     },
+     {
+        "name":"Chatter.Email Settings"
+     },
+     {
+        "name":"Chatter.Feed Item.Feed Item Actions"
+     },
+     {
+        "name":"Chatter.Feed Item.Feed Item Layouts"
+     },
+     {
+        "name":"Feed Tracking"
+     },
+     {
+        "name":"Groups.Group Layouts"
+     },
+     {
+        "name":"Groups.Group Member Triggers"
+     },
+     {
+        "name":"Groups.Group Record Triggers"
+     },
+     {
+        "name":"Groups.Group Triggers"
+     },
+     {
+        "name":"Groups.Record Types"
+     },
+     {
+        "name":"Influence"
+     },
+     {
+        "name":"Triggers.FeedComment Triggers"
+     },
+     {
+        "name":"Triggers.FeedItem Triggers"
+     },
+     {
+        "name":"Commerce.Settings"
+     },
+     {
+        "name":"Conversation Insights.Delete Video Calls"
+     },
+     {
+        "name":"Conversation Insights.General Settings"
+     },
+     {
+        "name":"Digital Experiences.All Sites"
+     },
+     {
+        "name":"Digital Experiences.Pages"
+     },
+     {
+        "name":"Digital Experiences.Settings"
+     },
+     {
+        "name":"Digital Experiences.Templates"
+     },
+     {
+        "name":"Digital Experiences.Themes"
+     },
+     {
+        "name":"Functions"
+     },
+     {
+        "name":"Home"
+     },
+     {
+        "name":"Marketing.Accounts As Campaign Members"
+     },
+     {
+        "name":"Marketing.Campaign Influence.Auto-Association Settings"
+     },
+     {
+        "name":"Marketing.Campaign Influence.Campaign Influence Settings"
+     },
+     {
+        "name":"Lead Assignment Rules"
+     },
+     {
+        "name":"Lead Auto-Response Rules"
+     },
+     {
+        "name":"Lead Processes"
+     },
+     {
+        "name":"Lead Settings"
+     },
+     {
+        "name":"LinkedIn Lead Gen.Lead Gen Fields"
+     },
+     {
+        "name":"LinkedIn Lead Gen.LinkedIn Accounts"
+     },
+     {
+        "name":"Web-to-Lead"
+     },
+     {
+        "name":"Quip (Salesforce Anywhere)"
+     },
+     {
+        "name":"Sales.Accounts.Account Owner Report"
+     },
+     {
+        "name":"Sales.Accounts.Account Settings"
+     },
+     {
+        "name":"Sales.Accounts.Account Teams"
+     },
+     {
+        "name":"Sales.Accounts.Person Accounts"
+     },
+     {
+        "name":"Activity Settings"
+     },
+     {
+        "name":"Contact Roles on Contracts"
+     },
+     {
+        "name":"Contact Roles on Opportunities"
+     },
+     {
+        "name":"Contract Settings"
+     },
+     {
+        "name":"Forecasts.Forecasts Hierarchy"
+     },
+     {
+        "name":"Forecasts.Forecasts Quotas"
+     },
+     {
+        "name":"Forecasts.Forecasts Settings"
+     },
+     {
+        "name":"High Velocity Sales"
+     },
+     {
+        "name":"Individual Settings"
+     },
+     {
+        "name":"LinkedIn Sales Navigator"
+     },
+     {
+        "name":"Meetings.Settings"
+     },
+     {
+        "name":"Notes Settings"
+     },
+     {
+        "name":"Opportunities.Big Deal Alert"
+     },
+     {
+        "name":"Opportunities.Opportunity Settings"
+     },
+     {
+        "name":"Opportunities.Opportunity Splits Settings"
+     },
+     {
+        "name":"Opportunities.Opportunity Team Settings"
+     },
+     {
+        "name":"Opportunities.Pipeline Inspection Setup"
+     },
+     {
+        "name":"Order Settings"
+     },
+     {
+        "name":"Products.Asset Settings"
+     },
+     {
+        "name":"Products.Product Schedules Settings"
+     },
+     {
+        "name":"Products.Product Settings"
+     },
+     {
+        "name":"Quotes.Quote Settings"
+     },
+     {
+        "name":"Quotes.Quote Templates"
+     },
+     {
+        "name":"Replace Team Roles"
+     },
+     {
+        "name":"Sales Processes"
+     },
+     {
+        "name":"Social Accounts and Contacts Settings"
+     },
+     {
+        "name":"Team Roles"
+     },
+     {
+        "name":"Territories.Territory Models"
+     },
+     {
+        "name":"Territories.Territory Settings"
+     },
+     {
+        "name":"Territories.Territory Types"
+     },
+     {
+        "name":"Update Reminders"
+     },
+     {
+        "name":"Zoom Video Setup"
+     },
+     {
+        "name":"Salesforce Files.Asset Files"
+     },
+     {
+        "name":"Salesforce Files.Content Deliveries and Public Links"
+     },
+     {
+        "name":"Salesforce Files.Files Connect"
+     },
+     {
+        "name":"Salesforce Files.General Settings"
+     },
+     {
+        "name":"Salesforce Files.Regenerate Previews"
+     },
+     {
+        "name":"Salesforce Files.Salesforce CRM Content"
+     },
+     {
+        "name":"Salesforce Scheduler.Assignment Policies"
+     },
+     {
+        "name":"Salesforce Scheduler.Salesforce Scheduler Settings"
+     },
+     {
+        "name":"Salesforce Scheduler.Scheduling Policies"
+     },
+     {
+        "name":"Salesforce Scheduler.Skills"
+     },
+     {
+        "name":"Service.Call Center.Call Centers"
+     },
+     {
+        "name":"Service.Call Center.Directory Numbers"
+     },
+     {
+        "name":"Service.Call Center.Softphone Layouts"
+     },
+     {
+        "name":"Case Assignment Rules"
+     },
+     {
+        "name":"Case Auto-Response Rules"
+     },
+     {
+        "name":"Case Comment Triggers"
+     },
+     {
+        "name":"Case Merge"
+     },
+     {
+        "name":"Case Teams.Case Team Roles"
+     },
+     {
+        "name":"Case Teams.Predefined Case Teams"
+     },
+     {
+        "name":"Channel-Object Linking"
+     },
+     {
+        "name":"Chat.Block Visitors"
+     },
+     {
+        "name":"Chat.Chat Agent Configurations"
+     },
+     {
+        "name":"Chat.Chat Buttons & Invitations"
+     },
+     {
+        "name":"Chat.Chat Settings"
+     },
+     {
+        "name":"Chat.Deployments"
+     },
+     {
+        "name":"Chat.Sensitive Data Rules"
+     },
+     {
+        "name":"Chat.Skills"
+     },
+     {
+        "name":"Contact Roles on Cases"
+     },
+     {
+        "name":"Customer Contact Requests"
+     },
+     {
+        "name":"Data Categories.Data Category Setup"
+     },
+     {
+        "name":"Data Categories.Default Data Category Visibility"
+     },
+     {
+        "name":"Email-to-Case"
+     },
+     {
+        "name":"Embedded Service.Channel Menu"
+     },
+     {
+        "name":"Embedded Service.Embedded Service Deployments"
+     },
+     {
+        "name":"Entitlement Management.Entitlement Processes"
+     },
+     {
+        "name":"Entitlement Management.Entitlement Settings"
+     },
+     {
+        "name":"Entitlement Management.Entitlement Templates"
+     },
+     {
+        "name":"Entitlement Management.Milestones"
+     },
+     {
+        "name":"Escalation Rules"
+     },
+     {
+        "name":"Feed Filters"
+     },
+     {
+        "name":"Field Service.Field Service Settings"
+     },
+     {
+        "name":"Incident Management"
+     },
+     {
+        "name":"Knowledge.Data Category Assignments"
+     },
+     {
+        "name":"Knowledge.Knowledge Settings"
+     },
+     {
+        "name":"Macro Settings"
+     },
+     {
+        "name":"Messaging.Messaging Settings"
+     },
+     {
+        "name":"Omni-Channel.Limits"
+     },
+     {
+        "name":"Omni-Channel.Omni-Channel Settings"
+     },
+     {
+        "name":"Omni-Channel.Presence Configurations"
+     },
+     {
+        "name":"Omni-Channel.Presence Decline Reasons"
+     },
+     {
+        "name":"Omni-Channel.Presence Statuses"
+     },
+     {
+        "name":"Omni-Channel.Routing Configurations"
+     },
+     {
+        "name":"Omni-Channel.Service Channels"
+     },
+     {
+        "name":"Omni-Channel.Supervisor.Supervisor Configurations"
+     },
+     {
+        "name":"Omni-Channel.Supervisor.Supervisor Settings"
+     },
+     {
+        "name":"Service Cloud Einstein.Einstein Article Recommendations"
+     },
+     {
+        "name":"Service Cloud Einstein.Einstein Bots"
+     },
+     {
+        "name":"Service Cloud Einstein.Einstein Classification"
+     },
+     {
+        "name":"Service Cloud Einstein.Einstein Reply Recommendations"
+     },
+     {
+        "name":"Social Business Rules"
+     },
+     {
+        "name":"Social Customer Service"
+     },
+     {
+        "name":"Support Processes"
+     },
+     {
+        "name":"Support Settings"
+     },
+     {
+        "name":"Swarming"
+     },
+     {
+        "name":"Web-to-Case"
+     },
+     {
+        "name":"Web-to-Case HTML Generator"
+     },
+     {
+        "name":"Survey.Survey Invitation Rules"
+     },
+     {
+        "name":"Survey.Survey Settings"
+     },
+     {
+        "name":"Topics.Topic Assignment Triggers"
+     },
+     {
+        "name":"Topics.Topic Triggers"
+     },
+     {
+        "name":"Topics.Topics for Objects"
+     },
+     {
+        "name":"Slack.Initial Slack Setup"
+     },
+     {
+        "name":"Workflow Services.Batch Management"
+     },
+     {
+        "name":"Workflow Services.Monitor Workflow Services"
+     },
+     {
+        "name":"Einstein.Einstein Assessors.Einstein Bots Assessor"
+     },
+     {
+        "name":"Einstein.Einstein Assessors.Sales Cloud Einstein Assessor"
+     },
+     {
+        "name":"Einstein.Einstein Assessors.Service Cloud Einstein Assessor"
+     },
+     {
+        "name":"Einstein Platform.Einstein Intent Sets"
+     },
+     {
+        "name":"Einstein Platform.Einstein Prediction Builder"
+     },
+     {
+        "name":"Einstein Platform.Einstein Recommendation Builder"
+     },
+     {
+        "name":"Einstein Platform.Einstein.ai"
+     },
+     {
+        "name":"Einstein Sales.Assisted Setup"
+     },
+     {
+        "name":"Einstein Sales.Data Policies.Delete Email and Events"
+     },
+     {
+        "name":"Einstein Sales.Data Policies.Excluded from Machine Learning"
+     },
+     {
+        "name":"Einstein Account Insights"
+     },
+     {
+        "name":"Einstein Activity Capture.Einstein Email Insights"
+     },
+     {
+        "name":"Einstein Activity Capture.Microsoft Exchange Connections"
+     },
+     {
+        "name":"Einstein Activity Capture.Settings"
+     },
+     {
+        "name":"Einstein Activity Capture.User Status"
+     },
+     {
+        "name":"Einstein Automated Contacts"
+     },
+     {
+        "name":"Einstein Forecasting"
+     },
+     {
+        "name":"Einstein Lead Scoring"
+     },
+     {
+        "name":"Einstein Opportunity Insights"
+     },
+     {
+        "name":"Einstein Opportunity Scoring"
+     },
+     {
+        "name":"Inbox.Setup Assistant"
+     },
+     {
+        "name":"Einstein Search.Objects to Always Search (Beta)"
+     },
+     {
+        "name":"Developer Console"
+     },
+     {
+        "name":"Einstein Search.Promoted Search Terms"
+     },
+     {
+        "name":"Einstein Search.Search Layouts"
+     },
+     {
+        "name":"Einstein Search.Search Manager"
+     },
+     {
+        "name":"Einstein Search.Settings"
+     },
+     {
+        "name":"Einstein Search.Synonyms"
+     },
+     {
+        "name":"Objects and Fields.Object Manager"
+     },
+     {
+        "name":"Objects and Fields.Picklist Value Sets"
+     },
+     {
+        "name":"Objects and Fields.Schema Builder"
+     },
+     {
+        "name":"Events.Event Manager"
+     },
+     {
+        "name":"Process Automation.Approval Processes"
+     },
+     {
+        "name":"Process Automation.Automation Home (Beta)"
+     },
+     {
+        "name":"Process Automation.Flows"
+     },
+     {
+        "name":"Process Automation.Migrate to Flow"
+     },
+     {
+        "name":"Process Automation.Next Best Action"
+     },
+     {
+        "name":"Process Automation.Paused And Failed Flow Interviews"
+     },
+     {
+        "name":"Process Automation.Post Templates"
+     },
+     {
+        "name":"Process Automation.Process Automation Settings"
+     },
+     {
+        "name":"Process Automation.Process Builder"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Email Alerts"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Field Updates"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Knowledge Action"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Outbound Messages"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Send Actions"
+     },
+     {
+        "name":"Process Automation.Workflow Actions.Tasks"
+     },
+     {
+        "name":"Workflow Rules"
+     },
+     {
+        "name":"User Interface.Action Link Templates"
+     },
+     {
+        "name":"User Interface.Actions & Recommendations"
+     },
+     {
+        "name":"User Interface.App Menu"
+     },
+     {
+        "name":"User Interface.Custom Labels"
+     },
+     {
+        "name":"User Interface.Density Settings"
+     },
+     {
+        "name":"User Interface.Global Actions.Global Actions"
+     },
+     {
+        "name":"User Interface.Global Actions.Publisher Layouts"
+     },
+     {
+        "name":"Lightning App Builder"
+     },
+     {
+        "name":"Lightning Extension"
+     },
+     {
+        "name":"Path Settings"
+     },
+     {
+        "name":"Quick Text Settings"
+     },
+     {
+        "name":"Record Page Settings"
+     },
+     {
+        "name":"Rename Tabs and Labels"
+     },
+     {
+        "name":"Sites and Domains.Custom URLs"
+     },
+     {
+        "name":"Sites and Domains.Domains"
+     },
+     {
+        "name":"Sites and Domains.Sites"
+     },
+     {
+        "name":"Tabs"
+     },
+     {
+        "name":"Themes and Branding"
+     },
+     {
+        "name":"Translation Workbench.Export"
+     },
+     {
+        "name":"Translation Workbench.Import"
+     },
+     {
+        "name":"Translation Workbench.Override"
+     },
+     {
+        "name":"Translation Workbench.Translate"
+     },
+     {
+        "name":"Translation Workbench.Translation Language Settings"
+     },
+     {
+        "name":"User Interface"
+     },
+     {
+        "name":"Custom Code.Apex Classes"
+     },
+     {
+        "name":"Custom Code.Apex Debugger"
+     },
+     {
+        "name":"Custom Code.Apex Hammer Test Results"
+     },
+     {
+        "name":"Custom Code.Apex Settings"
+     },
+     {
+        "name":"Custom Code.Apex Test Execution"
+     },
+     {
+        "name":"Custom Code.Apex Test History"
+     },
+     {
+        "name":"Custom Code.Apex Triggers"
+     },
+     {
+        "name":"Custom Code.Canvas App Previewer"
+     },
+     {
+        "name":"Custom Code.Custom Metadata Types"
+     },
+     {
+        "name":"Custom Code.Custom Permissions"
+     },
+     {
+        "name":"Custom Code.Custom Settings"
+     },
+     {
+        "name":"Custom Code.Email Services"
+     },
+     {
+        "name":"Custom Code.Lightning Components.Debug Mode"
+     },
+     {
+        "name":"Custom Code.Lightning Components.Lightning Components"
+     },
+     {
+        "name":"Platform Cache"
+     },
+     {
+        "name":"Remote Access"
+     },
+     {
+        "name":"Static Resources"
+     },
+     {
+        "name":"Tools"
+     },
+     {
+        "name":"Visualforce Components"
+     },
+     {
+        "name":"Visualforce Pages"
+     },
+     {
+        "name":"Performance.Performance Assistant"
+     },
+     {
+        "name":"Environments.Change Sets.Inbound Change Sets"
+     },
+     {
+        "name":"Environments.Change Sets.Outbound Change Sets"
+     },
+     {
+        "name":"Deploy.Deployment Settings"
+     },
+     {
+        "name":"Deploy.Deployment Status"
+     },
+     {
+        "name":"Jobs.Apex Flex Queue"
+     },
+     {
+        "name":"Jobs.Apex Jobs"
+     },
+     {
+        "name":"Jobs.Background Jobs"
+     },
+     {
+        "name":"Jobs.Bulk Data Load Jobs"
+     },
+     {
+        "name":"Jobs.Scheduled Jobs"
+     },
+     {
+        "name":"Logs.Debug Logs"
+     },
+     {
+        "name":"Logs.Email Log Files"
+     },
+     {
+        "name":"Monitoring.API Usage Notifications"
+     },
+     {
+        "name":"Monitoring.Article Imports and Exports"
+     },
+     {
+        "name":"Monitoring.Case Escalations"
+     },
+     {
+        "name":"Monitoring.Email Snapshots"
+     },
+     {
+        "name":"Monitoring.Outbound Messages"
+     },
+     {
+        "name":"Monitoring.Time-Based Workflow"
+     },
+     {
+        "name":"System Overview"
+     },
+     {
+        "name":"User Engagement.Adoption Assistance"
+     },
+     {
+        "name":"User Engagement.Help Menu"
+     },
+     {
+        "name":"User Engagement.In-App Guidance"
+     },
+     {
+        "name":"Integrations.API"
+     },
+     {
+        "name":"Integrations.Change Data Capture"
+     },
+     {
+        "name":"Integrations.Data Import Wizard"
+     },
+     {
+        "name":"Integrations.Data Loader"
+     },
+     {
+        "name":"Integrations.Dataloader.io"
+     },
+     {
+        "name":"Integrations.External Data Sources"
+     },
+     {
+        "name":"Integrations.External Objects"
+     },
+     {
+        "name":"Integrations.External Services"
+     },
+     {
+        "name":"Integrations.Platform Events"
+     },
+     {
+        "name":"Integrations.Teams Integration"
+     },
+     {
+        "name":"Notification Builder.Custom Notifications"
+     },
+     {
+        "name":"Notification Builder.Notification Delivery Settings"
+     },
+     {
+        "name":"Offline.Briefcase Builder"
+     },
+     {
+        "name":"Company Settings.Business Hours"
+     },
+     {
+        "name":"Company Settings.Calendar Settings.Public Calendars and Resources"
+     },
+     {
+        "name":"Company Information"
+     },
+     {
+        "name":"Data Protection and Privacy"
+     },
+     {
+        "name":"Fiscal Year"
+     },
+     {
+        "name":"Holidays"
+     },
+     {
+        "name":"Language Settings"
+     },
+     {
+        "name":"Manage Currencies"
+     },
+     {
+        "name":"Maps and Location Settings"
+     },
+     {
+        "name":"My Domain"
+     },
+     {
+        "name":"Data Classification.Data Classification Download"
+     },
+     {
+        "name":"Data Classification.Data Classification Settings"
+     },
+     {
+        "name":"Data Classification.Data Classification Upload"
+     },
+     {
+        "name":"Privacy Center.Consent Event Stream"
+     },
+     {
+        "name":"Identity.Auth. Providers"
+     },
+     {
+        "name":"Identity.Delegated Authentication Error History"
+     },
+     {
+        "name":"Identity.Identity Provider"
+     },
+     {
+        "name":"Identity.Identity Provider Event Log"
+     },
+     {
+        "name":"Identity.Identity Verification"
+     },
+     {
+        "name":"Identity.Identity Verification History"
+     },
+     {
+        "name":"Identity.Login Flows"
+     },
+     {
+        "name":"Identity.Login History"
+     },
+     {
+        "name":"Identity.OAuth Custom Scopes"
+     },
+     {
+        "name":"Identity.OAuth and OpenID Settings"
+     },
+     {
+        "name":"Identity.Single Sign-On Settings"
+     },
+     {
+        "name":"Security.Account Owner Report"
+     },
+     {
+        "name":"Security.Activations"
+     },
+     {
+        "name":"Security.CORS"
+     },
+     {
+        "name":"Security.CSP Trusted Sites"
+     },
+     {
+        "name":"Security.Certificate and Key Management"
+     },
+     {
+        "name":"Security.Delegated Administration"
+     },
+     {
+        "name":"Security.Event Monitoring.Event Monitoring Settings"
+     },
+     {
+        "name":"Security.Event Monitoring.Transaction Security Policies"
+     },
+     {
+        "name":"Expire All Passwords"
+     },
+     {
+        "name":"Field Accessibility"
+     },
+     {
+        "name":"File Upload and Download Security"
+     },
+     {
+        "name":"Health Check"
+     },
+     {
+        "name":"Login Access Policies"
+     },
+     {
+        "name":"Named Credentials"
+     },
+     {
+        "name":"Network Access"
+     },
+     {
+        "name":"Password Policies"
+     },
+     {
+        "name":"Portal Health Check"
+     },
+     {
+        "name":"Private Connect"
+     },
+     {
+        "name":"Remote Site Settings"
+     },
+     {
+        "name":"Security Alerts"
+     },
+     {
+        "name":"Session Management"
+     },
+     {
+        "name":"Session Settings"
+     },
+     {
+        "name":"Sharing Settings"
+     },
+     {
+        "name":"Trusted URLs for Redirects"
+     },
+     {
+        "name":"View Setup Audit Trail"
+     },
+     {
+        "name":"Sandboxes"
+     }
+  ],
+  "urls":{
+     "Sandboxes":"/lightning/setup/DataManagementCreateTestInstance/home",
+     "Setup-Home":"/lightning/setup/SetupOneHome/home",
+     "Service-Setup-Assistant":"/lightning/setup/ServiceHome/home",
+     "Multi-Factor-Authentication-Assistant":"/lightning/setup/MfaAssistant/home",
+     "Release-Updates":"/lightning/setup/ReleaseUpdates/home",
+     "Lightning-Experience-Transition-Assistant":"/lightning/setup/EnableLightningExperience/home",
+     "New-Salesforce-Mobile-App-QuickStart":"/lightning/setup/SalesforceMobileAppQuickStart/home",
+     "Optimizer":"/lightning/setup/SalesforceOptimizer/home",
+     "Users.Permission-Set-Groups":"/lightning/setup/PermSetGroups/home",
+     "Users.Permission-Sets":"/lightning/setup/PermSets/home",
+     "Users.Profiles":"/lightning/setup/EnhancedProfiles/home",
+     "Users.Public-Groups":"/lightning/setup/PublicGroups/home",
+     "Users.Queues":"/lightning/setup/Queues/home",
+     "Users.Roles":"/lightning/setup/Roles/home",
+     "Users.User-Management-Settings":"/lightning/setup/UserManagementSettings/home",
+     "Users.Users":"/lightning/setup/ManageUsers/home",
+     "Data.Big-Objects":"/lightning/setup/BigObjects/home",
+     "Data.Data-Export":"/lightning/setup/DataManagementExport/home",
+     "Data.Data-Integration-Metrics":"/lightning/setup/XCleanVitalsUi/home",
+     "Data.Data-Integration-Rules":"/lightning/setup/CleanRules/home",
+     "Data.Duplicate-Management.Duplicate-Error-Logs":"/lightning/setup/DuplicateErrorLog/home",
+     "Data.Duplicate-Management.Duplicate-Jobs":"/lightning/setup/BulkDedupeJob/home",
+     "Data.Duplicate-Management.Duplicate-Rules":"/lightning/setup/DuplicateRules/home",
+     "Data.Duplicate-Management.Matching-Rules":"/lightning/setup/MatchingRules/home",
+     "Export-Articles-for-Translation":"/lightning/setup/ArticleExportForTranslation/home",
+     "Import-Article-Translations":"/lightning/setup/ArticleImportTranslation/home",
+     "Import-Articles":"/lightning/setup/ArticleImport/home",
+     "Mass-Delete-Records":"/lightning/setup/DataManagementDelete/home",
+     "Mass-Reassign-Account-Teams":"/lightning/setup/DataManagementMassAcctTeamReassign/home",
+     "Mass-Reassign-Opportunity-Teams":"/lightning/setup/DataManagementMassOppTeamReassign/home",
+     "Mass-Transfer-Approval-Requests":"/lightning/setup/DataManagementManageApprovals/home",
+     "Mass-Transfer-Records":"/lightning/setup/DataManagementTransfer/home",
+     "Mass-Update-Addresses":"/lightning/setup/DataManagementMassUpdateAddresses/home",
+     "Picklist-Settings":"/lightning/setup/PicklistSettings/home",
+     "Schema-Settings":"/lightning/setup/SchemaSettings/home",
+     "State-and-Country/Territory-Picklists":"/lightning/setup/AddressCleanerOverview/home",
+     "Storage-Usage":"/lightning/setup/CompanyResourceDisk/home",
+     "Email.Apex-Exception-Email":"/lightning/setup/ApexExceptionEmail/home",
+     "Email.Classic-Email-Templates":"/lightning/setup/CommunicationTemplatesEmail/home",
+     "Email.Classic-Letterheads":"/lightning/setup/CommunicationTemplatesLetterheads/home",
+     "Email.Compliance-BCC-Email":"/lightning/setup/SecurityComplianceBcc/home",
+     "Email.DKIM-Keys":"/lightning/setup/EmailDKIMList/home",
+     "Email.Deliverability":"/lightning/setup/OrgEmailSettings/home",
+     "Email.Email-Address-Internationalization":"/lightning/setup/InternationalEmailAddresses/home",
+     "Email.Email-Attachments":"/lightning/setup/EmailAttachmentSettings/home",
+     "Email.Email-Delivery-Settings.Email-Domain-Filters":"/lightning/setup/EmailDomainFilter/home",
+     "Email.Email-Delivery-Settings.Email-Relays":"/lightning/setup/EmailRelay/home",
+     "Email-Footers":"/lightning/setup/EmailDisclaimers/home",
+     "Email-to-Salesforce":"/lightning/setup/EmailToSalesforce/home",
+     "Enhanced-Email":"/lightning/setup/EnhancedEmail/home",
+     "Filter-Email-Tracking":"/lightning/setup/FilterEmailTracking/home",
+     "Gmail-Integration-and-Sync":"/lightning/setup/LightningForGmailAndSyncSettings/home",
+     "Lightning-Email-Templates":"/lightning/setup/LightningEmailTemplateSetup/home",
+     "Mail-Merge-Templates":"/lightning/setup/CommunicationTemplatesWord/home",
+     "Organization-Wide-Addresses":"/lightning/setup/OrgWideEmailAddresses/home",
+     "Outlook-Configurations":"/lightning/setup/EmailConfigurations/home",
+     "Outlook-Integration-and-Sync":"/lightning/setup/LightningForOutlookAndSyncSettings/home",
+     "Send-through-External-Email-Services":"/lightning/setup/EmailTransportServiceSetupPage/home",
+     "Test-Deliverability":"/lightning/setup/TestEmailDeliverability/home",
+     "Apps.App-Manager":"/lightning/setup/NavigationMenus/home",
+     "Apps.AppExchange-Marketplace":"/lightning/setup/AppExchangeMarketplace/home",
+     "Apps.Connected-Apps.Connected-Apps-OAuth-Usage":"/lightning/setup/ConnectedAppsUsage/home",
+     "Apps.Connected-Apps.Manage-Connected-Apps":"/lightning/setup/ConnectedApplication/home",
+     "Lightning-Bolt.Flow-Category":"/lightning/setup/FlowCategory/home",
+     "Lightning-Bolt.Lightning-Bolt-Solutions":"/lightning/setup/LightningBolt/home",
+     "Mobile-Apps.Salesforce.Salesforce-Branding":"/lightning/setup/Salesforce1Branding/home",
+     "Mobile-Apps.Salesforce.Salesforce-Navigation":"/lightning/setup/ProjectOneAppMenu/home",
+     "Mobile-Apps.Salesforce.Salesforce-Notifications":"/lightning/setup/NotificationsSettings/home",
+     "Mobile-Apps.Salesforce.Salesforce-Offline":"/lightning/setup/MobileOfflineStorageAdmin/home",
+     "Mobile-Apps.Salesforce.Salesforce-Settings":"/lightning/setup/Salesforce1Settings/home",
+     "Packaging.Installed-Packages":"/lightning/setup/ImportedPackage/home",
+     "Packaging.Package-Manager":"/lightning/setup/Package/home",
+     "Packaging.Package-Usage":"/lightning/setup/PackageUsageSummary/home",
+     "Feature-Settings.Analytics.Analytics.Allowlist":"/lightning/setup/CSPFrameAncestors/home",
+     "Feature-Settings.Analytics.Analytics.Auto-Installed-Apps":"/lightning/setup/InsightsSetupAutoInstalledApps/home",
+     "Feature-Settings.Analytics.Analytics.Getting-Started":"/lightning/setup/InsightsSetupGettingStarted/home",
+     "Feature-Settings.Analytics.Analytics.Settings":"/lightning/setup/InsightsSetupSettings/home",
+     "Einstein-Discovery.Usage":"/lightning/setup/EinsteinDiscoveryUsage/home",
+     "Reports-&-Dashboards.Access-Policies":"/lightning/setup/SessionLevelPolicyUI/home",
+     "Reports-&-Dashboards.Historical-Trending":"/lightning/setup/HistoricalTrendingUI/home",
+     "Reports-&-Dashboards.Report-Types":"/lightning/setup/CustomReportTypes/home",
+     "Reports-&-Dashboards.Reporting-Snapshots":"/lightning/setup/AnalyticSnapshots/home",
+     "Reports-&-Dashboards.Reports-and-Dashboards-Settings":"/lightning/setup/ReportUI/home",
+     "Chatter.Chatter-Settings":"/lightning/setup/CollaborationSettings/home",
+     "Chatter.Email-Settings":"/lightning/setup/ChatterEmailSettings/home",
+     "Chatter.Feed-Item.Feed-Item-Actions":"/lightning/setup/FeedItemActions/home",
+     "Chatter.Feed-Item.Feed-Item-Layouts":"/lightning/setup/FeedItemLayouts/home",
+     "Feed-Tracking":"/lightning/setup/FeedTracking/home",
+     "Groups.Group-Layouts":"/lightning/setup/CollaborationGroupLayouts/home",
+     "Groups.Group-Member-Triggers":"/lightning/setup/CollaborationGroupMemberTriggers/home",
+     "Groups.Group-Record-Triggers":"/lightning/setup/CollaborationGroupRecordTriggers/home",
+     "Groups.Group-Triggers":"/lightning/setup/CollaborationGroupTriggers/home",
+     "Groups.Record-Types":"/lightning/setup/CollaborationGroupRecordTypes/home",
+     "Influence":"/lightning/setup/InfluenceSettings/home",
+     "Triggers.FeedComment-Triggers":"/lightning/setup/FeedCommentTriggers/home",
+     "Triggers.FeedItem-Triggers":"/lightning/setup/FeedItemTriggers/home",
+     "Commerce.Settings":"/lightning/setup/CommerceStoreEnable/home",
+     "Conversation-Insights.Delete-Video-Calls":"/lightning/setup/VideoCallDelete/home",
+     "Conversation-Insights.General-Settings":"/lightning/setup/CallCoachingSettings/home",
+     "Digital-Experiences.All-Sites":"/lightning/setup/SetupNetworks/home",
+     "Digital-Experiences.Pages":"/lightning/setup/CommunityFlexiPageList/home",
+     "Digital-Experiences.Settings":"/lightning/setup/NetworkSettings/home",
+     "Digital-Experiences.Templates":"/lightning/setup/CommunityTemplateDefinitionList/home",
+     "Digital-Experiences.Themes":"/lightning/setup/CommunityThemeDefinitionList/home",
+     "Functions":"/lightning/setup/Functions/home",
+     "Home":"/lightning/setup/Home/home",
+     "Marketing.Accounts-As-Campaign-Members":"/lightning/setup/AccountAsCM/home",
+     "Marketing.Campaign-Influence.Auto-Association-Settings":"/lightning/setup/AutoAssociationSettings/home",
+     "Marketing.Campaign-Influence.Campaign-Influence-Settings":"/lightning/setup/CampaignInfluenceSettings/home",
+     "Lead-Assignment-Rules":"/lightning/setup/LeadRules/home",
+     "Lead-Auto-Response-Rules":"/lightning/setup/LeadResponses/home",
+     "Lead-Processes":"/lightning/setup/LeadProcess/home",
+     "Lead-Settings":"/lightning/setup/LeadSettings/home",
+     "LinkedIn-Lead-Gen.Lead-Gen-Fields":"/lightning/setup/LinkedInLeadGenFields/home",
+     "LinkedIn-Lead-Gen.LinkedIn-Accounts":"/lightning/setup/LinkedInLeadGenAccounts/home",
+     "Web-to-Lead":"/lightning/setup/LeadWebtoleads/home",
+     "Quip-(Salesforce-Anywhere)":"/lightning/setup/SalesforceAnywhereSetupPage/home",
+     "Sales.Accounts.Account-Owner-Report":"/lightning/setup/AccountOwnerReport/home",
+     "Sales.Accounts.Account-Settings":"/lightning/setup/AccountSettings/home",
+     "Sales.Accounts.Account-Teams":"/lightning/setup/AccountTeamSelling/home",
+     "Sales.Accounts.Person-Accounts":"/lightning/setup/PersonAccountSettings/home",
+     "Activity-Settings":"/lightning/setup/HomeActivitiesSetupPage/home",
+     "Contact-Roles-on-Contracts":"/lightning/setup/ContractContactRoles/home",
+     "Contact-Roles-on-Opportunities":"/lightning/setup/OpportunityRoles/home",
+     "Contract-Settings":"/lightning/setup/ContractSettings/home",
+     "Forecasts.Forecasts-Hierarchy":"/lightning/setup/Forecasting3Role/home",
+     "Forecasts.Forecasts-Quotas":"/lightning/setup/Forecasting3Quota/home",
+     "Forecasts.Forecasts-Settings":"/lightning/setup/Forecasting3Settings/home",
+     "High-Velocity-Sales":"/lightning/setup/HighVelocitySales/home",
+     "Individual-Settings":"/lightning/setup/IndividualSettings/home",
+     "LinkedIn-Sales-Navigator":"/lightning/setup/LinkedInSalesNavigatorPage/home",
+     "Meetings.Settings":"/lightning/setup/SalesforceMeetingsSettings/home",
+     "Notes-Settings":"/lightning/setup/NotesSetupPage/home",
+     "Opportunities.Big-Deal-Alert":"/lightning/setup/OpportunityAlerts/home",
+     "Opportunities.Opportunity-Settings":"/lightning/setup/OpportunitySettings/home",
+     "Opportunities.Opportunity-Splits-Settings":"/lightning/setup/OpportunitySplitSetup/home",
+     "Opportunities.Opportunity-Team-Settings":"/lightning/setup/OpportunityTeamMemberSettings/home",
+     "Opportunities.Pipeline-Inspection-Setup":"/lightning/setup/PipelineInspectionSettings/home",
+     "Order-Settings":"/lightning/setup/OrderSettings/home",
+     "Products.Asset-Settings":"/lightning/setup/AssetSettings/home",
+     "Products.Product-Schedules-Settings":"/lightning/setup/Product2ScheduleSetup/home",
+     "Products.Product-Settings":"/lightning/setup/Product2Settings/home",
+     "Quotes.Quote-Settings":"/lightning/setup/QuotesSetupPage/home",
+     "Quotes.Quote-Templates":"/lightning/setup/QuoteTemplateEditor/home",
+     "Replace-Team-Roles":"/lightning/setup/OpportunityTeamMemberRolesReplace/home",
+     "Sales-Processes":"/lightning/setup/OpportunityProcess/home",
+     "Social-Accounts-and-Contacts-Settings":"/lightning/setup/SocialProfileOrgSettings/home",
+     "Team-Roles":"/lightning/setup/OpportunityTeamMemberRoles/home",
+     "Territories.Territory-Models":"/lightning/setup/Territory2Models/home",
+     "Territories.Territory-Settings":"/lightning/setup/Territory2Settings/home",
+     "Territories.Territory-Types":"/lightning/setup/Territory2Types/home",
+     "Update-Reminders":"/lightning/setup/OpportunityUpdateReminders/home",
+     "Zoom-Video-Setup":"/lightning/setup/ZoomVideoSetup/home",
+     "Salesforce-Files.Asset-Files":"/lightning/setup/ContentAssets/home",
+     "Salesforce-Files.Content-Deliveries-and-Public-Links":"/lightning/setup/ContentDistribution/home",
+     "Salesforce-Files.Files-Connect":"/lightning/setup/ContentHub/home",
+     "Salesforce-Files.General-Settings":"/lightning/setup/FilesGeneralSettings/home",
+     "Salesforce-Files.Regenerate-Previews":"/lightning/setup/RegeneratePreviews/home",
+     "Salesforce-Files.Salesforce-CRM-Content":"/lightning/setup/SalesforceCRMContent/home",
+     "Salesforce-Scheduler.Assignment-Policies":"/lightning/setup/AppointmentAssignmentPolicy/home",
+     "Salesforce-Scheduler.Salesforce-Scheduler-Settings":"/lightning/setup/LightningSchedulerSettings/home",
+     "Salesforce-Scheduler.Scheduling-Policies":"/lightning/setup/AppointmentSchedulingPolicy/home",
+     "Salesforce-Scheduler.Skills":"/lightning/setup/Skills/home",
+     "Service.Call-Center.Call-Centers":"/lightning/setup/CallCenters/home",
+     "Service.Call-Center.Directory-Numbers":"/lightning/setup/AdditionalDirectoryNumbers/home",
+     "Service.Call-Center.Softphone-Layouts":"/lightning/setup/SoftphoneLayouts/home",
+     "Case-Assignment-Rules":"/lightning/setup/CaseRules/home",
+     "Case-Auto-Response-Rules":"/lightning/setup/CaseResponses/home",
+     "Case-Comment-Triggers":"/lightning/setup/CaseCommentTriggers/home",
+     "Case-Merge":"/lightning/setup/CaseMerge/home",
+     "Case-Teams.Case-Team-Roles":"/lightning/setup/CaseTeamRoles/home",
+     "Case-Teams.Predefined-Case-Teams":"/lightning/setup/CaseTeamTemplates/home",
+     "Channel-Object-Linking":"/lightning/setup/ChannelObjectLinkingSetup/home",
+     "Chat.Block-Visitors":"/lightning/setup/LiveChatBlockingRuleSettings/home",
+     "Chat.Chat-Agent-Configurations":"/lightning/setup/LiveChatUserConfigSettings/home",
+     "Chat.Chat-Buttons-&-Invitations":"/lightning/setup/LiveChatButtonSettings/home",
+     "Chat.Chat-Settings":"/lightning/setup/LiveAgentSettings/home",
+     "Chat.Deployments":"/lightning/setup/LiveChatDeploymentSettings/home",
+     "Chat.Sensitive-Data-Rules":"/lightning/setup/LiveChatSensitiveDataRuleSettings/home",
+     "Chat.Skills":"/lightning/setup/SkillSettings/home",
+     "Contact-Roles-on-Cases":"/lightning/setup/CaseContactRoles/home",
+     "Customer-Contact-Requests":"/lightning/setup/ContactRequestFlows/home",
+     "Data-Categories.Data-Category-Setup":"/lightning/setup/DataCategorySetup/home",
+     "Data-Categories.Default-Data-Category-Visibility":"/lightning/setup/DataCategoryDefaultVisibilitySettings/home",
+     "Email-to-Case":"/lightning/setup/EmailToCase/home",
+     "Embedded-Service.Channel-Menu":"/lightning/setup/ChannelMenuDeployments/home",
+     "Embedded-Service.Embedded-Service-Deployments":"/lightning/setup/EmbeddedServiceDeployments/home",
+     "Entitlement-Management.Entitlement-Processes":"/lightning/setup/SlaProcess/home",
+     "Entitlement-Management.Entitlement-Settings":"/lightning/setup/EntitlementSettings/home",
+     "Entitlement-Management.Entitlement-Templates":"/lightning/setup/EntitlementTemplates/home",
+     "Entitlement-Management.Milestones":"/lightning/setup/MilestoneTypes/home",
+     "Escalation-Rules":"/lightning/setup/CaseEscRules/home",
+     "Feed-Filters":"/lightning/setup/FeedFilterDefinitions/home",
+     "Field-Service.Field-Service-Settings":"/lightning/setup/FieldServiceSettings/home",
+     "Incident-Management":"/lightning/setup/IncidentManagement/home",
+     "Knowledge.Data-Category-Assignments":"/lightning/setup/KnowledgeDataCategorySetup/home",
+     "Knowledge.Knowledge-Settings":"/lightning/setup/KnowledgeSettings/home",
+     "Macro-Settings":"/lightning/setup/MacroSettings/home",
+     "Messaging.Messaging-Settings":"/lightning/setup/LiveMessageSetup/home",
+     "Omni-Channel.Limits":"/lightning/setup/OmniChannelLimits/home",
+     "Omni-Channel.Omni-Channel-Settings":"/lightning/setup/OmniChannelSettings/home",
+     "Omni-Channel.Presence-Configurations":"/lightning/setup/ServicePresenceUserConfigSettings/home",
+     "Omni-Channel.Presence-Decline-Reasons":"/lightning/setup/ServicePresenceDeclineReasonSettings/home",
+     "Omni-Channel.Presence-Statuses":"/lightning/setup/ServicePresenceStatusSettings/home",
+     "Omni-Channel.Routing-Configurations":"/lightning/setup/QueueRoutingConfigSettings/home",
+     "Omni-Channel.Service-Channels":"/lightning/setup/ServiceChannelSettings/home",
+     "Omni-Channel.Supervisor.Supervisor-Configurations":"/lightning/setup/OmniSupervisorConfigSettings/home",
+     "Omni-Channel.Supervisor.Supervisor-Settings":"/lightning/setup/OmniSupervisorSettings/home",
+     "Service-Cloud-Einstein.Einstein-Article-Recommendations":"/lightning/setup/EinsteinArticleRecommendations/home",
+     "Service-Cloud-Einstein.Einstein-Bots":"/lightning/setup/EinsteinBots/home",
+     "Service-Cloud-Einstein.Einstein-Classification":"/lightning/setup/EinsteinCaseClassification/home",
+     "Service-Cloud-Einstein.Einstein-Reply-Recommendations":"/lightning/setup/EinsteinReplyRecommendation/home",
+     "Social-Business-Rules":"/lightning/setup/SocialCustomerServiceBusinessRules/home",
+     "Social-Customer-Service":"/lightning/setup/SocialCustomerManagementAccountSettings/home",
+     "Support-Processes":"/lightning/setup/CaseProcess/home",
+     "Support-Settings":"/lightning/setup/CaseSettings/home",
+     "Swarming":"/lightning/setup/CaseSwarming/home",
+     "Web-to-Case":"/lightning/setup/CaseWebtocase/home",
+     "Web-to-Case-HTML-Generator":"/lightning/setup/CaseWebToCaseHtmlGenerator/home",
+     "Survey.Survey-Invitation-Rules":"/lightning/setup/SurveyInvitationRules/home",
+     "Survey.Survey-Settings":"/lightning/setup/SurveySettings/home",
+     "Topics.Topic-Assignment-Triggers":"/lightning/setup/TopicAssigmentTriggers/home",
+     "Topics.Topic-Triggers":"/lightning/setup/TopicTriggers/home",
+     "Topics.Topics-for-Objects":"/lightning/setup/TopicRecords/home",
+     "Slack.Initial-Slack-Setup":"/lightning/setup/SlackSetupAssistant/home",
+     "Workflow-Services.Batch-Management":"/lightning/setup/BatchProcessJobDefinition/home",
+     "Workflow-Services.Monitor-Workflow-Services":"/lightning/setup/MonitorWorkflowServices/home",
+     "Einstein.Einstein-Assessors.Einstein-Bots-Assessor":"/lightning/setup/EinsteinBotsReadinessCheck/home",
+     "Einstein.Einstein-Assessors.Sales-Cloud-Einstein-Assessor":"/lightning/setup/SalesCloudEinsteinReadinessCheck/home",
+     "Einstein.Einstein-Assessors.Service-Cloud-Einstein-Assessor":"/lightning/setup/ServiceCloudEinsteinReadinessCheck/home",
+     "Einstein-Platform.Einstein-Intent-Sets":"/lightning/setup/EinsteinIntentSets/home",
+     "Einstein-Platform.Einstein-Prediction-Builder":"/lightning/setup/EinsteinBuilder/home",
+     "Einstein-Platform.Einstein-Recommendation-Builder":"/lightning/setup/EinsteinRecommendation/home",
+     "Einstein-Platform.Einstein.ai":"/lightning/setup/EinsteinKeyManagement/home",
+     "Einstein-Sales.Assisted-Setup":"/lightning/setup/SalesInsightsSetupAssistant/home",
+     "Einstein-Sales.Data-Policies.Delete-Email-and-Events":"/lightning/setup/SalesforceInboxDeleteEmailsAndEventsPage/home",
+     "Einstein-Sales.Data-Policies.Excluded-from-Machine-Learning":"/lightning/setup/SalesforceInboxExcludeFromMLPage/home",
+     "Einstein-Account-Insights":"/lightning/setup/AccountInsights/home",
+     "Einstein-Activity-Capture.Einstein-Email-Insights":"/lightning/setup/CustomInsightsListPage/home",
+     "Einstein-Activity-Capture.Microsoft-Exchange-Connections":"/lightning/setup/SalesforceInboxExchangeSettingPage/home",
+     "Einstein-Activity-Capture.Settings":"/lightning/setup/ActivitySyncEngineSettingsMain/home",
+     "Einstein-Activity-Capture.User-Status":"/lightning/setup/SalesforceInboxActivityStoragePage/home",
+     "Einstein-Automated-Contacts":"/lightning/setup/AutomatedDataCapture/home",
+     "Einstein-Forecasting":"/lightning/setup/ForecastingPrediction/home",
+     "Einstein-Lead-Scoring":"/lightning/setup/LeadIQ/home",
+     "Einstein-Opportunity-Insights":"/lightning/setup/OpportunityInsights/home",
+     "Einstein-Opportunity-Scoring":"/lightning/setup/OpportunityIQSetupHome/home",
+     "Inbox.Setup-Assistant":"/lightning/setup/EmailIqSetupPage/home",
+     "Einstein-Search.Objects-to-Always-Search-(Beta)":"/lightning/setup/SearchScope/home",
+     "Einstein-Search.Promoted-Search-Terms":"/lightning/setup/SearchPromotionRulesManagementPage/home",
+     "Einstein-Search.Search-Layouts":"/lightning/setup/EinsteinSearchLayouts/home",
+     "Einstein-Search.Search-Manager":"/lightning/setup/SearchConfiguration/home",
+     "Einstein-Search.Settings":"/lightning/setup/EinsteinSearchSettings/home",
+     "Einstein-Search.Synonyms":"/lightning/setup/ManageSynonyms/home",
+     "Objects-and-Fields.Object-Manager":"/lightning/setup/ObjectManager/home",
+     "Objects-and-Fields.Picklist-Value-Sets":"/lightning/setup/Picklists/home",
+     "Objects-and-Fields.Schema-Builder":"/lightning/setup/SchemaBuilder/home",
+     "Events.Event-Manager":"/lightning/setup/EventManager/home",
+     "Process-Automation.Approval-Processes":"/lightning/setup/ApprovalProcesses/home",
+     "Process-Automation.Automation-Home-(Beta)":"/lightning/setup/ProcessHome/home",
+     "Process-Automation.Flows":"/lightning/setup/Flows/home",
+     "Process-Automation.Migrate-to-Flow":"/lightning/setup/MigrateToFlowTool/home",
+     "Process-Automation.Next-Best-Action":"/lightning/setup/NextBestAction/home",
+     "Process-Automation.Paused-And-Failed-Flow-Interviews":"/lightning/setup/Pausedflows/home",
+     "Process-Automation.Post-Templates":"/lightning/setup/FeedTemplates/home",
+     "Process-Automation.Process-Automation-Settings":"/lightning/setup/WorkflowSettings/home",
+     "Process-Automation.Process-Builder":"/lightning/setup/ProcessAutomation/home",
+     "Process-Automation.Workflow-Actions.Email-Alerts":"/lightning/setup/WorkflowEmails/home",
+     "Process-Automation.Workflow-Actions.Field-Updates":"/lightning/setup/WorkflowFieldUpdates/home",
+     "Process-Automation.Workflow-Actions.Knowledge-Action":"/lightning/setup/WorkflowKnowledgeSubmit/home",
+     "Process-Automation.Workflow-Actions.Outbound-Messages":"/lightning/setup/WorkflowOutboundMessaging/home",
+     "Process-Automation.Workflow-Actions.Send-Actions":"/lightning/setup/SendAction/home",
+     "Process-Automation.Workflow-Actions.Tasks":"/lightning/setup/WorkflowTasks/home",
+     "Workflow-Rules":"/lightning/setup/WorkflowRules/home",
+     "User-Interface.Action-Link-Templates":"/lightning/setup/ActionLinkGroupTemplates/home",
+     "User-Interface.Actions-&-Recommendations":"/lightning/setup/GuidedActions/home",
+     "User-Interface.App-Menu":"/lightning/setup/AppMenu/home",
+     "User-Interface.Custom-Labels":"/lightning/setup/ExternalStrings/home",
+     "User-Interface.Density-Settings":"/lightning/setup/DensitySetup/home",
+     "User-Interface.Global-Actions.Global-Actions":"/lightning/setup/GlobalActions/home",
+     "User-Interface.Global-Actions.Publisher-Layouts":"/lightning/setup/GlobalPublisherLayouts/home",
+     "Lightning-App-Builder":"/lightning/setup/FlexiPageList/home",
+     "Lightning-Extension":"/lightning/setup/LightningExtension/home",
+     "Path-Settings":"/lightning/setup/PathAssistantSetupHome/home",
+     "Quick-Text-Settings":"/lightning/setup/LightningQuickTextSettings/home",
+     "Record-Page-Settings":"/lightning/setup/SimpleRecordHome/home",
+     "Rename-Tabs-and-Labels":"/lightning/setup/RenameTab/home",
+     "Sites-and-Domains.Custom-URLs":"/lightning/setup/DomainSites/home",
+     "Sites-and-Domains.Domains":"/lightning/setup/DomainNames/home",
+     "Sites-and-Domains.Sites":"/lightning/setup/CustomDomain/home",
+     "Tabs":"/lightning/setup/CustomTabs/home",
+     "Themes-and-Branding":"/lightning/setup/ThemingAndBranding/home",
+     "Translation-Workbench.Export":"/lightning/setup/LabelWorkbenchExport/home",
+     "Translation-Workbench.Import":"/lightning/setup/LabelWorkbenchImport/home",
+     "Translation-Workbench.Override":"/lightning/setup/LabelWorkbenchOverride/home",
+     "Translation-Workbench.Translate":"/lightning/setup/LabelWorkbenchTranslate/home",
+     "Translation-Workbench.Translation-Language-Settings":"/lightning/setup/LabelWorkbenchSetup/home",
+     "User-Interface":"/lightning/setup/UserInterfaceUI/home",
+     "Custom-Code.Apex-Classes":"/lightning/setup/ApexClasses/home",
+     "Custom-Code.Apex-Debugger":"/lightning/setup/ApexDebugger/home",
+     "Custom-Code.Apex-Hammer-Test-Results":"/lightning/setup/ApexHammerResultStatus/home",
+     "Custom-Code.Apex-Settings":"/lightning/setup/ApexSettings/home",
+     "Custom-Code.Apex-Test-Execution":"/lightning/setup/ApexTestQueue/home",
+     "Custom-Code.Apex-Test-History":"/lightning/setup/ApexTestHistory/home",
+     "Custom-Code.Apex-Triggers":"/lightning/setup/ApexTriggers/home",
+     "Custom-Code.Canvas-App-Previewer":"/lightning/setup/CanvasPreviewerUi/home",
+     "Custom-Code.Custom-Metadata-Types":"/lightning/setup/CustomMetadata/home",
+     "Custom-Code.Custom-Permissions":"/lightning/setup/CustomPermissions/home",
+     "Custom-Code.Custom-Settings":"/lightning/setup/CustomSettings/home",
+     "Custom-Code.Email-Services":"/lightning/setup/EmailToApexFunction/home",
+     "Custom-Code.Lightning-Components.Debug-Mode":"/lightning/setup/UserDebugModeSetup/home",
+     "Custom-Code.Lightning-Components.Lightning-Components":"/lightning/setup/LightningComponentBundles/home",
+     "Platform-Cache":"/lightning/setup/PlatformCache/home",
+     "Remote-Access":"/lightning/setup/RemoteAccess/home",
+     "Static-Resources":"/lightning/setup/StaticResources/home",
+     "Tools":"/lightning/setup/ClientDevTools/home",
+     "Visualforce-Components":"/lightning/setup/ApexComponents/home",
+     "Visualforce-Pages":"/lightning/setup/ApexPages/home",
+     "Performance.Performance-Assistant":"/lightning/setup/PerformanceAssistant/home",
+     "Environments.Change-Sets.Inbound-Change-Sets":"/lightning/setup/InboundChangeSet/home",
+     "Environments.Change-Sets.Outbound-Change-Sets":"/lightning/setup/OutboundChangeSet/home",
+     "Deploy.Deployment-Settings":"/lightning/setup/DeploymentSettings/home",
+     "Deploy.Deployment-Status":"/lightning/setup/DeployStatus/home",
+     "Jobs.Apex-Flex-Queue":"/lightning/setup/ApexFlexQueue/home",
+     "Jobs.Apex-Jobs":"/lightning/setup/AsyncApexJobs/home",
+     "Jobs.Background-Jobs":"/lightning/setup/ParallelJobsStatus/home",
+     "Jobs.Bulk-Data-Load-Jobs":"/lightning/setup/AsyncApiJobStatus/home",
+     "Jobs.Scheduled-Jobs":"/lightning/setup/ScheduledJobs/home",
+     "Developer-Console":"/_ui/common/apex/debug/ApexCSIPage",
+     "Logs.Debug-Logs":"/setup/ui/listApexTraces.apexp",
+     "Logs.Email-Log-Files":"/lightning/setup/EmailLogFiles/home",
+     "Monitoring.API-Usage-Notifications":"/lightning/setup/MonitoringRateLimitingNotification/home",
+     "Monitoring.Article-Imports-and-Exports":"/lightning/setup/DataManagementImportArticlesMonitoring/home",
+     "Monitoring.Case-Escalations":"/lightning/setup/DataManagementManageCaseEscalation/home",
+     "Monitoring.Email-Snapshots":"/lightning/setup/EmailCapture/home",
+     "Monitoring.Outbound-Messages":"/lightning/setup/WorkflowOmStatus/home",
+     "Monitoring.Time-Based-Workflow":"/lightning/setup/DataManagementManageWorkflowQueue/home",
+     "System-Overview":"/lightning/setup/SystemOverview/home",
+     "User-Engagement.Adoption-Assistance":"/lightning/setup/AdoptionAssistance/home",
+     "User-Engagement.Help-Menu":"/lightning/setup/HelpMenu/home",
+     "User-Engagement.In-App-Guidance":"/lightning/setup/Prompts/home",
+     "Integrations.API":"/lightning/setup/WebServices/home",
+     "Integrations.Change-Data-Capture":"/lightning/setup/CdcObjectEnablement/home",
+     "Integrations.Data-Import-Wizard":"/lightning/setup/DataManagementDataImporter/home",
+     "Integrations.Data-Loader":"/lightning/setup/DataLoader/home",
+     "Integrations.Dataloader.io":"/lightning/setup/DataLoaderIo/home",
+     "Integrations.External-Data-Sources":"/lightning/setup/ExternalDataSource/home",
+     "Integrations.External-Objects":"/lightning/setup/ExternalObjects/home",
+     "Integrations.External-Services":"/lightning/setup/ExternalServices/home",
+     "Integrations.Platform-Events":"/lightning/setup/EventObjects/home",
+     "Integrations.Teams-Integration":"/lightning/setup/MicrosoftTeamsIntegration/home",
+     "Notification-Builder.Custom-Notifications":"/lightning/setup/CustomNotifications/home",
+     "Notification-Builder.Notification-Delivery-Settings":"/lightning/setup/NotificationTypesManager/home",
+     "Offline.Briefcase-Builder":"/lightning/setup/Briefcase/home",
+     "Company-Settings.Business-Hours":"/lightning/setup/BusinessHours/home",
+     "Company-Settings.Calendar-Settings.Public-Calendars-and-Resources":"/lightning/setup/Calendars/home",
+     "Company-Information":"/lightning/setup/CompanyProfileInfo/home",
+     "Data-Protection-and-Privacy":"/lightning/setup/ConsentManagement/home",
+     "Fiscal-Year":"/lightning/setup/ForecastFiscalYear/home",
+     "Holidays":"/lightning/setup/Holiday/home",
+     "Language-Settings":"/lightning/setup/LanguageSettings/home",
+     "Manage-Currencies":"/lightning/setup/CompanyCurrency/home",
+     "Maps-and-Location-Settings":"/lightning/setup/MapsAndLocationServicesSettings/home",
+     "My-Domain":"/lightning/setup/OrgDomain/home",
+     "Data-Classification.Data-Classification-Download":"/lightning/setup/DataClassificationDownload/home",
+     "Data-Classification.Data-Classification-Settings":"/lightning/setup/DataClassificationSettings/home",
+     "Data-Classification.Data-Classification-Upload":"/lightning/setup/DataClassificationUpload/home",
+     "Privacy-Center.Consent-Event-Stream":"/lightning/setup/ConsentEventStream/home",
+     "Identity.Auth.-Providers":"/lightning/setup/AuthProviders/home",
+     "Identity.Delegated-Authentication-Error-History":"/lightning/setup/SsoErrorLog/home",
+     "Identity.Identity-Provider":"/lightning/setup/IdpPage/home",
+     "Identity.Identity-Provider-Event-Log":"/lightning/setup/IdpErrorLog/home",
+     "Identity.Identity-Verification":"/lightning/setup/IdentityVerification/home",
+     "Identity.Identity-Verification-History":"/lightning/setup/VerificationHistory/home",
+     "Identity.Login-Flows":"/lightning/setup/LoginFlow/home",
+     "Identity.Login-History":"/lightning/setup/OrgLoginHistory/home",
+     "Identity.OAuth-Custom-Scopes":"/lightning/setup/OauthCustomScope/home",
+     "Identity.OAuth-and-OpenID-Settings":"/lightning/setup/OauthOidcSettings/home",
+     "Identity.Single-Sign-On-Settings":"/lightning/setup/SingleSignOn/home",
+     "Security.Account-Owner-Report":"/lightning/setup/SecurityAccountOwner/home",
+     "Security.Activations":"/lightning/setup/ActivatedIpAddressAndClientBrowsersPage/home",
+     "Security.CORS":"/lightning/setup/CorsWhitelistEntries/home",
+     "Security.CSP-Trusted-Sites":"/lightning/setup/SecurityCspTrustedSite/home",
+     "Security.Certificate-and-Key-Management":"/lightning/setup/CertificatesAndKeysManagement/home",
+     "Security.Delegated-Administration":"/lightning/setup/DelegateGroups/home",
+     "Security.Event-Monitoring.Event-Monitoring-Settings":"/lightning/setup/EventMonitoringSetup/home",
+     "Security.Event-Monitoring.Transaction-Security-Policies":"/lightning/setup/TransactionSecurityNew/home",
+     "Expire-All-Passwords":"/lightning/setup/SecurityExpirePasswords/home",
+     "Field-Accessibility":"/lightning/setup/FieldAccessibility/home",
+     "File-Upload-and-Download-Security":"/lightning/setup/FileTypeSetting/home",
+     "Health-Check":"/lightning/setup/HealthCheck/home",
+     "Login-Access-Policies":"/lightning/setup/LoginAccessPolicies/home",
+     "Named-Credentials":"/lightning/setup/NamedCredential/home",
+     "Network-Access":"/lightning/setup/NetworkAccess/home",
+     "Password-Policies":"/lightning/setup/SecurityPolicies/home",
+     "Portal-Health-Check":"/lightning/setup/PortalSecurityReport/home",
+     "Private-Connect":"/lightning/setup/PrivateConnect/home",
+     "Remote-Site-Settings":"/lightning/setup/SecurityRemoteProxy/home",
+     "Security-Alerts":"/lightning/setup/SecurityUpdates/home",
+     "Session-Management":"/lightning/setup/SessionManagementPage/home",
+     "Session-Settings":"/lightning/setup/SecuritySession/home",
+     "Sharing-Settings":"/lightning/setup/SecuritySharing/home",
+     "Trusted-URLs-for-Redirects":"/lightning/setup/SecurityRedirectWhitelistUrl/home",
+     "View-Setup-Audit-Trail":"/lightning/setup/SecurityEvents/home"
+  }
+}

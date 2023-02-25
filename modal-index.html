@@ -1,0 +1,29 @@
+<div id="quicksearchmodal" class="sqab_modal">
+    <div id="sqab_modal-content" class="sqab_modal-content">
+        <button id="addbtn" class="sqab_addbtn sqab_tab-active-shortcuts"></button>
+        <div id="addbox" class="sqab_addbox">
+            <select id="sqab_orgSelect" class="sqab_orgSelect" name="orgs">
+                <option class="sqab_orgSelectoption" value="all">All Orgs</option>
+            </select>
+            <input id="addinput" class="sqab_addinput"  type='text' />
+            <button id="addcancel" class="sqab_addcancel" >✗</button>
+            <button id="addsave" class="sqab_addsave" >✓</button>
+        </div>
+        <div id="addboxMessage" class="sqab_addboxMessage">
+            Saved!
+        </div>
+        <ul class="sqab_nav sqab_nav-pills"  role="tablist">
+            <li class="sqab_nav-item">
+                <a class="sqab_nav-link sqab_tab-active-shortcuts" data-tab="sqab_tab-active-shortcuts" style="color:#2641c7;" data-toggle="pill" >Shortcuts</a>
+            </li>
+            <li class="sqab_nav-item">
+                <a class="sqab_nav-link" data-tab="sqab_tab-active-object-manager" style="color:#d13800;" data-toggle="pill">Objects</a>
+            </li>
+            <li class="sqab_nav-item">
+                <a class="sqab_nav-link" data-tab="sqab_tab-active-prettify" style="color:#3fd100;" data-toggle="pill" >Prettify</a>
+            </li>
+        </ul>
+        <input type="text" autocomplete="off" class="sqab_quicksearchbar tab-active-shortcuts" placeholder="Enter Setup Option or Shortcut Name..." id="shortcutFind" name="shortcutFind">    
+        <ul id="finding" class="sqab_tab-active-shortcuts"></ul>
+    </div>
+</div>
