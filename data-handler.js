@@ -1,6 +1,6 @@
 const data_library = {};
 var currentOrg = getURLminized();
-export var orgExists = false;
+export var orgExists = {value:false,name:"",value:""};
 buildData();
 
 export async function getData(storageType){
@@ -71,10 +71,12 @@ async function getMyOrgs(){
   }else{
     data_library["myorgs"].forEach(org => {
       if(org.value.includes(currentPage)){
-        orgExists = true;
+        orgExists.value = true;
       }
     });
-    if(!orgExists){
+    if(!orgExists.value){
+      orgExists.name = currentPage;
+      orgExists.value = currentPage;
       data_library["myorgs"].push({name:currentPage, value:currentPage }); 
     }
   }

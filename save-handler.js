@@ -3,11 +3,12 @@ export function save(dataHandler,value,label,targetorg,type){
     record["org"] = targetorg == "All Orgs" ? undefined : [targetorg];
     record["name"] = type == "objs" ? value : label ;
     record["value"] = value;
-    if(!dataHandler.orgExists && targetorg != "All Orgs"){
+    if(!dataHandler.orgExists.value){
         let orgRecord = {};
-        orgRecord["name"] = targetorg;
-        orgRecord["value"] = targetorg;
+        orgRecord["name"] = dataHandler.orgExists.name;
+        orgRecord["value"] = dataHandler.orgExists.value;
         dataHandler.saveData(orgRecord,"myorgs");
+        dataHandler.orgExists.value = true;
     }
     console.log("record",record);
     // myMemory.push(record);

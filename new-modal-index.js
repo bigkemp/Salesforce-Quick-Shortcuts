@@ -215,7 +215,7 @@ function initModal(){
         })
         addSave.addEventListener("click", async function(e){
           loading_Start();
-          // await saveHandler.save(dataHandler,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
+          await saveHandler.save(dataHandler,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
           await loadData();
           document.getElementById("alert-box").classList.add("show");
           document.getElementById("sqab_add_section").classList.add("hide");
@@ -244,17 +244,21 @@ function initModal(){
         const suggestionsHTML = suggestionHandler.buildSuggestionsHTML(filteredSuggestions, inputValue);
         console.log("suggestionsHTML",suggestionsHTML);
         suggestionsDropdown.innerHTML = suggestionsHTML;
-      }
-      if (selectedSuggestionIndex >= filteredSuggestions.length) {
-        selectedSuggestionIndex = filteredSuggestions.length - 1;
-      } else if (selectedSuggestionIndex < 0) {
+        if (selectedSuggestionIndex >= filteredSuggestions.length) {
+          selectedSuggestionIndex = filteredSuggestions.length - 1;
+        } else if (selectedSuggestionIndex < 0) {
+          selectedSuggestionIndex = 0;
+        }
+        const selectedSuggestion = suggestionsDropdown.children[selectedSuggestionIndex];
+        if(selectedSuggestion != undefined){
+          selectedSuggestion.style.backgroundColor = highlightColor;
+          selectedSuggestion.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }else{
         selectedSuggestionIndex = 0;
+        suggestionsDropdown.style.display = "none";
       }
-      const selectedSuggestion = suggestionsDropdown.children[selectedSuggestionIndex];
-      if(selectedSuggestion != undefined){
-        selectedSuggestion.style.backgroundColor = highlightColor;
-        selectedSuggestion.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      }
+
     } else {
       selectedSuggestionIndex = 0;
       suggestionsDropdown.style.display = "none";
