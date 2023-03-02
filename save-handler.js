@@ -1,16 +1,16 @@
-export function save(dataHandler,value,label,targetorg,type){
+export function save(handlers,value,label,targetorg,type){
     let record = {};
     record["org"] = targetorg == "All Orgs" ? undefined : [targetorg];
     record["name"] = type == "objs" ? value : label ;
     record["value"] = value;
-    if(!dataHandler.orgExists.value){
+    if(!handlers["data"].orgExists.value){
         let orgRecord = {};
-        orgRecord["name"] = dataHandler.orgExists.name;
-        orgRecord["value"] = dataHandler.orgExists.value;
-        dataHandler.saveData(orgRecord,"myorgs");
-        dataHandler.orgExists.value = true;
+        orgRecord["name"] = handlers["data"].orgExists.name;
+        orgRecord["value"] = handlers["data"].orgExists.value;
+        handlers["data"].saveData(orgRecord,"myorgs");
+        handlers["data"].orgExists.value = true;
     }
     console.log("record",record);
     // myMemory.push(record);
-    dataHandler.saveData(record,"my"+type);
+    handlers["data"].saveData(record,"my"+type);
 }

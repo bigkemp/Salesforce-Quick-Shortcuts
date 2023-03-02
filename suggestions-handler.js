@@ -6,10 +6,9 @@ export function getSuggestions(array_data, input) {
   if (!input) return []; // handle empty input
   const suggestions = [];
 
-  let isCustom = true;
+  let isCustom = array_data.length == 2 ? true : false ;
   // loop through all array data
   for (const element of array_data) {
-    
     // loop through all shortcuts of an element
     for (const shortcut of element) {
       const finalshortcutname = shortcut.name;
@@ -17,7 +16,7 @@ export function getSuggestions(array_data, input) {
       shortcut.custom = isCustom;
       suggestions.push(shortcut);
     }
-    isCustom = false;
+    isCustom = !isCustom;
   }
   return suggestions
 }

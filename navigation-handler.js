@@ -1,12 +1,11 @@
-export function redirectShortcuts(type,shortcut,dataHandler,preferences){
+export function redirectShortcuts(type,shortcut,handlers,preferences){
     console.log("got here",preferences.linkOpenNewTab)
-    window.open(getSpecificShortcut(type,shortcut,dataHandler), preferences.linkOpenNewTab? '_blank': '');
+    window.open(getSpecificShortcut(type,shortcut,handlers), preferences.linkOpenNewTab? '_blank': '');
 }
 
-function getSpecificShortcut(type,shortcut,dataHanlder){
+function getSpecificShortcut(type,shortcut,handlers){
     console.log('type',type);
     console.log('shortcut',shortcut);
-    console.log('dataHanlder',dataHanlder);
     let finalURL = '';
     if(shortcut?.custom){
         let targetUrl = shortcut.value;
@@ -26,7 +25,7 @@ function getSpecificShortcut(type,shortcut,dataHanlder){
             finalURL =  shortcut;
         }else{
             const nameForJson = shortcut.name.replaceAll(' ', '-');
-            const defaultShortcut = dataHandler.findDefaultShortcut(type, nameForJson);
+            const defaultShortcut = handlers["data"].findDefaultShortcut(type, nameForJson);
             finalURL = defaultShortcut || shortcut;
             if(defaultShortcut != undefined && type == 'objs'){
                 finalURL = `/lightning/setup/ObjectManager/${defaultShortcut}/Details/view`

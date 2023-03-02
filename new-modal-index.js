@@ -8,11 +8,8 @@ var tabBody
 var tabsPane
 var inputbar
 var inputPlaceholders
-var dataHandler;
-var saveHandler;
-var popupHandler;
-var navigationHandler;
-var suggestionHandler;
+var handlers = {};
+
 var currentSelectedTab="shortcuts";
 var savedShortcuts
 var loadingScreen;
@@ -26,37 +23,24 @@ var currentSettings = {
     alwaysShowCustoms:true,
     HotKey: {code:81 ,name:"q"}
 };
+
 async function init(){
-  await loadNavigation();
-  await loadData();
-  await loadSuggestions();
-  await loadSaver();
+  await loadHandler("navigation-handler", "navigation");
+  await loadHandler("extension-popup", "popup");
+  await loadHandler("data-handler", "data");
+  await loadHandler("save-handler", "save");
+  await loadHandler("suggestions-handler", "suggestions");
 }
+
+async function loadHandler(handlerName, handlerKey){
+  const src = chrome.runtime.getURL(`./${handlerName}.js`);
+  handlers[handlerKey] = await import(src);
+}
+
 
 function getURLminized(){
   let org = window.location.href.replace("https://","").substring(0,window.location.href.indexOf("."));
   return org.replace(org.substring(org.indexOf(".")),"");
-}
-
-async function loadData(){
-  const src = chrome.runtime.getURL("./data-handler.js");
-  dataHandler = await import(src);
-}
-async function loadSuggestions(){
-  const src = chrome.runtime.getURL("./save-handler.js");
-  saveHandler = await import(src);
-}
-async function loadSaver(){
-  const src = chrome.runtime.getURL("./suggestions-handler.js");
-  suggestionHandler = await import(src);
-}
-async function loadNavigation(){
-  const src = chrome.runtime.getURL("./navigation-handler.js");
-  navigationHandler = await import(src);
-}
-async function loadNavigation(){
-  const src = chrome.runtime.getURL("./extension-popup.js");
-  popupHandler = await import(src);
 }
 
 function keyPress(e) {
@@ -98,7 +82,7 @@ function keyPress(e) {
           }
         break;
         case false:
-            if (dataHandler != undefined && evtobj.keyCode == currentSettings.HotKey.code && (evtobj.ctrlKey || evtobj.metaKey)){
+            if (handlers["data"] != undefined && evtobj.keyCode == currentSettings.HotKey.code && (evtobj.ctrlKey || evtobj.metaKey)){
                 startUp();   
                 modalOpened = true;
                 e.preventDefault();
@@ -109,7 +93,7 @@ function keyPress(e) {
 }
 
 async function startUp(){
-  await dataHandler.loadModalIndex();
+  await handlers["data"].loadModalIndex();
   initModal();
 }
 
@@ -162,10 +146,13 @@ function initModal(){
                             "#6BCB77": {"placeholder":"Enter Object Label","type":"listview"},
                             "#FF6B6B": {"placeholder":"add","type":"add"}
                       }
-  const searchInput = document.getElementById("yayinput");
   const suggestionsDropdown = document.getElementById("suggestions-dropdown");
   var filteredSuggestions = [];
   var selectedSuggestionIndex = 0;
+  inputbar.placeholder = inputPlaceholders[tabsPane[0].dataset.color]["placeholder"];
+  currentSelectedTab = inputPlaceholders[tabsPane[0].dataset.color]["type"];
+  tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
+  r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].addEventListener("click",function(e){
       inputbar.value = "";
@@ -174,6 +161,7 @@ function initModal(){
       tabBody.getElementsByClassName("active")[0].classList.remove("active");
       console.log("tabsPane[i].innerText",tabsPane[i].innerText);
       if(tabsPane[i].innerText == 'ADD'){
+        suggestionsDropdown.innerHTML = "";
         document.getElementById("alert-box").classList.remove("show");
         document.getElementById("sqab_add_section").classList.remove("hide");
           inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
@@ -187,7 +175,7 @@ function initModal(){
           tabBody.getElementsByTagName("div")[1].classList.add("active");
           let targetList = document.getElementById("targetList");
           // targetList.innerHTML = '';
-          let orgOptions = dataHandler.getDataFromLibrary("myorgs");
+          let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
           console.log("orgOptions",orgOptions);
           let data = '<option>All Orgs</option>';
           orgOptions.forEach(org => {
@@ -215,7 +203,7 @@ function initModal(){
         })
         addSave.addEventListener("click", async function(e){
           loading_Start();
-          await saveHandler.save(dataHandler,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
+          await handlers["save"].save(handlers,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
           await loadData();
           document.getElementById("alert-box").classList.add("show");
           document.getElementById("sqab_add_section").classList.add("hide");
@@ -232,16 +220,16 @@ function initModal(){
     })
   }
 
-  searchInput.addEventListener("input", function(event) {
-    const inputValue = searchInput.value.toLowerCase();
+  inputbar.addEventListener("input", function(event) {
+    const inputValue = inputbar.value.toLowerCase();
     // filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().includes(inputValue));
     if (inputValue != '') {
-      filteredSuggestions = suggestionHandler.getSuggestions(dataHandler.getShortcuts(currentSelectedTab),inputValue);
+      filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(currentSelectedTab),inputValue);
       console.log("filteredSuggestions?.length",filteredSuggestions?.length);
       if(filteredSuggestions?.length != 0){
         suggestionsDropdown.style.display = "contents";
         suggestionsDropdown.innerHTML = "";
-        const suggestionsHTML = suggestionHandler.buildSuggestionsHTML(filteredSuggestions, inputValue);
+        const suggestionsHTML = handlers["suggestions"].buildSuggestionsHTML(filteredSuggestions, inputValue);
         console.log("suggestionsHTML",suggestionsHTML);
         suggestionsDropdown.innerHTML = suggestionsHTML;
         if (selectedSuggestionIndex >= filteredSuggestions.length) {
@@ -265,7 +253,7 @@ function initModal(){
     }
   });
 
-  searchInput.addEventListener("keydown", function(event) {
+  inputbar.addEventListener("keydown", function(event) {
 
     if (filteredSuggestions.length > 0) {
       const isArrowDown = event.key === "ArrowDown";
@@ -311,8 +299,7 @@ function initModal(){
   });
 
   function selectedShortcut(){
-    // searchInput.value = filteredSuggestions[selectedSuggestionIndex];
-    navigationHandler.redirectShortcuts(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],dataHandler,currentSettings);
+    handlers["navigation"].redirectShortcuts(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers,currentSettings);
     suggestionsDropdown.style.display = "none";
     selectedSuggestionIndex = 0;
     filteredSuggestions = [];
@@ -326,10 +313,10 @@ function initModal(){
       return;
     }else{
       const slideOutMenuBody = document.getElementById('slide-out-menu-body');
-      let html = await dataHandler.loadModalIndex2();
+      let html = await handlers["data"].loadModalIndex2();
       slideOutMenuBody.innerHTML = html;
       slideOutMenu.style.right = '0px'; /* Slide out the menu */
-      popupHandler.initYay();
+      handlers["popup"].initYay();
     }
   }
 
