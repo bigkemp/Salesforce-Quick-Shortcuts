@@ -1,4 +1,4 @@
-export function save(handlers,value,label,targetorg,type){
+export async function save(handlers,value,label,targetorg,type){
     let record = {};
     record["org"] = targetorg == "All Orgs" ? undefined : [targetorg];
     record["name"] = type == "objs" ? value : label ;
@@ -7,10 +7,16 @@ export function save(handlers,value,label,targetorg,type){
         let orgRecord = {};
         orgRecord["name"] = handlers["data"].orgExists.name;
         orgRecord["value"] = handlers["data"].orgExists.value;
-        handlers["data"].saveData(orgRecord,"myorgs");
+        await handlers["data"].saveData(orgRecord,"myorgs");
         handlers["data"].orgExists.value = true;
     }
     console.log("record",record);
-    // myMemory.push(record);
-    handlers["data"].saveData(record,"my"+type);
+    if(handlers["data"].checkIfExists(record,"my"+type)){
+        return {success:false, message: "Already Exists"};
+    }else{
+        await handlers["data"].saveData(record,"my"+type);
+        return {success:true, message: "Save was successful"};
+    }
 }
+
+

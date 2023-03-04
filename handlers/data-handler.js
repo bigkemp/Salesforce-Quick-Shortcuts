@@ -1,4 +1,4 @@
-const data_library = {};
+var data_library = {};
 var currentOrg = getURLminized();
 export var orgExists = {value:false,name:"",value:""};
 buildData();
@@ -8,6 +8,18 @@ export async function getData(storageType){
   return data[storageType];
 }
 
+export function checkIfExists(newData,type){
+  if(data_library[type] == undefined){
+    return false;
+  }else{
+    data_library[type].forEach(data => {
+      if(data.value == newData){
+        return true;
+      }
+    });
+    return false;
+  }
+}
 export async function saveData(data,type){
   console.log("data_library",data_library);
   console.log(`data_library[${type}]`,data_library[type])
@@ -54,6 +66,8 @@ export function findDefaultShortcut(type,nameForJson){
 }
 
 async function buildData(){
+  data_library = {};
+  orgExists = {value:false,name:"",value:""};
   await getMyOrgs();
   getMyData('myshortcuts');
   getMyData('myobjs');

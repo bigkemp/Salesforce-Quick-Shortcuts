@@ -25,15 +25,15 @@ var currentSettings = {
 };
 
 async function init(){
-  await loadHandler("navigation-handler", "navigation");
   await loadHandler("extension-popup", "popup");
-  await loadHandler("data-handler", "data");
-  await loadHandler("save-handler", "save");
-  await loadHandler("suggestions-handler", "suggestions");
+  await loadHandler("handlers/navigation-handler", "navigation");
+  await loadHandler("handlers/data-handler", "data");
+  await loadHandler("handlers/save-handler", "save");
+  await loadHandler("handlers/suggestions-handler", "suggestions");
 }
 
 async function loadHandler(handlerName, handlerKey){
-  const src = chrome.runtime.getURL(`./${handlerName}.js`);
+  const src = chrome.runtime.getURL(`${handlerName}.js`);
   handlers[handlerKey] = await import(src);
 }
 
@@ -203,9 +203,16 @@ function initModal(){
         })
         addSave.addEventListener("click", async function(e){
           loading_Start();
-          await handlers["save"].save(handlers,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
-          await loadData();
+          let result = await handlers["save"].save(handlers,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
+          document.getElementById("alert-box").classList.remove("success");
+          document.getElementById("alert-box").classList.remove("error");
+          if(result.success){
+            document.getElementById("alert-box").classList.add("success");
+          }else{
+            document.getElementById("alert-box").classList.add("error");
+          }
           document.getElementById("alert-box").classList.add("show");
+          document.getElementById("alert-box").innerText = result.message;
           document.getElementById("sqab_add_section").classList.add("hide");
           inputbar.value = "";
           loading_End();

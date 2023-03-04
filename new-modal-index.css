@@ -234,9 +234,18 @@
 	display: none;
 	}
 
+	.alert-box.success{
+		background:#4cbe83  no-repeat 10px 50%;
+		border:1px solid #36ad6f;
+	}
+
+	.alert-box.error{
+		background:#be4c4c  no-repeat 10px 50%;
+		border:1px solid #be4c4c;
+	}
+
 	.alert-box.show{
 	display: block;
-
 	}
 
 	.sqab_add_section{
@@ -249,17 +258,18 @@
 	flex-direction: column;
 	}
 
-	.alert-box span {
+	/* .alert-box span {
 	font-weight:bold;
 	text-transform:uppercase;
 	letter-spacing: 1px;
-	}
+	} */
+
 	.setting_icon{
 	margin: 0;
 	padding: 0;
 	text-align: right;
 	display: block;
-	position: absolute;
+    position: inherit;
 	right: 3%;
 	top: 8%;
 	}
