@@ -9,6 +9,7 @@ var tabsPane
 var inputbar
 var inputPlaceholders
 var handlers = {};
+var initied = false;
 
 var currentSelectedTab="shortcuts";
 var savedShortcuts
@@ -16,7 +17,21 @@ var loadingScreen;
 var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'lightgray';
+
+const observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    const bar = document.querySelector(".bRight");
+    if (bar != null && !initied) {
+      injectbtns();
+      observer.disconnect();
+      initied= true;
+      return;
+    }
+  });
+});
+
 init();
+
 window.addEventListener("keydown",keyPress);
 var currentSettings = {
     linkOpenNewTab:true,
@@ -25,7 +40,8 @@ var currentSettings = {
 };
 
 async function init(){
-  await loadHandler("extension-popup", "popup");
+  injectbtns();
+  await loadHandler("new-extension-popup", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
@@ -37,6 +53,35 @@ async function loadHandler(handlerName, handlerKey){
   handlers[handlerKey] = await import(src);
 }
 
+function injectbtns() {
+  if(!window.location.href.substring(window.location.href.indexOf("com")+3).includes("setup/ObjectManager")) {
+    return;
+  }
+  let findBar = document.querySelector(".bRight");
+  console.log('findBar',findBar);
+  if(findBar == null){
+    observer.observe(document.body, { childList: true, subtree: true });
+    return;
+  }
+  const newBtn = document.createElement('button');
+  newBtn.innerText = "Add to Quick Access Bar";
+  newBtn.id = "sfqab_Btn";
+  newBtn.classList.add("setup-header-element-right")
+  newBtn.onclick = addShortcutsBtn;
+  findBar.insertBefore(newBtn,findBar.firstChild);
+}
+
+
+function addShortcutsBtn(){
+  let myTable = document.getElementsByTagName("tbody");
+  let possibleShortcuts = myTable[0].getElementsByTagName("tr");
+  for (const possibleShortcut of possibleShortcuts) {
+    let possibleAPI = possibleShortcut.getElementsByTagName("td")[0];
+    console.log("possibleAPI",possibleAPI.innerText);
+    let result = handlers["save"].save(handlers,possibleAPI.innerText,possibleAPI.innerText,undefined,"objs");
+    console.log('result',result);
+  }
+}
 
 function getURLminized(){
   let org = window.location.href.replace("https://","").substring(0,window.location.href.indexOf("."));
@@ -98,6 +143,11 @@ async function startUp(){
 }
 
 function deleteModal(){
+  const slideOutMenu = document.getElementById('slide-out-menu');
+  if(slideOutMenu.style.right == "0px"){
+    closeSidePanel();
+    return;
+  }
   findByClass("sqab_modal")[0].remove();
   modalOpened = false;
 }
@@ -113,6 +163,7 @@ function findByClass(targetClass){
 function loading_Start(){
   loadingScreen.style.display = "block";
 }
+
 function loading_End(){
   loadingScreen.style.display = "none";
 }
@@ -155,6 +206,8 @@ function initModal(){
   r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].addEventListener("click",function(e){
+      const suggestionsDropdown = document.getElementById("suggestions-dropdown");
+      suggestionsDropdown.style.display = "none";
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
@@ -224,6 +277,7 @@ function initModal(){
       currentSelectedTab = inputPlaceholders[tabsPane[i].dataset.color]["type"];
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabsPane[i].dataset.color);
+      inputbar.focus();
     })
   }
 
@@ -323,7 +377,7 @@ function initModal(){
       let html = await handlers["data"].loadModalIndex2();
       slideOutMenuBody.innerHTML = html;
       slideOutMenu.style.right = '0px'; /* Slide out the menu */
-      handlers["popup"].initYay();
+      //handlers["popup"].initYay();
     }
   }
 

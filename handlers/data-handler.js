@@ -139,7 +139,7 @@ export async function loadModalIndex() {
 
 export async function loadModalIndex2() {
   try {
-    const file = await fetch(chrome.runtime.getURL("/extension-popup.html"));
+    const file = await fetch(chrome.runtime.getURL("/new-extension-popup.html"));
     const html = await file.text();
     return html;
     // document.body.insertAdjacentHTML("beforeend", html);

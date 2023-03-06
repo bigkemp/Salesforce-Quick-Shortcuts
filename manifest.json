@@ -8,7 +8,7 @@
     ],
     "action": {
         "default_icon": "resources/icon16.png" ,
-        "default_popup": "extension-popup.html"
+        "default_popup": "new-extension-popup.html"
     }, 
     "icons": {
         "16": "resources/icon16.png",
@@ -20,12 +20,12 @@
         {
             "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],
             "js": ["new-modal-index.js"],
-            "css": ["new-modal-index.css","extension-popup.css"],
+            "css": ["new-modal-index.css","new-extension-popup.css"],
             "all_frames": true
         }
     ],
     "web_accessible_resources": [{
-        "resources": ["data/*.json","extension-popup.css","extension-popup.html","extension-popup.js","handlers/*.js","new-modal-index.css","new-modal-index.html","resources/*.png","resources/*.svg"],
+        "resources": ["data/*.json","new-extension-popup.css","new-extension-popup.html","new-extension-popup.js","handlers/*.js","new-modal-index.css","new-modal-index.html","resources/*.png","resources/*.svg"],
         "matches": ["https://*.lightning.force.com/*"]
     }]
 }
