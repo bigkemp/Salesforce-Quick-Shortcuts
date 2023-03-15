@@ -265,18 +265,28 @@
 	} */
 
 	.setting_icon{
-	margin: 0;
-	padding: 0;
-	text-align: right;
-	display: block;
-    position: inherit;
-	right: 3%;
-	top: 8%;
+		margin: 0;
+		padding: 0;
+		text-align: right;
+		display: block;
+		position: inherit;
+		right: 3%;
+		top: 8%;
+		margin-bottom: -15px;
 	}
 
-	#icon{
-	height: 20px;
-	cursor: pointer;
+	img#icon{
+		height: 20px;
+		cursor: pointer;
+	}
+
+	img#icon:hover{
+		transform: rotate(360deg);
+		transition: transform 1s; /* optional: adds a smooth transition effect */
+	}
+
+	img#icon:active{
+		transform: scale(4);
 	}
 
 

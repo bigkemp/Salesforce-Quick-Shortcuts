@@ -3,6 +3,7 @@ export async function save(handlers,value,label,targetorg,type){
     record["org"] = targetorg == "All Orgs" ? undefined : [targetorg];
     record["name"] = type == "objs" ? value : label ;
     record["value"] = value;
+    record["custom"] = true;
     if(!handlers["data"].orgExists.value){
         let orgRecord = {};
         orgRecord["name"] = handlers["data"].orgExists.name;

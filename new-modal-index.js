@@ -18,14 +18,22 @@ var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'lightgray';
 
-const observer = new MutationObserver(function(mutations) {
+const observer2Addbtn = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     const bar = document.querySelector(".bRight");
     if (bar != null && !initied) {
       injectbtns();
-      observer.disconnect();
+      observer2Addbtn.disconnect();
       initied= true;
       return;
+    }
+  });
+});
+
+const observer4ObjectsTable = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if(document.getElementsByTagName("tbody") != undefined){
+      checkWhatShortcutsAlreadyExists();
     }
   });
 });
@@ -60,9 +68,10 @@ function injectbtns() {
   let findBar = document.querySelector(".bRight");
   console.log('findBar',findBar);
   if(findBar == null){
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer2Addbtn.observe(document.body, { childList: true, subtree: true });
     return;
   }
+  observer4ObjectsTable.observe(document.body, { childList: true, subtree: true });
   const newBtn = document.createElement('button');
   newBtn.innerText = "Add to Quick Access Bar";
   newBtn.id = "sfqab_Btn";
@@ -72,15 +81,30 @@ function injectbtns() {
 }
 
 
+function checkWhatShortcutsAlreadyExists(){
+  let myTable = document.getElementsByTagName("tbody");
+  let possibleShortcuts = myTable[0].getElementsByTagName("tr");
+  for (const possibleShortcut of possibleShortcuts) {
+    let tdOfObj = possibleShortcut.getElementsByTagName("td")[0];
+    let objnode = tdOfObj.innerText;
+    if(tdOfObj.style.color != "green"){
+      if(handlers["data"].getDataFromLibrary("myobjs").filter(obj => obj.value == objnode).length > 0){
+        tdOfObj.style.color= "lightgreen";
+      }else{
+        tdOfObj.style.color= "red";
+      }
+    }
+  }
+}
+
 function addShortcutsBtn(){
   let myTable = document.getElementsByTagName("tbody");
   let possibleShortcuts = myTable[0].getElementsByTagName("tr");
   for (const possibleShortcut of possibleShortcuts) {
     let possibleAPI = possibleShortcut.getElementsByTagName("td")[0];
-    console.log("possibleAPI",possibleAPI.innerText);
-    let result = handlers["save"].save(handlers,possibleAPI.innerText,possibleAPI.innerText,undefined,"objs");
-    console.log('result',result);
+    let result = handlers["save"].save(handlers,possibleAPI.innerText,possibleAPI.innerText,"All Orgs","objs");
   }
+  checkWhatShortcutsAlreadyExists();
 }
 
 function getURLminized(){
@@ -175,8 +199,6 @@ function closeSidePanel(){
 
 function initModal(){
   let icon = document.getElementById("icon");
-  let closebtn = document.getElementsByClassName("close-btn")[0];
-  closebtn.onclick = closeSidePanel;
   icon.src = chrome.runtime.getURL("/resources/gear.png");
   icon.onclick = redirectTab;
   window.onclick = function(event) {
@@ -218,7 +240,7 @@ function initModal(){
         document.getElementById("alert-box").classList.remove("show");
         document.getElementById("sqab_add_section").classList.remove("hide");
           inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-          if(inputbar.value.includes("/setup/ObjectManager/")){
+          if(inputbar.value.includes("/setup/ObjectManager/") && !inputbar.value.includes("/ObjectManager/home") ){
             const try2findDetailTable = findByClass("object-detail-column")[0];
             inputbar.value= try2findDetailTable.getElementsByTagName("ul")[0].getElementsByClassName("slds-form-element__static")[0].innerText;
             document.getElementById("option2").checked = true;

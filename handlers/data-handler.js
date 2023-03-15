@@ -21,8 +21,6 @@ export function checkIfExists(newData,type){
   }
 }
 export async function saveData(data,type){
-  console.log("data_library",data_library);
-  console.log(`data_library[${type}]`,data_library[type])
   if(data_library[type] == undefined){
     data_library[type] = [];
   }
