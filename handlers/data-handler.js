@@ -20,15 +20,34 @@ export function checkIfExists(newData,type){
     return false;
   }
 }
+
+export function findDataFromLabel(label,type) {
+  let mySavedData = getDataFromLibrary(type);
+  for (const data of mySavedData) {
+      if(data.name == label){
+          return data;
+      }
+  }
+}
+
 export async function saveData(data,type){
   if(data_library[type] == undefined){
     data_library[type] = [];
   }
   data_library[type].push(data);
-  let memoryStracture = {};
-  memoryStracture[type] = data_library[type];
-  chrome.storage.sync.set(memoryStracture);
+  await chrome.storage.sync.set({ [type]: data_library[type] });
+  await buildData();
 }
+
+
+export async function deleteData(value,type,by){
+  let memoryStructure = {[type]: data_library[type].filter(obj => obj[by] !== value)};
+  await chrome.storage.sync.set(memoryStructure);
+  await buildData();
+}
+
+
+
 
 export function getDataFromLibrary(name){
   return data_library[name] == undefined ? [] : data_library[name];

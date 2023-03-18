@@ -10,35 +10,35 @@
         <input style="width:100%" class="sqab_pop_inputlabel" type="text" placeholder="Enter Label" id="addMySCtext" name="addmyShortcut"><br/>
         <input style="width:100%" class="sqab_pop_inputvalue" type="text" placeholder="Enter Custom Url" id="addMySCtextURL" name="addmyShortcutURL">
         <div id="orglist" class="sqab_pop_orglist"></div>
-        <button class="edit_btn" style="width:100%">Add</button>
-        <button class="edit_btn" style="width:100%">Cancel</button>
+        <button id="edit_btn_save" style="width:100%">Save</button>
+        <button id="edit_btn_cancel" style="width:100%">Cancel</button>
       </div>
     </div>
   </div>
-    <div id="popup_myorgs">
+    <div >
       <input style="display:none;" id="ac-1" name="accordion-1" type="radio" checked="">
-      <label for="ac-1">Saved Orgs</label>
+      <label id="popup_myorgs" for="ac-1">Saved Orgs</label>
       <article class="ac-small">
         <div id="container_myorgs"></div>
       </article>
     </div>
-    <div id="popup_myobjs">
+    <div >
       <input style="display:none;" id="ac-2" name="accordion-1"  type="radio">
-      <label for="ac-2">Saved Objects</label>
+      <label  id="popup_myobjs" for="ac-2">Saved Objects</label>
       <article class="ac-medium">
         <div id="container_myobjs"></div>
       </article>
     </div>
-    <div id="popup_myshortcuts">
+    <div>
       <input style="display:none;" id="ac-3" name="accordion-1" type="radio">
-      <label for="ac-3">Saved Shortcuts</label>
+      <label id="popup_myshortcuts" for="ac-3">Saved Shortcuts</label>
       <article class="ac-large">
         <div id="container_myshortcuts"></div>
       </article>
     </div>
-    <div id="popup_prefrences">
+    <div >
       <input style="display:none;" id="ac-5" name="accordion-1" type="radio">
-      <label for="ac-5">Preferences</label>
+      <label id="popup_prefrences" for="ac-5">Preferences</label>
       <article class="ac-large">
           <div style="padding:10px;">
             <b style="background: #d5d5d5; border-radius: 5px;">Change Hotkey:</b>
