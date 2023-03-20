@@ -1,5 +1,6 @@
 var handlers = [];
 var type = "myorgs";
+var editOldrecord = {};
 document.addEventListener("DOMContentLoaded",function () {init(null);},false);
 
 export async function init(handlers){
@@ -26,7 +27,15 @@ function closeEdit() {
 async function saveEdit() {
     const editMenu = document.getElementById("sqab_pop_modal");
     const edit_inputs = editMenu.getElementsByTagName("input");
-    await handlers["save"].save(handlers,edit_inputs[1].value,edit_inputs[0].value,undefined,type);
+    let updatedRecord;
+    if(type != 'myorgs'){
+        updatedRecord = {custom:true,name:edit_inputs[0].value,value:edit_inputs[1].value,org:undefined};
+    }else{
+        updatedRecord = {name:edit_inputs[0].value,value:edit_inputs[1].value};
+    }
+    console.log('updatedRecord',updatedRecord);
+    let response = await handlers["save"].edit(handlers,updatedRecord,editOldrecord,type);
+    alert(response.message);
     buildContent(type);
 }
 
@@ -37,6 +46,7 @@ async function loadHandler(handlerName, handlerKey){
 
 async function buildContent(selectedType) {
     console.log('buildContent',type);
+    await handlers["data"].buildData();
     type = selectedType;
     let allData = htmlBuild(type);
     let div = document.getElementById("container_"+type);
@@ -55,8 +65,15 @@ function buttonEditClicked(e){
     let editMenu = document.getElementById('sqab_pop_modal');
     editMenu.classList.remove("sqab_pop_hide");
     let edit_inputs = editMenu.getElementsByTagName("input");
+    editOldrecord = handlers["data"].findDataFromLabel(input.value,type);
     edit_inputs[0].value = input.value;
-    edit_inputs[1].value = handlers["data"].findDataFromLabel(input.value,type).value;
+    edit_inputs[1].value = editOldrecord.value;
+    if(type != "myorgs"){
+        document.getElementById('orglist').innerHTML = alltargetOrgPin(editOldrecord);
+    }else{
+        document.getElementById('orglist').innerHTML = "";
+    }
+    
 }
 
 async function  buttonRemoveClicked(e){
@@ -98,6 +115,19 @@ function targetOrgPin(data) {
         }
     }else if(!type.includes("orgs")) {
         targetOrg +=`<li class="sqab_pop_tag sqab_pop_silent">all</li>`;
+    }
+    targetOrg += `</ul>`;
+    return targetOrg;
+}
+
+function alltargetOrgPin(recordOrgs) {
+    let targetOrg=`<ul id="orgs${type}-${recordOrgs.name}" class="sqab_pop_tags sqab_pop_silent">`;
+    for (const savedOrg of handlers["data"].getDataFromLibrary("myorgs")) {
+        if(recordOrgs.org == undefined || recordOrgs.org.includes(savedOrg.name)){
+            targetOrg +=`<li class="sqab_pop_tag sqab_my_org sqab_pop_silent">${savedOrg.name}</li>`;
+        }else{
+            targetOrg +=`<li class="sqab_pop_tag sqab_pop_silent">${savedOrg.name}</li>`;
+        }
     }
     targetOrg += `</ul>`;
     return targetOrg;

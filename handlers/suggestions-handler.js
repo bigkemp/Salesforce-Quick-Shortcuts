@@ -12,7 +12,7 @@ export function getSuggestions(array_data, input) {
     // loop through all shortcuts of an element
     for (const shortcut of element) {
       const finalshortcutname = shortcut.name;
-      if (!finalshortcutname.toUpperCase().includes(input.toUpperCase())) continue;
+      if (!finalshortcutname.split('.')[finalshortcutname.split('.').length -1].toUpperCase().includes(input.toUpperCase())) continue;
       shortcut.custom = isCustom;
       suggestions.push(shortcut);
     }

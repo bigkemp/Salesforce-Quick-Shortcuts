@@ -18,37 +18,14 @@ var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'lightgray';
 
-const observer2Addbtn = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    const bar = document.querySelector(".bRight");
-    if (bar != null && !initied) {
-      injectbtns();
-      observer2Addbtn.disconnect();
-      initied= true;
-      return;
-    }
-  });
-});
-
-const observer4ObjectsTable = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    if(document.getElementsByTagName("tbody") != undefined){
-      checkWhatShortcutsAlreadyExists();
-    }
-  });
-});
-
 init();
-
 window.addEventListener("keydown",keyPress);
 var currentSettings = {
     linkOpenNewTab:true,
     alwaysShowCustoms:true,
     HotKey: {code:81 ,name:"q"}
 };
-
 async function init(){
-  injectbtns();
   await loadHandler("new-extension-popup", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
@@ -59,52 +36,6 @@ async function init(){
 async function loadHandler(handlerName, handlerKey){
   const src = chrome.runtime.getURL(`${handlerName}.js`);
   handlers[handlerKey] = await import(src);
-}
-
-function injectbtns() {
-  if(!window.location.href.substring(window.location.href.indexOf("com")+3).includes("setup/ObjectManager")) {
-    return;
-  }
-  let findBar = document.querySelector(".bRight");
-  console.log('findBar',findBar);
-  if(findBar == null){
-    observer2Addbtn.observe(document.body, { childList: true, subtree: true });
-    return;
-  }
-  observer4ObjectsTable.observe(document.body, { childList: true, subtree: true });
-  const newBtn = document.createElement('button');
-  newBtn.innerText = "Add to Quick Access Bar";
-  newBtn.id = "sfqab_Btn";
-  newBtn.classList.add("setup-header-element-right")
-  newBtn.onclick = addShortcutsBtn;
-  findBar.insertBefore(newBtn,findBar.firstChild);
-}
-
-
-function checkWhatShortcutsAlreadyExists(){
-  let myTable = document.getElementsByTagName("tbody");
-  let possibleShortcuts = myTable[0].getElementsByTagName("tr");
-  for (const possibleShortcut of possibleShortcuts) {
-    let tdOfObj = possibleShortcut.getElementsByTagName("td")[0];
-    let objnode = tdOfObj.innerText;
-    if(tdOfObj.style.color != "green"){
-      if(handlers["data"].getDataFromLibrary("myobjs").filter(obj => obj.value == objnode).length > 0){
-        tdOfObj.style.color= "lightgreen";
-      }else{
-        tdOfObj.style.color= "red";
-      }
-    }
-  }
-}
-
-function addShortcutsBtn(){
-  let myTable = document.getElementsByTagName("tbody");
-  let possibleShortcuts = myTable[0].getElementsByTagName("tr");
-  for (const possibleShortcut of possibleShortcuts) {
-    let possibleAPI = possibleShortcut.getElementsByTagName("td")[0];
-    let result = handlers["save"].save(handlers,possibleAPI.innerText,possibleAPI.innerText,"All Orgs","objs");
-  }
-  checkWhatShortcutsAlreadyExists();
 }
 
 function getURLminized(){
@@ -162,6 +93,7 @@ function keyPress(e) {
 }
 
 async function startUp(){
+  await handlers["data"].buildData();
   await handlers["data"].loadModalIndex();
   initModal();
 }
@@ -259,7 +191,7 @@ function initModal(){
           targetList.innerHTML = data;
           let objOption = document.getElementById("option2");
           let shortcutOption = document.getElementById("option1"); 
-          let addSave = document.getElementById("addSave"); 
+          let addSave = document.getElementById("sqab_addSave"); 
           let type = "shortcuts";
           objOption.addEventListener("click",function(e){
             if(inputbar.value.includes("__c")){

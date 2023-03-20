@@ -171,6 +171,10 @@
     font-size: xx-small;
   }
 
+  .sqab_pop_tag.sqab_my_org{
+    background: rgba(184, 184, 252, 0.84);
+  }
+
   .sqab_pop_modal {
     display: block; 
     position: fixed; 
