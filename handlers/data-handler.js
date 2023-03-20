@@ -43,7 +43,7 @@ export async function saveData(data,type){
   if(data_library[type] == undefined){
     data_library[type] = [];
   }
-  let memoryStructure = data_library[type];
+  let memoryStructure = await getData(type);
   console.log('memoryStructure',memoryStructure);
   if(data != null && data != undefined){// for non existing orgs, are added by defualt so data would be in that case undefined, Im setting as null as indicator.
     memoryStructure.push(data);

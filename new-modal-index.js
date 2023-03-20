@@ -52,6 +52,7 @@ function keyPress(e) {
             deleteModal();
           }
           if(evtobj.key === "Tab"){
+            closeSidePanel();
             if(document.activeElement != inputbar){
               inputbar.focus();
               e.preventDefault();
@@ -161,6 +162,7 @@ function initModal(){
   r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].addEventListener("click",function(e){
+      closeSidePanel();
       const suggestionsDropdown = document.getElementById("suggestions-dropdown");
       suggestionsDropdown.style.display = "none";
       inputbar.value = "";
