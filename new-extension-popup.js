@@ -3,13 +3,18 @@ var type = "myorgs";
 var editOldrecord = {};
 document.addEventListener("DOMContentLoaded",function () {init(null);},false);
 
-export async function init(handlers){
-    if(handlers == null){
+export async function init(importedhandlers){
+    debugger
+    if(importedhandlers == null){
         await loadHandler("handlers/navigation-handler", "navigation");
         await loadHandler("handlers/data-handler", "data");
         await loadHandler("handlers/save-handler", "save");
         await loadHandler("handlers/suggestions-handler", "suggestions");
+    }else{
+        handlers = importedhandlers
     }
+    console.log(handlers);
+    handlers["data"].doStartFromPopup(true);
     document.getElementById('popup_myorgs').onclick = function () {buildContent("myorgs")};
     document.getElementById('popup_myobjs').onclick = function () {buildContent("myobjs")};
     document.getElementById('popup_myshortcuts').onclick = function () {buildContent("myshortcuts")};
@@ -42,6 +47,7 @@ async function saveEdit() {
 async function loadHandler(handlerName, handlerKey){
     const src = chrome.runtime.getURL(`${handlerName}.js`);
     handlers[handlerKey] = await import(src);
+    console.log("done "+handlerKey);
 }
 
 async function buildContent(selectedType) {

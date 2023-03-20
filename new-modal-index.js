@@ -127,6 +127,7 @@ function loading_End(){
 function closeSidePanel(){
   const slideOutMenu = document.getElementById('slide-out-menu');
   slideOutMenu.style.right = '-430px'; /* Slide the menu back out */
+  handlers["data"].doStartFromPopup(false);
 }
 
 function initModal(){
@@ -331,7 +332,7 @@ function initModal(){
       let html = await handlers["data"].loadModalIndex2();
       slideOutMenuBody.innerHTML = html;
       slideOutMenu.style.right = '0px'; /* Slide out the menu */
-      //handlers["popup"].initYay();
+      handlers["popup"].init(handlers);
     }
   }
 

@@ -300,7 +300,7 @@
 	z-index: 9999;
 	transition: right 0.3s ease-in-out;
 	}
-
+/* 
 	#slide-out-menu ul {
 	list-style: none;
 	padding: 0;
@@ -310,7 +310,7 @@
 	#slide-out-menu li {
 	padding: 10px;
 	border-bottom: 1px solid #ccc;
-	}
+	} */
 
 	#menu-button {
 	position: fixed;

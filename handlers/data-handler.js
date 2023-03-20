@@ -1,4 +1,5 @@
 var data_library = {};
+var startFromPopup = false;
 var currentOrg = getURLminized();
 export var orgExists = {value:false,name:""};
 buildData();
@@ -7,6 +8,10 @@ export async function getData(storageType){
   let data = await chrome.storage.sync.get(storageType);
   console.log(storageType,data);
   return data[storageType];
+}
+
+export function doStartFromPopup(value){
+  startFromPopup = value;
 }
 
 export function checkIfExists(newData,type){
@@ -135,7 +140,7 @@ async function getMyData(mySpecificData){
   let mydata = await getData(mySpecificData);
   console.log('mydata',mydata);
   const filteredData = mydata?.filter(entry => {
-    if(currentOrg == ''){//means its from popup
+    if(startFromPopup){//means its from popup
       return true;
     }
     if (entry.org === undefined || entry.org.includes('all')) {
