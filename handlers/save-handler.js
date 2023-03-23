@@ -9,7 +9,7 @@ export async function save(handlers,value,label,targetorg,type){ // only modal
         return {success:false, message: "Already Exists"};
     }else{
         await checkOrg(handlers);
-        await handlers["data"].saveData(record,type);
+        await handlers["data"].saveDataByAdd(record,type);
         return {success:true, message: "Save was successful"};
     }
 }
@@ -21,7 +21,7 @@ export async function edit(handlers,record,oldrecord,type){ // only pop
         targetData.splice(index, 1, record);
         await handlers["data"].saveData(null,type);
         await postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type);
-        return {success:true, message: "Save was successful"};
+        return {success:true, message: "Edit was successful"};
     }else{
         return {success:false, message: "Didnt find record to edit."};
     }
@@ -51,8 +51,8 @@ function saveValidations(handlers,record,type) {
     return handlers["data"].checkIfExists(record,"my"+type);
 }
 
-async function checkOrg(handlers){
-    if(!handlers["data"].orgExists.value){
-        await handlers["data"].saveData(null,"myorgs");
+async function saveDataOrgs(handlers){
+    if(!handlers["data"].orgExists.bool){
+        await handlers["data"].saveDataOrgs();
     }
 }

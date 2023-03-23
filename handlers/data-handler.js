@@ -1,12 +1,11 @@
 var data_library = {};
 var startFromPopup = false;
 var currentOrg = getURLminized();
-export var orgExists = {value:false,name:""};
+export var orgExists = {bool:false,name:"",value:""};
 buildData();
 
 export async function getData(storageType){
   let data = await chrome.storage.sync.get(storageType);
-  console.log(storageType,data);
   return data[storageType];
 }
 
@@ -36,19 +35,23 @@ export function findDataFromLabel(label,type) {
   }
 }
 
-export async function saveData(data,type){
+export async function saveDataByAdd(data,type){
   if(!type.includes("my")){
     type = "my"+type;
   }
-  if(data_library[type] == undefined){
-    data_library[type] = [];
-  }
   let memoryStructure = await getData(type);
-  console.log('memoryStructure',memoryStructure);
+  if(memoryStructure == undefined){
+    memoryStructure = [];
+  }
   if(data != null && data != undefined){// for non existing orgs, are added by defualt so data would be in that case undefined, Im setting as null as indicator.
     memoryStructure.push(data);
   }
   await chromeStorageSet(memoryStructure,type);
+}
+
+export async function saveDataOrgs(){
+  let memoryStructure = await getData("myorgs");
+  await chromeStorageSet(memoryStructure,"myorgs");
 }
 
 async function chromeStorageSet(data,type){
@@ -98,13 +101,12 @@ export function findDefaultShortcut(type,nameForJson){
 
 export async function buildData(){
   data_library = {};
-  orgExists = {value:false,name:""};
+  orgExists = {bool:false,name:"",value:""};
   await getMyOrgs();
   await getMyData('myshortcuts');
   await getMyData('myobjs');
   await loadJson('shortcuts');
   await loadJson('obj-shortcuts');
-  console.log('data_library',data_library);
 }
 
 async function getMyOrgs(){
@@ -117,13 +119,15 @@ async function getMyOrgs(){
     }else{
       data_library["myorgs"].forEach(org => {
         if(org.value.includes(currentPage)){
-          orgExists.value = true;
-          orgExists.name = currentPage;
+          orgExists.bool = true;
+          orgExists.name = org.name;
+          orgExists.value = currentPage;
         }
       });
-      if(!orgExists.value){
+      if(!orgExists.bool){
+        orgExists.value = currentPage;
         orgExists.name = currentPage;
-        orgExists.value = false;
+        orgExists.bool = false;
         data_library["myorgs"].push({name:currentPage, value:currentPage }); 
       }
     }
@@ -131,14 +135,9 @@ async function getMyOrgs(){
 }
 
 async function getMyData(mySpecificData){
-  console.log('-------------------------');
-  console.log('mySpecificData',mySpecificData);
   let myorg = data_library["myorgs"]?.filter(org => org.value.includes(currentOrg));
-  console.log('myorg',myorg);
   let targetOrgSaved = myorg?.length != 0;
-  console.log('targetOrgSaved',targetOrgSaved);
   let mydata = await getData(mySpecificData);
-  console.log('mydata',mydata);
   const filteredData = mydata?.filter(entry => {
     if(startFromPopup){//means its from popup
       return true;

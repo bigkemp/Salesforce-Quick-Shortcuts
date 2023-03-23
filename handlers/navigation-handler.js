@@ -1,11 +1,8 @@
 export function redirectShortcuts(type,shortcut,handlers,preferences){
-    console.log("got here",preferences.linkOpenNewTab)
     window.open(getSpecificShortcut(type,shortcut,handlers), preferences.linkOpenNewTab? '_blank': '');
 }
 
 function getSpecificShortcut(type,shortcut,handlers){
-    console.log('type',type);
-    console.log('shortcut',shortcut);
     let finalURL = '';
     if(shortcut?.custom){
         let targetUrl = shortcut.value;
@@ -34,6 +31,5 @@ function getSpecificShortcut(type,shortcut,handlers){
             }
         }
     }
-    console.log("finalURL",finalURL);
     return finalURL;
 }

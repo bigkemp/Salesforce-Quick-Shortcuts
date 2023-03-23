@@ -7,7 +7,6 @@ function injectbtns() {
       return;
     }
     let findBar = document.querySelector(".bRight");
-    console.log('findBar',findBar);
     if(findBar == null){
       observer2Addbtn.observe(document.body, { childList: true, subtree: true });
       return;

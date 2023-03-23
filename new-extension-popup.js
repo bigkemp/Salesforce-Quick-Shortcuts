@@ -13,7 +13,6 @@ export async function init(importedhandlers){
     }else{
         handlers = importedhandlers
     }
-    console.log(handlers);
     handlers["data"].doStartFromPopup(true);
     document.getElementById('popup_myorgs').onclick = function () {buildContent("myorgs")};
     document.getElementById('popup_myobjs').onclick = function () {buildContent("myobjs")};
@@ -25,7 +24,6 @@ export async function init(importedhandlers){
 
 function closeEdit() {
     let editMenu = document.getElementById('sqab_pop_modal');
-    console.log('editMenu',editMenu);
     editMenu.classList.add("sqab_pop_hide");
 }
 
@@ -38,7 +36,6 @@ async function saveEdit() {
     }else{
         updatedRecord = {name:edit_inputs[0].value,value:edit_inputs[1].value};
     }
-    console.log('updatedRecord',updatedRecord);
     let response = await handlers["save"].edit(handlers,updatedRecord,editOldrecord,type);
     alert(response.message);
     buildContent(type);
@@ -47,11 +44,9 @@ async function saveEdit() {
 async function loadHandler(handlerName, handlerKey){
     const src = chrome.runtime.getURL(`${handlerName}.js`);
     handlers[handlerKey] = await import(src);
-    console.log("done "+handlerKey);
 }
 
 async function buildContent(selectedType) {
-    console.log('buildContent',type);
     await handlers["data"].buildData();
     type = selectedType;
     let allData = htmlBuild(type);
@@ -83,10 +78,8 @@ function buttonEditClicked(e){
 }
 
 async function  buttonRemoveClicked(e){
-    console.log('type',type)
     const parent = e.target.parentElement;
     const input = parent.querySelector('input');
-    console.log('input',input.value)
     // const elementValue = handlers["data"].findDataFromLabel(input.value,type).value};
     await handlers["data"].deleteData(input.value,type,'name');
     buildContent(type);
@@ -95,7 +88,6 @@ async function  buttonRemoveClicked(e){
 function htmlBuild(type){
     let allData = '';
     let mySavedData = handlers["data"].getDataFromLibrary(type);
-    console.log('mySavedData',mySavedData);
     for (const data of mySavedData) {
         allData+=`
         <div class="sqab_pop_row_container">

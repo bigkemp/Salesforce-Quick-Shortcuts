@@ -10,14 +10,14 @@ var inputbar
 var inputPlaceholders
 var handlers = {};
 var initied = false;
-
+var filteredSuggestions = [];
+var selectedSuggestionIndex = 0;
 var currentSelectedTab="shortcuts";
 var savedShortcuts
 var loadingScreen;
 var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'lightgray';
-
 init();
 window.addEventListener("keydown",keyPress);
 var currentSettings = {
@@ -30,6 +30,7 @@ async function init(){
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
+  await loadHandler("handlers/favorites-handler", "favorites");
   await loadHandler("handlers/suggestions-handler", "suggestions");
 }
 
@@ -131,7 +132,8 @@ function closeSidePanel(){
   handlers["data"].doStartFromPopup(false);
 }
 
-function initModal(){
+async function initModal(){
+  currentSelectedTab="shortcuts";
   let icon = document.getElementById("icon");
   icon.src = chrome.runtime.getURL("/resources/gear.png");
   icon.onclick = redirectTab;
@@ -154,23 +156,28 @@ function initModal(){
                             "#FF6B6B": {"placeholder":"add","type":"add"}
                       }
   const suggestionsDropdown = document.getElementById("suggestions-dropdown");
-  var filteredSuggestions = [];
-  var selectedSuggestionIndex = 0;
+  filteredSuggestions = handlers["suggestions"].getFavoritesSuggestions(await handlers["favorites"].getFavorites(currentSelectedTab,handlers));
+  if(filteredSuggestions.length != 0){
+    suggestionsDropdown.style.display = "contents";
+    suggestionsDropdown.innerHTML = "";
+    const suggestionsHTML = handlers["suggestions"].buildSuggestionsHTML(filteredSuggestions, '');
+    suggestionsDropdown.innerHTML = suggestionsHTML;
+  }else{
+    suggestionsDropdown.style.display = "none";
+  }
   inputbar.placeholder = inputPlaceholders[tabsPane[0].dataset.color]["placeholder"];
   currentSelectedTab = inputPlaceholders[tabsPane[0].dataset.color]["type"];
   tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
   r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
-    tabsPane[i].addEventListener("click",function(e){
+    tabsPane[i].addEventListener("click", async function(e){
       closeSidePanel();
-      const suggestionsDropdown = document.getElementById("suggestions-dropdown");
-      suggestionsDropdown.style.display = "none";
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
       tabBody.getElementsByClassName("active")[0].classList.remove("active");
-      console.log("tabsPane[i].innerText",tabsPane[i].innerText);
       if(tabsPane[i].innerText == 'ADD'){
+        const suggestionsDropdown = document.getElementById("suggestions-dropdown");
         suggestionsDropdown.innerHTML = "";
         document.getElementById("alert-box").classList.remove("show");
         document.getElementById("sqab_add_section").classList.remove("hide");
@@ -186,7 +193,6 @@ function initModal(){
           let targetList = document.getElementById("targetList");
           // targetList.innerHTML = '';
           let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
-          console.log("orgOptions",orgOptions);
           let data = '<option>All Orgs</option>';
           orgOptions.forEach(org => {
             data+=  `<option>${org.name}</option>`;
@@ -234,38 +240,44 @@ function initModal(){
       currentSelectedTab = inputPlaceholders[tabsPane[i].dataset.color]["type"];
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabsPane[i].dataset.color);
+      const suggestionsDropdown = document.getElementById("suggestions-dropdown");
+      filteredSuggestions = handlers["suggestions"].getFavoritesSuggestions(await handlers["favorites"].getFavorites(currentSelectedTab,handlers));
+      if(filteredSuggestions.length != 0){
+        suggestionsDropdown.style.display = "contents";
+        suggestionsDropdown.innerHTML = "";
+        const suggestionsHTML = handlers["suggestions"].buildSuggestionsHTML(filteredSuggestions, '');
+        suggestionsDropdown.innerHTML = suggestionsHTML;
+      }else{
+        suggestionsDropdown.style.display = "none";
+      }
       inputbar.focus();
     })
   }
 
-  inputbar.addEventListener("input", function(event) {
+  inputbar.addEventListener("input", async function(event) {
     const inputValue = inputbar.value.toLowerCase();
     // filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().includes(inputValue));
     if (inputValue != '') {
       filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(currentSelectedTab),inputValue);
-      console.log("filteredSuggestions?.length",filteredSuggestions?.length);
-      if(filteredSuggestions?.length != 0){
-        suggestionsDropdown.style.display = "contents";
-        suggestionsDropdown.innerHTML = "";
-        const suggestionsHTML = handlers["suggestions"].buildSuggestionsHTML(filteredSuggestions, inputValue);
-        console.log("suggestionsHTML",suggestionsHTML);
-        suggestionsDropdown.innerHTML = suggestionsHTML;
-        if (selectedSuggestionIndex >= filteredSuggestions.length) {
-          selectedSuggestionIndex = filteredSuggestions.length - 1;
-        } else if (selectedSuggestionIndex < 0) {
-          selectedSuggestionIndex = 0;
-        }
-        const selectedSuggestion = suggestionsDropdown.children[selectedSuggestionIndex];
-        if(selectedSuggestion != undefined){
-          selectedSuggestion.style.backgroundColor = highlightColor;
-          selectedSuggestion.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
-      }else{
+    }else{
+      filteredSuggestions =  handlers["suggestions"].getFavoritesSuggestions(await handlers["favorites"].getFavorites(currentSelectedTab,handlers));
+    }
+    if(filteredSuggestions?.length != 0){
+      suggestionsDropdown.style.display = "contents";
+      suggestionsDropdown.innerHTML = "";
+      const suggestionsHTML = handlers["suggestions"].buildSuggestionsHTML(filteredSuggestions, inputValue);
+      suggestionsDropdown.innerHTML = suggestionsHTML;
+      if (selectedSuggestionIndex >= filteredSuggestions.length) {
+        selectedSuggestionIndex = filteredSuggestions.length - 1;
+      } else if (selectedSuggestionIndex < 0) {
         selectedSuggestionIndex = 0;
-        suggestionsDropdown.style.display = "none";
       }
-
-    } else {
+      const selectedSuggestion = suggestionsDropdown.children[selectedSuggestionIndex];
+      if(selectedSuggestion != undefined){
+        selectedSuggestion.style.backgroundColor = highlightColor;
+        selectedSuggestion.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    }else{
       selectedSuggestionIndex = 0;
       suggestionsDropdown.style.display = "none";
     }
@@ -317,6 +329,7 @@ function initModal(){
   });
 
   function selectedShortcut(){
+    handlers["favorites"].add2Favorites(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers);
     handlers["navigation"].redirectShortcuts(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers,currentSettings);
     suggestionsDropdown.style.display = "none";
     selectedSuggestionIndex = 0;

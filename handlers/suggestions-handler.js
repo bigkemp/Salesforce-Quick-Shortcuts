@@ -1,8 +1,7 @@
 const DIVIDER = '.';
 const customColor = '#bd5858';
+const favoriteColor = '#00ee3b';
 export function getSuggestions(array_data, input) {
-  console.log('getSuggestions.array_data',array_data);
-  console.log('getSuggestions.input',input);
   if (!input) return []; // handle empty input
   const suggestions = [];
 
@@ -21,26 +20,43 @@ export function getSuggestions(array_data, input) {
   return suggestions
 }
 
+export function getFavoritesSuggestions(array_data) {
+  console
+  const suggestions = [];
+  for (const favorite of array_data) {
+    favorite.shortcut.favorite = true;
+    suggestions.push(favorite.shortcut);
+  }
+  return suggestions
+}
+
 export function buildSuggestionsHTML(shortcutFinding, inputValue) {
     const htmlStrings = shortcutFinding.map((shortcut, index) => {
       const modifiedName = formatModifiedName(shortcut.name, inputValue);
-      const customClass = shortcut.custom ? `style="color:${customColor};"` : '';
-      const customDivider = shortcut.custom ? '<span class="sqab_divider">Custom</span>' : '';
-      return generateSuggestionHTML(index, customClass, customDivider, modifiedName, shortcut.name);
+      let specialCSSColor;
+      let specialDivider;
+      if(shortcut.favorite != undefined){
+        specialCSSColor = shortcut.favorite ? favoriteColor: undefined;
+        specialDivider = shortcut.favorite ? '<span class="sqab_divider">Favorite</span>' : '';
+      }else{
+        specialCSSColor = shortcut.custom ? customColor: undefined;
+        specialDivider = shortcut.custom ? '<span class="sqab_divider">Custom</span>' : '';
+      }
+      return generateSuggestionHTML(index, specialCSSColor, specialDivider, modifiedName, shortcut.name);
     });
   
     return htmlStrings.join('');
   }
   
-  function generateSuggestionHTML(index, customClass, customDivider, modifiedName, name) {
+  function generateSuggestionHTML(index, specialColor, customDivider, modifiedName, name) {
     const suggestionItem = document.createElement("li");
     suggestionItem.tabIndex = -1;
     suggestionItem.classList.add("sqab_suggestions");
     suggestionItem.dataset.index = index;
     suggestionItem.dataset.name = name;
     suggestionItem.innerHTML = `${customDivider}${modifiedName}`;
-    if (customClass) {
-      suggestionItem.style.color = customColor;
+    if (specialColor != undefined) {
+      suggestionItem.style.color = specialColor;
     }
     return suggestionItem.outerHTML;
   }
