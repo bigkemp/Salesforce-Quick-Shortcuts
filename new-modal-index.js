@@ -17,31 +17,18 @@ var savedShortcuts
 var loadingScreen;
 var savedObjs
 var currentOrg = getURLminized()
-var highlightColor = 'lightgray';
+var highlightColor = 'rgb(213 213 213 / 33%)';
+
 init();
-window.addEventListener("keydown",keyPress);
-var currentSettings = {
-    linkOpenNewTab:true,
-    alwaysShowCustoms:true,
-    HotKey: {code:81 ,name:"q"}
-};
+
 async function init(){
+  window.addEventListener("keydown",keyPress);
   await loadHandler("new-extension-popup", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
   await loadHandler("handlers/favorites-handler", "favorites");
   await loadHandler("handlers/suggestions-handler", "suggestions");
-}
-
-async function loadHandler(handlerName, handlerKey){
-  const src = chrome.runtime.getURL(`${handlerName}.js`);
-  handlers[handlerKey] = await import(src);
-}
-
-function getURLminized(){
-  let org = window.location.href.replace("https://","").substring(0,window.location.href.indexOf("."));
-  return org.replace(org.substring(org.indexOf(".")),"");
 }
 
 function keyPress(e) {
@@ -84,7 +71,7 @@ function keyPress(e) {
           }
         break;
         case false:
-            if (handlers["data"] != undefined && evtobj.keyCode == currentSettings.HotKey.code && (evtobj.ctrlKey || evtobj.metaKey)){
+            if (handlers["data"] != undefined && evtobj.code == handlers["data"].findDataByNode("HotKey","mypreferences").code && (evtobj.ctrlKey || evtobj.metaKey)){
                 startUp();   
                 modalOpened = true;
                 e.preventDefault();
@@ -92,6 +79,16 @@ function keyPress(e) {
         break;
     }
 
+}
+
+async function loadHandler(handlerName, handlerKey){
+  const src = chrome.runtime.getURL(`${handlerName}.js`);
+  handlers[handlerKey] = await import(src);
+}
+
+function getURLminized(){
+  let org = window.location.href.replace("https://","").substring(0,window.location.href.indexOf("."));
+  return org.replace(org.substring(org.indexOf(".")),"");
 }
 
 async function startUp(){
@@ -317,11 +314,14 @@ async function initModal(){
 
   suggestionsDropdown.addEventListener("mouseover", function(event) {
     // Remove highlight from previously selected suggestion
-    if (selectedSuggestionIndex >= 0) {
+    if (selectedSuggestionIndex >= 0 && suggestionsDropdown.children[selectedSuggestionIndex] != undefined) {
       suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
     }
     selectedSuggestionIndex = Array.from(suggestionsDropdown.children).indexOf(event.target);
-    event.target.style.backgroundColor = highlightColor;
+    // event.target.style.backgroundColor = highlightColor;
+    if(suggestionsDropdown.children[selectedSuggestionIndex] != undefined){
+      suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = highlightColor;
+    }
   });
 
   suggestionsDropdown.addEventListener("click", function(event) {
@@ -330,7 +330,7 @@ async function initModal(){
 
   function selectedShortcut(){
     handlers["favorites"].add2Favorites(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers);
-    handlers["navigation"].redirectShortcuts(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers,currentSettings);
+    handlers["navigation"].redirectShortcuts(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
     suggestionsDropdown.style.display = "none";
     selectedSuggestionIndex = 0;
     filteredSuggestions = [];

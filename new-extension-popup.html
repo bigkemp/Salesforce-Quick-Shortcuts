@@ -1,12 +1,9 @@
-<head>
-  <script type="module" src="new-extension-popup.js"></script>
-  <link type = 'text/css' rel = 'stylesheet' href = 'new-extension-popup.css'> 
-</head>
+
 <section class="ac-container">
   <div class="sqab_pop_addMsg"></div>
   <div id="sqab_pop_modal" class="sqab_pop_modal sqab_pop_hide" >
-    <div style="height:100%;padding:30%">
-      <div style="padding:10px; background:white;">
+    <div style="height:100%;">
+      <div style="padding:10px; height:100%;background:white;">
         <input style="width:100%" class="sqab_pop_inputlabel" type="text" placeholder="Enter Label" id="addMySCtext" name="addmyShortcut"><br/>
         <input style="width:100%" class="sqab_pop_inputvalue" type="text" placeholder="Enter Custom Url" id="addMySCtextURL" name="addmyShortcutURL">
         <div id="orglist" class="sqab_pop_orglist"></div>
@@ -39,24 +36,29 @@
     <div >
       <input style="display:none;" id="ac-5" name="accordion-1" type="radio">
       <label id="popup_prefrences" for="ac-5">Preferences</label>
-      <article class="ac-large">
-          <div style="padding:10px;">
-            <b style="background: #d5d5d5; border-radius: 5px;">Change Hotkey:</b>
-            <div style="display: flex;">
+      <article class="ac-large mypreferences">
+          <div >
+            <b class="preferenceTitle">Change Hotkey:</b>
+            <div style="display: flex; margin-top: 15px;text-align-last: center;">
               <div style="border:1px solid rgb(222, 222, 222);width:25%">CTRL</div> 
-              <div style="width:10%">+</div> 
-              <input style="display: inline;width:65%;" class="sqab_pop_inputClass" type="text" placeholder="Click on any key" id="newHotKey">
+              <div style="width: 10%; border: solid; border-width: 1px; border-color: #d5d5d5;">+</div> 
+              <input id="sqab_hotkey_input"style="display: inline; width:65%;" class="sqab_pop_inputClass" type="text" placeholder="Click on any key" >
             </div>
           </div>
-          <div style="padding:10px;">
-            <b style="background: #d5d5d5; border-radius: 5px;">Tab Settings:</b><br/>
-            <input style="margin-top: 10px; display: inline;" type="checkbox" checked id="openLinksAsNewTab">
-            Open links in new Tab
+          <div >
+            <b class="preferenceTitle">Tab Settings:</b>
+            <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_new_tab_input">
+            Open links in a new Tab.
           </div>
-          <div style="padding:10px;">
-            <b style="background: #d5d5d5; border-radius: 5px;">Shortcuts Settings:</b><br/>
-            <input style="margin-top: 10px; display: inline;" type="checkbox" id="alwaysShowCustoms">
+          <div >
+            <b class="preferenceTitle">Shortcuts Settings:</b>
+            <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_show_all_input">
             Show `All` custom shortcuts/objects on unsaved orgs.
+          </div>
+          <div >
+            <b class="preferenceTitle">Favorites Settings:</b>
+            <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_show_favorites_input">
+            Show Favorites.
           </div>
       </article>
     </div>

@@ -26,13 +26,33 @@ export function checkIfExists(newData,type){
   }
 }
 
-export function findDataFromLabel(label,type) {
+export function findDataByLabel(label,type) {
   let mySavedData = getDataFromLibrary(type);
   for (const data of mySavedData) {
       if(data.name == label){
           return data;
       }
   }
+}
+
+export function findDataByNode(node,type) {// for preferences data
+  let mySavedData = getDataFromLibrary(type);
+  return mySavedData[node];
+}
+
+
+export async function saveDataByReplace(index2Remove,newData,type){
+  if(!type.includes("my")){
+    type = "my"+type;
+  }
+  let memoryStructure = await getData(type);
+  if(memoryStructure == undefined){
+    memoryStructure = [];
+  }else{
+    memoryStructure.splice(index2Remove, 1, newData);
+
+  }
+  await chromeStorageSet(memoryStructure,type);
 }
 
 export async function saveDataByAdd(data,type){
@@ -49,9 +69,13 @@ export async function saveDataByAdd(data,type){
   await chromeStorageSet(memoryStructure,type);
 }
 
-export async function saveDataOrgs(){
-  let memoryStructure = await getData("myorgs");
-  await chromeStorageSet(memoryStructure,"myorgs");
+export async function overrideData(type){
+  let memoryStructure = await getData(type);
+  await chromeStorageSet(memoryStructure,type);
+}
+
+export async function overrideManualData(type,data){
+  await chromeStorageSet(data,type);
 }
 
 async function chromeStorageSet(data,type){
@@ -69,6 +93,7 @@ export async function deleteData(value,type,by){
 export function getDataFromLibrary(name){
   return data_library[name] == undefined ? [] : data_library[name];
 }
+
 
 export function getShortcuts(name){
   if(name == 'listview'){
@@ -102,20 +127,22 @@ export function findDefaultShortcut(type,nameForJson){
 export async function buildData(){
   data_library = {};
   orgExists = {bool:false,name:"",value:""};
-  await getMyOrgs();
-  await getMyData('myshortcuts');
-  await getMyData('myobjs');
+  await loadMyOrgs();
+  await loadMyData('myshortcuts');
+  await loadMyData('myobjs');
+  await loadMyData('mypreferences');
   await loadJson('shortcuts');
   await loadJson('obj-shortcuts');
 }
 
-async function getMyOrgs(){
+async function loadMyOrgs(){
   let myorgs = await getData('myorgs');
   let currentPage = getURLminized();
+  console.log('loadMyOrgs',currentPage);
   data_library["myorgs"] = myorgs;
   if(currentPage != ""){
     if(data_library["myorgs"] == undefined || data_library["myorgs"].length == 0){
-      data_library["myorgs"] = [{name:currentPage, value:currentPage }]; 
+      // do nothing, need to remove. line "if(!orgExists.bool){" does the same
     }else{
       data_library["myorgs"].forEach(org => {
         if(org.value.includes(currentPage)){
@@ -124,33 +151,49 @@ async function getMyOrgs(){
           orgExists.value = currentPage;
         }
       });
-      if(!orgExists.bool){
-        orgExists.value = currentPage;
-        orgExists.name = currentPage;
-        orgExists.bool = false;
-        data_library["myorgs"].push({name:currentPage, value:currentPage }); 
-      }
+    }
+    if(!orgExists.bool){
+      orgExists.value = currentPage;
+      orgExists.name = currentPage;
+      orgExists.bool = false;
+      data_library["myorgs"].push({name:currentPage, value:currentPage, exists:false}); 
     }
   }
+  console.log('orgExists',orgExists);
 }
 
-async function getMyData(mySpecificData){
+async function loadMyData(mySpecificData){
   let myorg = data_library["myorgs"]?.filter(org => org.value.includes(currentOrg));
   let targetOrgSaved = myorg?.length != 0;
   let mydata = await getData(mySpecificData);
-  const filteredData = mydata?.filter(entry => {
-    if(startFromPopup){//means its from popup
-      return true;
-    }
-    if (entry.org === undefined || entry.org.includes('all')) {
-      return true;
-    }
-    if (targetOrgSaved) {
-      return entry.org.includes(myorg[0].name);
-    }
-    return false;
-  });
-  data_library[mySpecificData] = filteredData?.length == 0 ? undefined : filteredData;
+  console.log('mydata',mydata);
+  if(mySpecificData == 'mypreferences'){
+      if(mydata == undefined){ // if preferences were never defined, then define
+        mydata = {
+          linkOpenNewTab:true,
+          alwaysShowCustoms:true,
+          alwaysShowFavorites:true,
+          HotKey: {code:81 ,name:"q"}
+        };
+        await chromeStorageSet(mydata,mySpecificData);
+      }
+      data_library[mySpecificData] = mydata;
+  }else{
+    const filteredData = mydata?.filter(entry => {
+      if(startFromPopup){//means its from popup
+        return true;
+      }
+      if (entry.org === undefined || entry.org.includes('all')) {
+        return true;
+      }
+      if (targetOrgSaved) {
+        return entry.org.includes(myorg[0].name);
+      }
+      return false;
+    });
+    data_library[mySpecificData] = filteredData?.length == 0 ? undefined : filteredData;
+  }
+
 }
 
 async function loadJson(data) {

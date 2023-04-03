@@ -1,5 +1,5 @@
 export function redirectShortcuts(type,shortcut,handlers,preferences){
-    window.open(getSpecificShortcut(type,shortcut,handlers), preferences.linkOpenNewTab? '_blank': '');
+    window.open(getSpecificShortcut(type,shortcut,handlers), preferences? '_blank': '');
 }
 
 function getSpecificShortcut(type,shortcut,handlers){

@@ -8,39 +8,60 @@ export async function save(handlers,value,label,targetorg,type){ // only modal
     if(saveValidations(handlers,record,type)){
         return {success:false, message: "Already Exists"};
     }else{
-        await checkOrg(handlers);
+        await saveDataOrgs(handlers);
         await handlers["data"].saveDataByAdd(record,type);
         return {success:true, message: "Save was successful"};
     }
+}
+
+export async function savePreferences(handlers,type,value){ // only popup
+    let myprefrences = handlers["data"].getDataFromLibrary("mypreferences");
+    myprefrences[type] = value;
+    console.log('savePreferences',myprefrences);
+    await handlers["data"].overrideManualData('mypreferences',myprefrences);
 }
 
 export async function edit(handlers,record,oldrecord,type){ // only pop
     let targetData = handlers["data"].getDataFromLibrary(type);
     const index = targetData.findIndex(obj => obj.name === oldrecord.name);
     if (index !== -1) {
-        targetData.splice(index, 1, record);
-        await handlers["data"].saveData(null,type);
-        await postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type);
+        await handlers["data"].saveDataByReplace(index,record,type);
+        // await postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type);
         return {success:true, message: "Edit was successful"};
     }else{
         return {success:false, message: "Didnt find record to edit."};
     }
 }
 
+export async function remove(handlers,value,type){ // only pop
+    console.log('remove!!!');
+        await handlers["data"].deleteData(value,type,'name');
+        await postProcessingOfSuccessfulEdit(handlers,undefined,value,type);
+        return {success:true, message: "Delete was successful"};
+}
+
 
 async function  postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type){
     if(type == "myorgs"){
+        console.log('postProcessingOfSuccessfulEdit');
         let affectedDataTypes = ["myobjs","myshortcuts"];
         for (const affectedDataType of affectedDataTypes) {
             let need2Save = false;
-            for (const data of handlers["data"].getDataFromLibrary(affectedDataType)) {
-                if(data.org != undefined && data.org.includes(oldrecord.name)){
+            let datatype = handlers["data"].getDataFromLibrary(affectedDataType);
+            for (const data of datatype) {
+                if(data.org != undefined && data.org.includes(oldrecord.name) && record){
                     data.org.splice(data.org.indexOf(oldrecord.name), 1, record.name);
+                    need2Save = true;
+                }else if(data.org != undefined && data.org.includes(oldrecord.name) && !record){
+                    data.org.splice(data.org.indexOf(oldrecord.name), 1);
+                    if(data.org.length == 0){
+                        data.org = undefined;
+                    }
                     need2Save = true;
                 }
             }
             if(need2Save){
-                await handlers["data"].saveData(null,type);
+                await handlers["data"].overrideManualData(affectedDataType,datatype);
                 need2Save = false;
             }
         }
@@ -53,6 +74,6 @@ function saveValidations(handlers,record,type) {
 
 async function saveDataOrgs(handlers){
     if(!handlers["data"].orgExists.bool){
-        await handlers["data"].saveDataOrgs();
+        await handlers["data"].overrideData("myorgs");
     }
 }

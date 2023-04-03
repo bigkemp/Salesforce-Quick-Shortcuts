@@ -15,15 +15,31 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
       }
     }
     
-    if (!shortcutExists) {
-        max10Favorites(favorites[orgKey][type], { shortcut, count: 1 });
-    }
+    // if (!shortcutExists) {
+        max10Favorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
+    // }
 
     await  chromeStorageSet(favorites, "favorites");
   }
 
-  function max10Favorites(shortcuts, newShortcut) {
-    if (shortcuts.length < 10) {
+//   function max10Favorites(shortcuts, newShortcut) {
+//     if (shortcuts.length < 10) {
+//         shortcuts.push(newShortcut);
+//     } else {
+//         let lowestCountIndex = 0;
+//         for (let i = 1; i < shortcuts.length; i++) {
+//             if (shortcuts[i].count < shortcuts[lowestCountIndex].count) {
+//                 lowestCountIndex = i;
+//             }
+//         }
+//         if (newShortcut.count > shortcuts[lowestCountIndex].count) {
+//             shortcuts[lowestCountIndex] = newShortcut;
+//         }
+//     }
+// }
+
+function max10Favorites(shortcuts, newShortcut, shortcutExists) {
+    if (shortcuts.length < 10 && !shortcutExists) {
         shortcuts.push(newShortcut);
     } else {
         let lowestCountIndex = 0;
@@ -36,12 +52,14 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
             shortcuts[lowestCountIndex] = newShortcut;
         }
     }
+
+    shortcuts.sort((a, b) => b.count - a.count);
 }
 
   export async function getFavorites(type, handlers){
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || undefined;
-    if (favorites == undefined){
+    if (favorites == undefined || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
         return [];
     }
     let finalFavList = [];

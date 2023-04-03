@@ -2,10 +2,6 @@
 		--indicatorcolor: #00acee;
 	}
 	
-	body{
-		background:#ddd;
-	}
-
 	.sqab_modal {
 		display: block; 
 		position: fixed; 
@@ -48,7 +44,7 @@
 	}
 
 	.sqab_divider{
-		border:1px solid rgb(229 229 229);
+		border:1px solid rgba(229, 229, 229, 0.499);
 		color:gray;
 		border-radius: 3px;
 		padding: 0.5%;
@@ -113,67 +109,6 @@
 		display:block;
 	}
 	
-	
-	button{
-		padding: .5em 1em;
-		background: #fff;
-		color: #4A5568;
-		border: 0px solid #A0AEC0;
-		margin: .1em;
-		transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
-		box-shadow: 0 0 0 #BEE3F8;
-		transform: translateY(0);
-	}
-	button:first-of-type{
-		border-radius: .5em 0 0 .5em;
-	}
-	button:last-of-type{
-		border-radius: 0 .5em .5em 0;
-	}
-	button i{
-		color: #A0AEC0;
-		margin-right: .3em;
-		transition: all .2s ease-out;
-	}
-	.multi-button:hover button{
-		color: #A0AEC0;
-	}
-	
-	.multi-button:hover button:hover{
-		background: #D53F8C;
-		color: #fff;
-		box-shadow: 0 0 0.8em 0 rgba(213, 63, 140, .8);
-		transform: translateY(-.2em);
-	}
-	.multi-button:hover button i{
-		color: #CBD5E0;
-	}
-	.multi-button:hover button:hover i{
-		color: #FED7E2;
-		transform: rotate(-10deg);
-	}
-	
-	#container {
-		height: 30px;
-		width: 40%;
-		border: 1px solid black;
-		position: relative;
-		padding:20px;
-		border-radius: 5px;
-		text-align-last: center;
-	}
-	
-	#label {
-		position: absolute;
-		top: -10px;
-		left: 10px;
-		height: 20px;
-		width: 100px;
-		background:#808080;
-		text-align: center;
-	
-	}
-	
 	.suggestions-dropdown {
 		position: absolute; /* Position the dropdown relative to the parent div */
 		top: 100%; /* Position the top of the dropdown at the bottom of the parent div */
@@ -191,9 +126,12 @@
 	}
 
 	.sqab_suggestions {
-		color: #555;
+		color: var(--indicatorcolor);
 		font-size: 14px;
 		padding: 10px 12px;
+		cursor: pointer;
+		border-radius: 5px;
+
 	}
 	
 	.suggestions-dropdown-item {
@@ -258,12 +196,6 @@
 	flex-direction: column;
 	}
 
-	/* .alert-box span {
-	font-weight:bold;
-	text-transform:uppercase;
-	letter-spacing: 1px;
-	} */
-
 	.setting_icon{
 		margin: 0;
 		padding: 0;
@@ -327,8 +259,6 @@
 
 	.row{
 	padding: 5px;
-	/* border:1px solid var(--indicatorcolor);
-	border-radius: 5px; */
 	}
 
 	.col{

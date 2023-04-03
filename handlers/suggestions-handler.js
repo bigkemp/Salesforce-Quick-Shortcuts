@@ -1,6 +1,4 @@
 const DIVIDER = '.';
-const customColor = '#bd5858';
-const favoriteColor = '#00ee3b';
 export function getSuggestions(array_data, input) {
   if (!input) return []; // handle empty input
   const suggestions = [];
@@ -32,39 +30,36 @@ export function getFavoritesSuggestions(array_data) {
 
 export function buildSuggestionsHTML(shortcutFinding, inputValue) {
     const htmlStrings = shortcutFinding.map((shortcut, index) => {
-      const modifiedName = formatModifiedName(shortcut.name, inputValue);
-      let specialCSSColor;
+      const modifiedName = formatModifiedName(shortcut, inputValue);
       let specialDivider;
       if(shortcut.favorite != undefined){
-        specialCSSColor = shortcut.favorite ? favoriteColor: undefined;
-        specialDivider = shortcut.favorite ? '<span class="sqab_divider">Favorite</span>' : '';
+        specialDivider = shortcut.favorite ? `<img src="${chrome.runtime.getURL("/resources/star.png")}" width="20px" height="20px"/>` : '';
       }else{
-        specialCSSColor = shortcut.custom ? customColor: undefined;
-        specialDivider = shortcut.custom ? '<span class="sqab_divider">Custom</span>' : '';
+        specialDivider = shortcut.custom ? `<img src="${chrome.runtime.getURL("/resources/pencil.png")}" width="30px" height="30px"/>` : '';
       }
-      return generateSuggestionHTML(index, specialCSSColor, specialDivider, modifiedName, shortcut.name);
+      return generateSuggestionHTML(index, specialDivider, modifiedName, shortcut.name);
     });
   
     return htmlStrings.join('');
   }
   
-  function generateSuggestionHTML(index, specialColor, customDivider, modifiedName, name) {
+  function generateSuggestionHTML(index, customDivider, modifiedName, name) {
     const suggestionItem = document.createElement("li");
     suggestionItem.tabIndex = -1;
     suggestionItem.classList.add("sqab_suggestions");
     suggestionItem.dataset.index = index;
     suggestionItem.dataset.name = name;
     suggestionItem.innerHTML = `${customDivider}${modifiedName}`;
-    if (specialColor != undefined) {
-      suggestionItem.style.color = specialColor;
-    }
     return suggestionItem.outerHTML;
   }
   
-  function formatModifiedName(name, inputValue) {
-    if (name.includes(DIVIDER)) {
-      let nameSplitted = name.split('.');
+  function formatModifiedName(shortcut, inputValue) {
+    if (shortcut.name.includes(DIVIDER)) {
+      let nameSplitted = shortcut.name.split('.');
       let suffix = nameSplitted.pop();
+      if(shortcut.favorite != undefined && shortcut.favorite == true){
+        return suffix;
+      }
       let modifiedSuffix = '';
       for (const prefix_part of nameSplitted) {
         modifiedSuffix+= `<span tabIndex="-1" class="sqab_divider">${prefix_part}</span>`
@@ -72,7 +67,7 @@ export function buildSuggestionsHTML(shortcutFinding, inputValue) {
       modifiedSuffix+=`${boldRelevantChars(suffix, inputValue)}`;
       return `${modifiedSuffix}`;
     } else {
-      return boldRelevantChars(name, inputValue);
+      return boldRelevantChars(shortcut.name, inputValue);
     }
   }
   
