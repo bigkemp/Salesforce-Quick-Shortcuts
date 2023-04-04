@@ -20,16 +20,22 @@ function closeEdit() {
 
 async function saveEdit() {
     const editMenu = document.getElementById("sqab_pop_modal");
+    const orgtags = document.getElementById('orglist');
     const edit_inputs = editMenu.getElementsByTagName("input");
-    let updatedRecord;
-    if(type != 'myorgs'){
-        updatedRecord = {custom:true,name:edit_inputs[0].value,value:edit_inputs[1].value,org:undefined};
-    }else{
-        updatedRecord = {name:edit_inputs[0].value,value:edit_inputs[1].value};
+    let updatedRecord = {custom:true,name:edit_inputs[0].value,value:edit_inputs[1].value,org:undefined};
+    for (const tag of orgtags.getElementsByClassName('sqab_my_org')) {
+        if(updatedRecord.org == undefined){
+            updatedRecord.org = [];
+        }
+        updatedRecord.org.push(tag.textContent);
+    }
+    if(updatedRecord.org != undefined && updatedRecord.org.length == handlers['data'].getDataFromLibrary('myorgs').length ){
+        updatedRecord.org = undefined;
     }
     let response = await handlers["save"].edit(handlers,updatedRecord,editOldrecord,type);
     alert(response.message);
     buildContent(type);
+    closeEdit();
 }
 
 function hotkeyChanged(event){
@@ -67,35 +73,39 @@ async function buildContent(selectedType) {
         const hotkeyInput = document.getElementById('sqab_hotkey_input');
         hotkeyInput.style.background = 'white';
         hotkeyInput.value = handlers["data"].findDataByNode("HotKey","mypreferences").name;
-        hotkeyInput.addEventListener('keydown', (event) => hotkeyChanged(event));
-        hotkeyInput.addEventListener('focus', (event) => hotkeyFocused(event));
-        hotkeyInput.addEventListener('blur', (event) => {event.target.style.background = 'white'; event.target.value = handlers["data"].findDataByNode("HotKey","mypreferences").name;});
+        hotkeyInput.onkeydown = (event) => hotkeyChanged(event);
+        hotkeyInput.onfocus = (event) => hotkeyFocused(event);
+        hotkeyInput.onblur = (event) => {
+          event.target.style.background = 'white';
+          event.target.value = handlers["data"].findDataByNode("HotKey","mypreferences").name;
+        };
 
         const newTabInput = document.getElementById('sqab_new_tab_input');
-        newTabInput.checked= getDefualts("linkOpenNewTab");
-        newTabInput.addEventListener('change', (event) => checkboxChanged(event,"linkOpenNewTab"));
+        newTabInput.checked = getDefualts("linkOpenNewTab");
+        newTabInput.onchange = (event) => checkboxChanged(event,"linkOpenNewTab");
 
         const showAllInput = document.getElementById('sqab_show_all_input');
         showAllInput.checked = getDefualts("alwaysShowCustoms");
-        showAllInput.addEventListener('change', (event) => checkboxChanged(event,"alwaysShowCustoms"));
+        showAllInput.onchange = (event) => checkboxChanged(event,"alwaysShowCustoms");
 
         const favoritesInput = document.getElementById('sqab_show_favorites_input');
         favoritesInput.checked = getDefualts("alwaysShowFavorites");
-        favoritesInput.addEventListener('change', (event) => checkboxChanged(event,"alwaysShowFavorites"));
+        favoritesInput.onchange = (event) => checkboxChanged(event,"alwaysShowFavorites");
+        
     }else{
         let allData = htmlBuild(type);
         let div = document.getElementById("container_"+type);
         div.innerHTML = allData;
         for (const row of div.children) {
-            if(type != "myorgs"){
+            if (type != "myorgs") {
                 const editBtn = row.querySelector('.sqab_pop_btn:nth-of-type(1)');
                 const removeBtn = row.querySelector('.sqab_pop_btn:nth-of-type(2)');
-                editBtn.addEventListener('click', (event) => buttonEditClicked(event));
-                removeBtn.addEventListener('click', (event) => buttonRemoveClicked(event));
-            }else{
+                editBtn.onclick = (event) => buttonEditClicked(event);
+                removeBtn.onclick = (event) => buttonRemoveClicked(event);
+            } else {
                 const removeBtn = row.querySelector('.sqab_pop_btn:nth-of-type(1)');
-                removeBtn.addEventListener('click', (event) => buttonRemoveClicked(event));
-            }
+                removeBtn.onclick = (event) => buttonRemoveClicked(event);
+            }            
         }
     }
 }
@@ -109,18 +119,16 @@ function buttonEditClicked(e){
     editOldrecord = handlers["data"].findDataByLabel(input.value,type);
     edit_inputs[0].value = input.value; // Label
     edit_inputs[1].value = editOldrecord.value; // value
+    const orglist = document.getElementById('orglist');
+    orglist.innerHTML = "";
     if(type != "myorgs"){
-        document.getElementById('orglist').innerHTML = alltargetOrgPin(editOldrecord);
-    }else{
-        document.getElementById('orglist').innerHTML = "";
+        orglist.append(alltargetOrgPin(editOldrecord));
     }
-    
 }
 
 async function  buttonRemoveClicked(e){
     const parent = e.target.parentElement;
     const input = parent.querySelector('input');
-    // const elementValue = handlers["data"].findDataByLabel(input.value,type).value};
     handlers["save"].remove(handlers,input.value,type);
     buildContent(type);
 }
@@ -138,7 +146,7 @@ function htmlBuild(type){
                     ${targetOrgPin(data)}
                 </div>
             </div>
-            <button class=" sqab_pop_btn ${type == "myorgs" && data.exists === false ? 'sqab_pop_btn_disabled" disabled> Placeholder' : '" style="background-color: #ce6363;">Remove'}</button>
+            <button class=" sqab_pop_btn" style="background-color: #ce6363;">Remove</button>
         </div>
       `;
     }
@@ -159,16 +167,38 @@ function targetOrgPin(data) {
 }
 
 function alltargetOrgPin(recordOrgs) {
-    let targetOrg=`<ul id="orgs${type}-${recordOrgs.name}" class="sqab_pop_tags sqab_pop_silent">`;
-    for (const savedOrg of handlers["data"].getDataFromLibrary("myorgs")) {
-        if(savedOrg.exists === false){
-            continue;
-        }else if(recordOrgs.org == undefined || recordOrgs.org.includes(savedOrg.name)){
-            targetOrg +=`<li class="sqab_pop_tag sqab_my_org sqab_pop_silent">${savedOrg.name}</li>`;
-        }else{
-            targetOrg +=`<li class="sqab_pop_tag sqab_pop_silent">${savedOrg.name}</li>`;
-        }
+    const targetOrg = document.createElement('ul');
+    targetOrg.classList.add('sqab_pop_tags');
+  
+    const myOrgs = handlers['data'].getDataFromLibrary('myorgs');
+    for (const savedOrg of myOrgs) {
+      const li = document.createElement('li');
+      li.classList.add('sqab_pop_tag');
+      li.textContent = savedOrg.name;
+  
+      if (recordOrgs.org == undefined || recordOrgs.org.includes(savedOrg.name)) {
+        li.classList.add('sqab_my_org');
+      }
+  
+      targetOrg.appendChild(li);
     }
-    targetOrg += `</ul>`;
+  
+    targetOrg.onclick = (event) => {
+        console.log("hhhhhhh");
+      if (event.target.tagName === 'LI') {
+        const myorgtag = event.target;
+        console.log('hello');
+        if (myorgtag.classList.contains('sqab_my_org')) {
+          myorgtag.classList.remove('sqab_my_org');
+        } else {
+          myorgtag.classList.add('sqab_my_org');
+        }
+      }
+    };
+  
     return targetOrg;
-}
+  } 
+  
+  
+  
+  

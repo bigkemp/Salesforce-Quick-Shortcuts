@@ -156,7 +156,6 @@ async function loadMyOrgs(){
       orgExists.value = currentPage;
       orgExists.name = currentPage;
       orgExists.bool = false;
-      data_library["myorgs"].push({name:currentPage, value:currentPage, exists:false}); 
     }
   }
   console.log('orgExists',orgExists);
@@ -226,7 +225,6 @@ export async function loadModalIndex2() {
     const file = await fetch(chrome.runtime.getURL("/new-extension-popup.html"));
     const html = await file.text();
     return html;
-    // document.body.insertAdjacentHTML("beforeend", html);
   } catch (e) {
     console.log(e);
   }

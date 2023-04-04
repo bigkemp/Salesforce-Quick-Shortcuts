@@ -1,4 +1,7 @@
 export async function add2Favorites(type, shortcut,handlers) { // TODO: will later need to add the handlers to save in data handler instead of here.
+    if(shortcut.custom){//TODO: for now favorites only works for non customs
+        return
+    }
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || {};
     const orgKey = shortcut.org ? shortcut.org : "undefined";
@@ -6,7 +9,6 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
     favorites[orgKey][type] = favorites[orgKey][type] || [];
 
     let shortcutExists = false;
-    debugger;
     for (const item of favorites[orgKey][type]) {
       if (item.shortcut.name === shortcut.name && item.shortcut.value === shortcut.value) {
         item.count++;
@@ -14,29 +16,9 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
         break;
       }
     }
-    
-    // if (!shortcutExists) {
-        max10Favorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
-    // }
-
+    max10Favorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
     await  chromeStorageSet(favorites, "favorites");
   }
-
-//   function max10Favorites(shortcuts, newShortcut) {
-//     if (shortcuts.length < 10) {
-//         shortcuts.push(newShortcut);
-//     } else {
-//         let lowestCountIndex = 0;
-//         for (let i = 1; i < shortcuts.length; i++) {
-//             if (shortcuts[i].count < shortcuts[lowestCountIndex].count) {
-//                 lowestCountIndex = i;
-//             }
-//         }
-//         if (newShortcut.count > shortcuts[lowestCountIndex].count) {
-//             shortcuts[lowestCountIndex] = newShortcut;
-//         }
-//     }
-// }
 
 function max10Favorites(shortcuts, newShortcut, shortcutExists) {
     if (shortcuts.length < 10 && !shortcutExists) {
@@ -52,7 +34,6 @@ function max10Favorites(shortcuts, newShortcut, shortcutExists) {
             shortcuts[lowestCountIndex] = newShortcut;
         }
     }
-
     shortcuts.sort((a, b) => b.count - a.count);
 }
 
@@ -72,7 +53,6 @@ function max10Favorites(shortcuts, newShortcut, shortcutExists) {
     if (favorites[undefined] != undefined && favorites[undefined][type] != undefined){
         let nonOrgFavs = favorites[undefined][type]
         finalFavList = finalFavList.concat(nonOrgFavs);
-
     }
     return finalFavList;
 }

@@ -26,18 +26,17 @@ export async function edit(handlers,record,oldrecord,type){ // only pop
     const index = targetData.findIndex(obj => obj.name === oldrecord.name);
     if (index !== -1) {
         await handlers["data"].saveDataByReplace(index,record,type);
-        // await postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type);
         return {success:true, message: "Edit was successful"};
     }else{
         return {success:false, message: "Didnt find record to edit."};
     }
 }
 
-export async function remove(handlers,value,type){ // only pop
+export async function remove(handlers,label,type){ // only pop
     console.log('remove!!!');
-        await handlers["data"].deleteData(value,type,'name');
-        await postProcessingOfSuccessfulEdit(handlers,undefined,value,type);
-        return {success:true, message: "Delete was successful"};
+    await handlers["data"].deleteData(label,type,'name');
+    await postProcessingOfSuccessfulEdit(handlers,undefined,{name: label},type);
+    return {success:true, message: "Delete was successful"};
 }
 
 
@@ -49,10 +48,7 @@ async function  postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type){
             let need2Save = false;
             let datatype = handlers["data"].getDataFromLibrary(affectedDataType);
             for (const data of datatype) {
-                if(data.org != undefined && data.org.includes(oldrecord.name) && record){
-                    data.org.splice(data.org.indexOf(oldrecord.name), 1, record.name);
-                    need2Save = true;
-                }else if(data.org != undefined && data.org.includes(oldrecord.name) && !record){
+                if(data.org != undefined && data.org.includes(oldrecord.name) && record == undefined){
                     data.org.splice(data.org.indexOf(oldrecord.name), 1);
                     if(data.org.length == 0){
                         data.org = undefined;
@@ -61,7 +57,7 @@ async function  postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type){
                 }
             }
             if(need2Save){
-                await handlers["data"].overrideManualData(affectedDataType,datatype);
+                handlers["data"].overrideManualData(affectedDataType,datatype);
                 need2Save = false;
             }
         }
@@ -74,6 +70,6 @@ function saveValidations(handlers,record,type) {
 
 async function saveDataOrgs(handlers){
     if(!handlers["data"].orgExists.bool){
-        await handlers["data"].overrideData("myorgs");
+        await handlers["data"].saveDataByAdd({name:handlers["data"].orgExists.name, value:handlers["data"].orgExists.value},"myorgs");
     }
 }

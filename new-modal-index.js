@@ -22,7 +22,7 @@ var highlightColor = 'rgb(213 213 213 / 33%)';
 init();
 
 async function init(){
-  window.addEventListener("keydown",keyPress);
+  window.onkeydown = keyPress;
   await loadHandler("new-extension-popup", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
@@ -167,7 +167,7 @@ async function initModal(){
   tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
   r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
-    tabsPane[i].addEventListener("click", async function(e){
+    tabsPane[i].onclick = async function(e){
       closeSidePanel();
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
@@ -194,12 +194,15 @@ async function initModal(){
           orgOptions.forEach(org => {
             data+=  `<option>${org.name}</option>`;
           });
+          if(!handlers["data"].orgExists.bool){
+            data+=  `<option>${handlers["data"].orgExists.name}</option>`;
+          }
           targetList.innerHTML = data;
           let objOption = document.getElementById("option2");
           let shortcutOption = document.getElementById("option1"); 
           let addSave = document.getElementById("sqab_addSave"); 
           let type = "shortcuts";
-          objOption.addEventListener("click",function(e){
+          objOption.onclick = function(e) {
             if(inputbar.value.includes("__c")){
               let obgInUrl = inputbar.value.split("/").filter(element => element.includes("__c"));
               inputbar.value = obgInUrl;
@@ -207,14 +210,14 @@ async function initModal(){
             }
             document.getElementById("yaylabel").disabled =true;
             type = "objs";
-          })
-        shortcutOption.addEventListener("click",function(e){
+          }
+        shortcutOption.onclick = function(e) {
           inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
           document.getElementById("yaylabel").placeholder = "Enter Label";
           document.getElementById("yaylabel").disabled =false;
           type = "shortcuts";
-        })
-        addSave.addEventListener("click", async function(e){
+        }
+        addSave.onclick = async function(e) {
           loading_Start();
           let result = await handlers["save"].save(handlers,inputbar.value,document.getElementById("yaylabel").value,document.getElementById("targetList").value,type);
           document.getElementById("alert-box").classList.remove("success");
@@ -229,7 +232,7 @@ async function initModal(){
           document.getElementById("sqab_add_section").classList.add("hide");
           inputbar.value = "";
           loading_End();
-        })  
+        }
       }else{
           tabBody.getElementsByTagName("div")[0].classList.add("active");
       }
@@ -248,10 +251,10 @@ async function initModal(){
         suggestionsDropdown.style.display = "none";
       }
       inputbar.focus();
-    })
+    }
   }
 
-  inputbar.addEventListener("input", async function(event) {
+  inputbar.oninput = async function(event) {
     const inputValue = inputbar.value.toLowerCase();
     // filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().includes(inputValue));
     if (inputValue != '') {
@@ -278,9 +281,9 @@ async function initModal(){
       selectedSuggestionIndex = 0;
       suggestionsDropdown.style.display = "none";
     }
-  });
+  };
 
-  inputbar.addEventListener("keydown", function(event) {
+  inputbar.onkeydown = async function(event) {
 
     if (filteredSuggestions.length > 0) {
       const isArrowDown = event.key === "ArrowDown";
@@ -309,24 +312,23 @@ async function initModal(){
         event.preventDefault();
       }
     }
-  });
+  };
   
 
-  suggestionsDropdown.addEventListener("mouseover", function(event) {
+  suggestionsDropdown.onmouseover = function(event) {
     // Remove highlight from previously selected suggestion
     if (selectedSuggestionIndex >= 0 && suggestionsDropdown.children[selectedSuggestionIndex] != undefined) {
       suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
     }
     selectedSuggestionIndex = Array.from(suggestionsDropdown.children).indexOf(event.target);
-    // event.target.style.backgroundColor = highlightColor;
     if(suggestionsDropdown.children[selectedSuggestionIndex] != undefined){
       suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = highlightColor;
     }
-  });
+  };
 
-  suggestionsDropdown.addEventListener("click", function(event) {
+  suggestionsDropdown.onclick = function(event) {
     selectedShortcut();
-  });
+  };
 
   function selectedShortcut(){
     handlers["favorites"].add2Favorites(currentSelectedTab,filteredSuggestions[selectedSuggestionIndex],handlers);
