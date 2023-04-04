@@ -1,5 +1,5 @@
 export async function add2Favorites(type, shortcut,handlers) { // TODO: will later need to add the handlers to save in data handler instead of here.
-    if(shortcut.custom){//TODO: for now favorites only works for non customs
+    if(!shortcut || shortcut.custom ){//TODO: for now favorites only works for non customs
         return
     }
     let localmem = await chrome.storage.sync.get("favorites");

@@ -1,5 +1,12 @@
 export function redirectShortcuts(type,shortcut,handlers,preferences){
-    window.open(getSpecificShortcut(type,shortcut,handlers), preferences? '_blank': '');
+    if (typeof shortcut === "object") {
+        window.open(getSpecificShortcut(type,shortcut,handlers), preferences? '_blank': '');
+    } else if (typeof shortcut === "string") {
+        shortcut = shortcut.charAt(0) === "/" ? shortcut.substring(1) : shortcut;
+        window.open('/'+shortcut, preferences? '_blank': '');
+    } else {
+        return
+      }
 }
 
 function getSpecificShortcut(type,shortcut,handlers){
