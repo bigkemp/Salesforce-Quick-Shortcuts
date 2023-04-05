@@ -138,7 +138,6 @@ export async function buildData(){
 async function loadMyOrgs(){
   let myorgs = await getData('myorgs');
   let currentPage = getURLminized();
-  console.log('loadMyOrgs',currentPage);
   data_library["myorgs"] = myorgs;
   if(currentPage != ""){
     if(data_library["myorgs"] == undefined || data_library["myorgs"].length == 0){
@@ -158,14 +157,12 @@ async function loadMyOrgs(){
       orgExists.bool = false;
     }
   }
-  console.log('orgExists',orgExists);
 }
 
 async function loadMyData(mySpecificData){
   let myorg = data_library["myorgs"]?.filter(org => org.value.includes(currentOrg));
   let targetOrgSaved = myorg?.length != 0;
   let mydata = await getData(mySpecificData);
-  console.log('mydata',mydata);
   if(mySpecificData == 'mypreferences'){
       if(mydata == undefined){ // if preferences were never defined, then define
         mydata = {
@@ -210,7 +207,7 @@ async function loadJson(data) {
   }
 }
 
-export async function loadModalIndex() {
+export async function loadModalHTML() {
   try {
     const file = await fetch(chrome.runtime.getURL("/new-modal-index.html"));
     const html = await file.text();
@@ -220,7 +217,7 @@ export async function loadModalIndex() {
   }
 }
 
-export async function loadModalIndex2() {
+export async function loadPopHTML() {
   try {
     const file = await fetch(chrome.runtime.getURL("/new-extension-popup.html"));
     const html = await file.text();

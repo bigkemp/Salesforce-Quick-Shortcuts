@@ -62,7 +62,6 @@ function hotkeyFocused(event){
 
 function getDefualts(type){
     let result = handlers["data"].findDataByNode(type,"mypreferences");
-    console.log(result);
     return result;
 }
 
@@ -184,10 +183,8 @@ function alltargetOrgPin(recordOrgs) {
     }
   
     targetOrg.onclick = (event) => {
-        console.log("hhhhhhh");
       if (event.target.tagName === 'LI') {
         const myorgtag = event.target;
-        console.log('hello');
         if (myorgtag.classList.contains('sqab_my_org')) {
           myorgtag.classList.remove('sqab_my_org');
         } else {

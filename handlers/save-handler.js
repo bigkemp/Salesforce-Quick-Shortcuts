@@ -17,7 +17,6 @@ export async function save(handlers,value,label,targetorg,type){ // only modal
 export async function savePreferences(handlers,type,value){ // only popup
     let myprefrences = handlers["data"].getDataFromLibrary("mypreferences");
     myprefrences[type] = value;
-    console.log('savePreferences',myprefrences);
     await handlers["data"].overrideManualData('mypreferences',myprefrences);
 }
 
@@ -33,7 +32,6 @@ export async function edit(handlers,record,oldrecord,type){ // only pop
 }
 
 export async function remove(handlers,label,type){ // only pop
-    console.log('remove!!!');
     await handlers["data"].deleteData(label,type,'name');
     await postProcessingOfSuccessfulEdit(handlers,undefined,{name: label},type);
     return {success:true, message: "Delete was successful"};
@@ -42,7 +40,6 @@ export async function remove(handlers,label,type){ // only pop
 
 async function  postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type){
     if(type == "myorgs"){
-        console.log('postProcessingOfSuccessfulEdit');
         let affectedDataTypes = ["myobjs","myshortcuts"];
         for (const affectedDataType of affectedDataTypes) {
             let need2Save = false;

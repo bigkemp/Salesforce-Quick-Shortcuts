@@ -93,7 +93,7 @@ function getURLminized(){
 
 async function startUp(){
   await handlers["data"].buildData();
-  await handlers["data"].loadModalIndex();
+  await handlers["data"].loadModalHTML();
   initModal();
 }
 
@@ -356,7 +356,7 @@ async function initModal(){
       return;
     }else{
       const slideOutMenuBody = document.getElementById('slide-out-menu-body');
-      let html = await handlers["data"].loadModalIndex2();
+      let html = await handlers["data"].loadPopHTML();
       slideOutMenuBody.innerHTML = html;
       slideOutMenu.style.right = '0px'; /* Slide out the menu */
       handlers["popup"].init(handlers);
