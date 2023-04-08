@@ -71,7 +71,7 @@ function keyPress(e) {
           }
         break;
         case false:
-            if (handlers["data"] != undefined && evtobj.code == handlers["data"].findDataByNode("HotKey","mypreferences").code && (evtobj.ctrlKey || evtobj.metaKey)){
+            if (handlers["data"] != undefined && evtobj.key.toLowerCase() == handlers["data"].findDataByNode("HotKey","mypreferences").name.toLowerCase() && (evtobj.ctrlKey || evtobj.metaKey)){
                 startUp();   
                 modalOpened = true;
                 e.preventDefault();
