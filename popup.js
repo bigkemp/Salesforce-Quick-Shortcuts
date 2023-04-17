@@ -24,7 +24,6 @@ async function chromeStorageSet(type,data){
     await getData(type);
     let res = {[type]:data};
     await chrome.storage.sync.set(res);
-    console.log("done",res);
     await getData(type);
 }
 
@@ -48,6 +47,5 @@ async function resetEverything(){
 
 async function getData(storageType){
     let data = await chrome.storage.sync.get(storageType);
-    console.log( data);
     return data[storageType];
   }

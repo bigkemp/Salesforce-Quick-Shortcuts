@@ -40,7 +40,7 @@ function max10Favorites(shortcuts, newShortcut, shortcutExists) {
   export async function getFavorites(type, handlers){
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || undefined;
-    if (favorites == undefined || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
+    if (favorites == undefined || favorites === {} || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
         return [];
     }
     let finalFavList = [];
