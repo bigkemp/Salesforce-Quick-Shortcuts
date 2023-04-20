@@ -2,6 +2,14 @@
 
 Salesforce Quick Access Bar is a tool that provides shortcuts to Salesforce's Setup pages and Object Manager Objects via a quick access bar on all Lightning pages. It's a simple and user-friendly UI that allows users to access important Salesforce information with ease.
 
+## Works on
+
+Lightning Pages.
+
+## Latest Version
+
+2.0.0
+
 ## Key Features
 
 - Shortcuts to all Salesforce Setup pages.
@@ -13,11 +21,12 @@ Salesforce Quick Access Bar is a tool that provides shortcuts to Salesforce's Se
 - Add your own custom Objects shortcuts.
 - Favorites - saves your most frequently used shortcuts.
 - Choose what custom shortcuts and objects will be shown based on orgs.
+- Enter an Id to the shortcut page and press Enter to be redirect to a specific
 - Use the mouse less by switching between tabs by Tab button.
 
 ## Usage
 
-To open the Quick Access Modal, simply click CTRL + Q (changeable on the setting page).
+To open the Quick Access Modal, simply click CTRL + Q (Windows) or command + Q (iOS) (changeable on the setting page).
 
 ## Security
 
