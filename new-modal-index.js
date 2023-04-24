@@ -284,8 +284,6 @@ async function initModal(){
   };
 
   inputbar.onkeydown = async function(event) {
-
-    if (filteredSuggestions.length > 0) {
       const isArrowDown = event.key === "ArrowDown";
       const isArrowUp = event.key === "ArrowUp";
       const isEnter = event.key === "Enter";
@@ -311,13 +309,7 @@ async function initModal(){
         deleteModal();
         event.preventDefault();
       }
-    }else if(currentSelectedTab == 'shortcuts'){
-      if (event.key === "Enter") {
-        selectedShortcut();
-        event.preventDefault();
-      }
-    }
-  };
+  }
   
 
   suggestionsDropdown.onmouseover = function(event) {
@@ -337,12 +329,14 @@ async function initModal(){
 
   function selectedShortcut(){
     const myshortcut = filteredSuggestions[selectedSuggestionIndex];
+    let shortcutResult;
     if(myshortcut){
-      handlers["favorites"].add2Favorites(currentSelectedTab,myshortcut,handlers);
-      handlers["navigation"].redirectShortcuts(currentSelectedTab,myshortcut,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
+      shortcutResult = myshortcut;
+      handlers["favorites"].add2Favorites(currentSelectedTab,shortcutResult,handlers);
     }else{
-      handlers["navigation"].redirectShortcuts(currentSelectedTab,inputbar.value,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
+      shortcutResult = inputbar.value;
     }
+    handlers["navigation"].redirectShortcuts(currentSelectedTab,shortcutResult,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
     suggestionsDropdown.style.display = "none";
     selectedSuggestionIndex = 0;
     filteredSuggestions = [];
