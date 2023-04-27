@@ -169,8 +169,12 @@ async function loadMyData(mySpecificData){
           linkOpenNewTab:true,
           alwaysShowCustoms:true,
           alwaysShowFavorites:true,
-          HotKey: {code:81 ,name:"q"}
         };
+        if (navigator.userAgentData.platform.includes('Mac')) {
+          mydata.HotKey = {code:75 ,name:"k"}
+        } else {
+          mydata.HotKey = {code:81 ,name:"q"}
+        }
         await chromeStorageSet(mydata,mySpecificData);
       }
       data_library[mySpecificData] = mydata;

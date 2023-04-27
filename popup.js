@@ -3,12 +3,40 @@ const defaultSettings = {
        linkOpenNewTab:true,
        alwaysShowCustoms:true,
        alwaysShowFavorites:true,
-       HotKey: {code:81 ,name:"q"}
    }
 };
+const menuItems = document.querySelectorAll('.menu-item');
+const tabContents = document.querySelectorAll('.tab-content');
+
+function activateTab(tab) {
+  // Deactivate all menu items
+  menuItems.forEach(item => item.classList.remove('active'));
+  // Activate the selected menu item
+  tab.classList.add('active');
+console.log(tab.classList.contains("active"));
+
+  // Hide all tab contents
+  tabContents.forEach(content => content.classList.remove('active'));
+  // Show the selected tab content
+  const tabContent = document.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`);
+  tabContent.classList.add('active');
+  console.log(tabContent.classList.contains("active"));
+}
+
+// Set up event listeners for the menu items
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    activateTab(item);
+  });
+});
+
+// Activate the first tab on page load
+activateTab(menuItems[0]);
 var resetbtn = document.getElementById('sqab_ResetEverything');
 resetbtn.onclick = doubleCheck;
 
+var openModalbtn = document.getElementById('sqab_OpenMyModal');
+openModalbtn.onclick = openMyModal;
 var resetFinalebtn = document.getElementById('sqab_ResetEverythingFinale');
 resetFinalebtn.onclick = resetEverything;
 
@@ -27,6 +55,16 @@ async function chromeStorageSet(type,data){
     await getData(type);
 }
 
+
+function openMyModal(){
+    let message = {
+        text: "Wake Up!"
+      };
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, message);
+      });
+}
+
 function doubleCheck(){
     ResetEverything_container.style.display = "none";
     mydoubleCheck.style.display = "block";
@@ -35,6 +73,11 @@ function doubleCheck(){
 async function resetEverything(){
     mydoubleCheck.style.display = "none";
     myloader.style.display = "block";
+    if (navigator.userAgentData.platform.includes('Mac')) {
+        defaultSettings["mypreferences"].HotKey = {code:75 ,name:"k"}
+      } else {
+        defaultSettings["mypreferences"].HotKey = {code:81 ,name:"q"}
+      }
     await chromeStorageSet("mypreferences",defaultSettings["mypreferences"]);
     await chromeStorageSet("myorgs",[]);
     await chromeStorageSet("myshortcuts",[]);

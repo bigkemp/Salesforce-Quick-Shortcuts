@@ -1,31 +1,44 @@
 <head>
     <script type="module" src="popup.js"></script>
+    <link type = 'text/css' rel = 'stylesheet' href = 'popup.css'> 
 </head>
-<div style="width: 300px; height:auto;font-size: 14px;">
-    <div id="sqab_ResetEverything_container">
-        <p>
-            <h2>Experiencing issues with the modal? </h2>
-            You can utilize the Reset function to restore it to its functional state.
-        </p>
-        <button id="sqab_ResetEverything">Reset to defualts</button>
+
+<div class="menu-container">
+    <ul class="menu">
+      <li class="menu-item active" data-tab="reset"><a href="#">Reset</a></li>
+      <li class="menu-item" data-tab="floating-button"><a href="#">Open Modal</a></li>
+    </ul>
+    <div class="tab-content" data-tab="reset">
+        <div id="sqab_ResetEverything_container">
+            <p>
+                <h2>Experiencing issues with the modal? </h2>
+                You can utilize the Reset function to restore it to its functional state.
+            </p>
+            <button id="sqab_ResetEverything">Reset to defualts</button>
+        </div>
+        <div id="sqab_doubleCheck">
+            <p>
+                <h2 style="color:red">Are you sure you want to proceed with this process?</h2>
+                Please note that it will result in the deletion of all saved data, including:<br/><br/>
+                <b>
+                    * custom shortcuts<br/>
+                    * custom objects<br/>
+                    * saved organizations<br/>
+                    * favorites.<br/><br/>
+                </b>
+                Additionally, all preferences will be reset. <br/>
+                To open the modal in the future, you will need to use the default Ctrl+Q.<br/>
+                 If you wish to change this setting, you can do so by going to the Settings page within the modal itself.
+            </p>
+            <button id="sqab_ResetEverythingFinale">I am sure, Reset Everything!</button>
+        </div>
     </div>
-    <div id="sqab_doubleCheck">
-        <p>
-            <h2 style="color:red">Are you sure you want to proceed with this process?</h2>
-            Please note that it will result in the deletion of all saved data, including:<br/><br/>
-            <b>
-                * custom shortcuts<br/>
-                * custom objects<br/>
-                * saved organizations<br/>
-                * favorites.<br/><br/>
-            </b>
-            Additionally, all preferences will be reset. <br/>
-            To open the modal in the future, you will need to use the default Ctrl+Q.<br/>
-             If you wish to change this setting, you can do so by going to the Settings page within the modal itself.
-        </p>
-        <button id="sqab_ResetEverythingFinale">I am sure, Reset Everything!</button>
-    </div>
+    <div class="tab-content" data-tab="floating-button">
+        <h2>Open Modal</h2>
+        <p>Unable to open the modal using the hotkey? Click the button below to open the modal and customize the hotkey combination in your preferences.</p>
+        <button id="sqab_OpenMyModal">Open Modal</button>
+      </div>
+  </div>
     <div id="sqab_loading-screen">
         <p>Loading...</p>
     </div>
-</div>

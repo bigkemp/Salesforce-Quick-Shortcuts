@@ -22,6 +22,12 @@ var highlightColor = 'rgb(213 213 213 / 33%)';
 init();
 
 async function init(){
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if(modalOpened === false){
+      startUp();   
+      modalOpened = true;
+    }
+  });
   window.onkeydown = keyPress;
   await loadHandler("new-extension-popup", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
