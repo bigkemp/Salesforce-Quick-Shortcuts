@@ -23,7 +23,7 @@ init();
 
 async function init(){
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if(modalOpened === false){
+    if(modalOpened === false && message?.text == "Wake Up!"){
       startUp();   
       modalOpened = true;
     }
@@ -35,6 +35,20 @@ async function init(){
   await loadHandler("handlers/save-handler", "save");
   await loadHandler("handlers/favorites-handler", "favorites");
   await loadHandler("handlers/suggestions-handler", "suggestions");
+  if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
+    createFloatingBtn();
+  }
+}
+
+function createFloatingBtn(){
+  document.body.innerHTML += '<div id="sqab_mydiv"><div id="sqab_mydivheader">Open Shortcuts</div></div>';
+  const myDiv = document.getElementById("sqab_mydiv");
+  myDiv.onclick = function() {
+    if(modalOpened === false){
+      startUp();   
+      modalOpened = true;
+    }
+  };
 }
 
 function keyPress(e) {

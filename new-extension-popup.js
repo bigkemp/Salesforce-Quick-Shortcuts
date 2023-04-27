@@ -40,12 +40,12 @@ async function saveEdit() {
 
 function hotkeyChanged(event){
     event.preventDefault();
-    if(event.key == 'w'){
-        alert("Cant choose 'W' key, already defined by Chrome for closing windows ");
-    }else{
+    // if(event.key == 'w'){
+    //     alert("Cant choose 'W' key, already defined by Chrome for closing windows ");
+    // }else{
         event.target.value = event.key;
         handlers["save"].savePreferences(handlers,"HotKey",{code:event.code, name:event.key});
-    }
+    // }
     event.target.blur();
 }
 
@@ -90,6 +90,10 @@ async function buildContent(selectedType) {
         const favoritesInput = document.getElementById('sqab_show_favorites_input');
         favoritesInput.checked = getDefualts("alwaysShowFavorites");
         favoritesInput.onchange = (event) => checkboxChanged(event,"alwaysShowFavorites");
+
+        const floatingBtnInput = document.getElementById('sqab_show_floating_btn_input');
+        floatingBtnInput.checked = getDefualts("enableFloatingBtn");
+        floatingBtnInput.onchange = (event) => checkboxChanged(event,"enableFloatingBtn");
         
     }else{
         let allData = htmlBuild(type);

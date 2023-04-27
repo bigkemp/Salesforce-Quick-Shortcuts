@@ -3,6 +3,7 @@ const defaultSettings = {
        linkOpenNewTab:true,
        alwaysShowCustoms:true,
        alwaysShowFavorites:true,
+       enableFloatingBtn:false
    }
 };
 const menuItems = document.querySelectorAll('.menu-item');
@@ -13,14 +14,12 @@ function activateTab(tab) {
   menuItems.forEach(item => item.classList.remove('active'));
   // Activate the selected menu item
   tab.classList.add('active');
-console.log(tab.classList.contains("active"));
 
   // Hide all tab contents
   tabContents.forEach(content => content.classList.remove('active'));
   // Show the selected tab content
   const tabContent = document.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`);
   tabContent.classList.add('active');
-  console.log(tabContent.classList.contains("active"));
 }
 
 // Set up event listeners for the menu items
@@ -57,12 +56,12 @@ async function chromeStorageSet(type,data){
 
 
 function openMyModal(){
-    let message = {
-        text: "Wake Up!"
-      };
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, message);
-      });
+  let message = {
+      text: "Wake Up!"
+    };
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, message);
+  });
 }
 
 function doubleCheck(){
