@@ -94,6 +94,14 @@ async function buildContent(selectedType) {
         const floatingBtnInput = document.getElementById('sqab_show_floating_btn_input');
         floatingBtnInput.checked = getDefualts("enableFloatingBtn");
         floatingBtnInput.onchange = (event) => checkboxChanged(event,"enableFloatingBtn");
+
+        const disableHotkeyInput = document.getElementById('sqab_disable_hotkey_input');
+        disableHotkeyInput.checked = getDefualts("disableHotKey");
+        disableHotkeyInput.onchange = (event) => checkboxChanged(event,"disableHotKey");
+
+        const enableAutoAddInput = document.getElementById('sqab_enable_auto_add_input');
+        enableAutoAddInput.checked = getDefualts("enableAutoAdd");
+        enableAutoAddInput.onchange = (event) => checkboxChanged(event,"enableAutoAdd");
         
     }else{
         let allData = htmlBuild(type);

@@ -3,7 +3,9 @@ const defaultSettings = {
        linkOpenNewTab:true,
        alwaysShowCustoms:true,
        alwaysShowFavorites:true,
-       enableFloatingBtn:false
+       enableFloatingBtn:false,
+       disableHotKey:false,
+       enableAutoAdd:false
    }
 };
 const menuItems = document.querySelectorAll('.menu-item');

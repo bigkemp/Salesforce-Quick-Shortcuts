@@ -169,7 +169,9 @@ async function loadMyData(mySpecificData){
           linkOpenNewTab:true,
           alwaysShowCustoms:true,
           alwaysShowFavorites:true,
-          enableFloatingBtn:false
+          enableFloatingBtn:false,
+          disableHotKey:false,
+          enableAutoAdd:false
         };
         if (navigator.userAgentData.platform.includes('Mac')) {
           mydata.HotKey = {code:75 ,name:"k"}

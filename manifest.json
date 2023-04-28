@@ -1,7 +1,7 @@
 {
     "name": "Salesforce Quick Access Bar",
     "description": "Easy access to Salesforce's Setup page options and Object Manager's Objects via a quick access bar on all Lightning pages",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "manifest_version": 3,
     "permissions": [
         "storage"
