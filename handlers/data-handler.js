@@ -173,7 +173,7 @@ async function loadMyData(mySpecificData){
           disableHotKey:false,
           enableAutoAdd:false
         };
-        if (navigator.userAgentData.platform.includes('Mac')) {
+        if (navigator.userAgentData.platform.toLowerCase().includes('mac')) {
           mydata.HotKey = {code:75 ,name:"k"}
         } else {
           mydata.HotKey = {code:81 ,name:"q"}
