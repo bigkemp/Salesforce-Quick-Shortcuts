@@ -30,7 +30,7 @@ Lightning Pages.
 
 ## Usage
 
-To open the Quick Access Modal, simply click CTRL + Q (Windows) or command + Q (iOS) (changeable on the setting page).
+To open the Quick Access Modal, simply click CTRL + Q (Windows) or command + K (iOS) (changeable on the setting page).
 
 ## Security
 
