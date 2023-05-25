@@ -15,6 +15,8 @@ export function redirectShortcuts(type, shortcut, handlers, preferences) {
 function getSpecificShortcut(type,shortcut,handlers){
     let finalURL = '';
     let targetUrl = '';
+    console.log('type',type);
+    console.log('shortcut',shortcut);
     if (typeof shortcut === "string") {
         targetUrl = shortcut.charAt(0) === "/" ? shortcut.substring(1) : shortcut;
         if(type == 'objs'){
@@ -27,6 +29,7 @@ function getSpecificShortcut(type,shortcut,handlers){
     }else{
         if(shortcut?.custom){
             targetUrl = shortcut.value;
+            finalURL = targetUrl
                 if(type == 'objs'){
                     finalURL = `/lightning/setup/ObjectManager/${targetUrl}/Details/view`
                 }else if(type == 'listview'){

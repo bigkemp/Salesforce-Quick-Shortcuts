@@ -41,8 +41,14 @@ async function init(){
 }
 
 function createFloatingBtn(){
-  document.body.innerHTML += '<div id="sqab_mydiv"><div id="sqab_mydivheader">Open Shortcuts</div></div>';
-  const myDiv = document.getElementById("sqab_mydiv");
+  const sfPageBody = document.getElementsByClassName("desktop")[0];
+  const myDiv = document.createElement('div');
+  myDiv.id = "sqab_mydiv";
+  const myDivHeader = document.createElement('div');
+  myDivHeader.id = "sqab_mydivheader";
+  myDivHeader.textContent = "Open Shortcuts";
+  myDiv.appendChild(myDivHeader);
+  sfPageBody.appendChild(myDiv);
   myDiv.onclick = function() {
     if(modalOpened === false){
       startUp();   
@@ -50,6 +56,7 @@ function createFloatingBtn(){
     }
   };
 }
+
 
 function keyPress(e) {
     let evtobj = e;

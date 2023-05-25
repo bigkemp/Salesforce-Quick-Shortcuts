@@ -17,7 +17,7 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
       }
     }
     max10Favorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
-    await  chromeStorageSet(favorites, "favorites");
+    handlers["data"].chromeStorageSet(favorites, "favorites")
   }
 
 function max10Favorites(shortcuts, newShortcut, shortcutExists) {
@@ -56,9 +56,3 @@ function max10Favorites(shortcuts, newShortcut, shortcutExists) {
     }
     return finalFavList;
 }
-
-
-   async function chromeStorageSet(data, type) {
-     await chrome.storage.sync.set({[type]:data});
-    }
-  
