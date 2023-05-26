@@ -19,7 +19,7 @@ export function getSuggestions(array_data, input) {
 }
 
 export function getFavoritesSuggestions(array_data) {
-  console
+  console.log('array_data',array_data);
   const suggestions = [];
   for (const favorite of array_data) {
     favorite.shortcut.favorite = true;

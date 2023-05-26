@@ -1,4 +1,5 @@
-export async function add2Favorites(type, shortcut,handlers) { // TODO: will later need to add the handlers to save in data handler instead of here.
+const maxNumberOfFavs = 5;
+export async function add2Favorites(type, shortcut,handlers) { 
     if(!shortcut || shortcut.custom ){//TODO: for now favorites only works for non customs
         return
     }
@@ -16,12 +17,12 @@ export async function add2Favorites(type, shortcut,handlers) { // TODO: will lat
         break;
       }
     }
-    max10Favorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
-    handlers["data"].chromeStorageSet(favorites, "favorites")
+    sortFavorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
+    handlers["data"].overrideManualData( "favorites",favorites)
   }
 
-function max10Favorites(shortcuts, newShortcut, shortcutExists) {
-    if (shortcuts.length < 10 && !shortcutExists) {
+function sortFavorites(shortcuts, newShortcut, shortcutExists) {
+    if (shortcuts.length < maxNumberOfFavs && !shortcutExists) {
         shortcuts.push(newShortcut);
     } else {
         let lowestCountIndex = 0;

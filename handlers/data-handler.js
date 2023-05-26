@@ -1,6 +1,13 @@
 var data_library = {};
 var startFromPopup = false;
 var currentOrg = getURLminized();
+var defaultPreferences = {
+          linkOpenNewTab:true,
+          alwaysShowCustoms:true,
+          alwaysShowFavorites:true,
+          enableFloatingBtn:true,
+          enableHotKey:true,
+        }
 export var orgExists = {bool:false,name:"",value:""};
 buildData();
 
@@ -37,6 +44,9 @@ export function findDataByLabel(label,type) {
 
 export function findDataByNode(node,type) {// for preferences data
   let mySavedData = getDataFromLibrary(type);
+  if(type == 'mypreferences' && mySavedData[node] === undefined){
+    return defaultPreferences[node];
+  }
   return mySavedData[node];
 }
 
@@ -165,14 +175,7 @@ async function loadMyData(mySpecificData){
   let mydata = await getData(mySpecificData);
   if(mySpecificData == 'mypreferences'){
       if(mydata == undefined){ // if preferences were never defined, then define
-        mydata = {
-          linkOpenNewTab:true,
-          alwaysShowCustoms:true,
-          alwaysShowFavorites:true,
-          enableFloatingBtn:false,
-          disableHotKey:false,
-          enableAutoAdd:false
-        };
+        mydata = defaultPreferences;
         if (navigator.userAgentData.platform.toLowerCase().includes('mac')) {
           mydata.HotKey = {code:75 ,name:"k"}
         } else {

@@ -95,13 +95,13 @@ async function buildContent(selectedType) {
         floatingBtnInput.checked = getDefualts("enableFloatingBtn");
         floatingBtnInput.onchange = (event) => checkboxChanged(event,"enableFloatingBtn");
 
-        const disableHotkeyInput = document.getElementById('sqab_disable_hotkey_input');
-        disableHotkeyInput.checked = getDefualts("disableHotKey");
-        disableHotkeyInput.onchange = (event) => checkboxChanged(event,"disableHotKey");
+        const enableHotKeyInput = document.getElementById('sqab_enable_hotkey_input');
+        enableHotKeyInput.checked = getDefualts("enableHotKey");
+        enableHotKeyInput.onchange = (event) => checkboxChanged(event,"enableHotKey");
 
-        const enableAutoAddInput = document.getElementById('sqab_enable_auto_add_input');
-        enableAutoAddInput.checked = getDefualts("enableAutoAdd");
-        enableAutoAddInput.onchange = (event) => checkboxChanged(event,"enableAutoAdd");
+        // const enableAutoAddInput = document.getElementById('sqab_enable_auto_add_input');
+        // enableAutoAddInput.checked = getDefualts("enableAutoAdd");
+        // enableAutoAddInput.onchange = (event) => checkboxChanged(event,"enableAutoAdd");
         
     }else{
         let allData = htmlBuild(type);

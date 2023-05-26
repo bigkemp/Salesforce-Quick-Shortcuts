@@ -4,7 +4,7 @@ const defaultSettings = {
        alwaysShowCustoms:true,
        alwaysShowFavorites:true,
        enableFloatingBtn:false,
-       disableHotKey:false,
+       enableHotKey:true,
        enableAutoAdd:false
    }
 };
@@ -74,7 +74,7 @@ function doubleCheck(){
 async function resetEverything(){
     mydoubleCheck.style.display = "none";
     myloader.style.display = "block";
-    if (navigator.userAgentData.platform.includes('Mac')) {
+    if (navigator.userAgentData.platform.toLowerCase().includes('mac')) {
         defaultSettings["mypreferences"].HotKey = {code:75 ,name:"k"}
       } else {
         defaultSettings["mypreferences"].HotKey = {code:81 ,name:"q"}
