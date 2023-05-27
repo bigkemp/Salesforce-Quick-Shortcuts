@@ -15,8 +15,6 @@ export function redirectShortcuts(type, shortcut, handlers, preferences) {
 function getSpecificShortcut(type,shortcut,handlers){
     let finalURL = '';
     let targetUrl = '';
-    console.log('type',type);
-    console.log('shortcut',shortcut);
     if (typeof shortcut === "string") {
         targetUrl = shortcut.charAt(0) === "/" ? shortcut.substring(1) : shortcut;
         if(type == 'objs'){

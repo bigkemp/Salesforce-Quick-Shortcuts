@@ -345,6 +345,7 @@ function ADDpage(){
   const shortcutOption = document.getElementById("option1"); 
   const addlabel = document.getElementById("add_label_input"); 
   const rowElement = addlabel.parentNode;
+  rowElement.style.display = 'flex';
   const targetList = document.getElementById("targetList");
   let type = "shortcuts";
 
@@ -371,11 +372,12 @@ function ADDpage(){
 
   objOption.onclick = function(e) {
     type = "objs";
-    inputbar.value = '';
     inputbar.placeholder = 'Enter Object API Name';
     if(inputbar.value.includes("__c")){
       let obgInUrl = inputbar.value.split("/").filter(element => element.includes("__c"));
       inputbar.value = obgInUrl;
+    }else{
+      inputbar.value = '';
     }
     rowElement.style.display = 'none';
   }

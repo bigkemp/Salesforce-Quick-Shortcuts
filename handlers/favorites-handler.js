@@ -3,42 +3,46 @@ export async function add2Favorites(type, shortcut,handlers) {
     if(!shortcut || shortcut.custom ){//TODO: for now favorites only works for non customs
         return
     }
-    let localmem = await chrome.storage.sync.get("favorites");
-    let favorites = localmem["favorites"] || {};
+    let favorites = await handlers["data"].getData("favorites") || {};
     const orgKey = shortcut.org ? shortcut.org : "undefined";
     favorites[orgKey] = favorites[orgKey] || {};
     favorites[orgKey][type] = favorites[orgKey][type] || [];
 
     let shortcutExists = false;
+    let usedShortcut = { shortcut, count: 1 };
     for (const item of favorites[orgKey][type]) {
       if (item.shortcut.name === shortcut.name && item.shortcut.value === shortcut.value) {
         item.count++;
+        usedShortcut = item;
         shortcutExists = true;
         break;
       }
     }
-    sortFavorites(favorites[orgKey][type], { shortcut, count: 1 },shortcutExists);
-    handlers["data"].overrideManualData( "favorites",favorites)
-  }
+    favorites[orgKey][type] = sortFavorites(favorites[orgKey][type], usedShortcut ,shortcutExists);
+    handlers["data"].overrideManualData("favorites",favorites)
+}
 
-function sortFavorites(shortcuts, newShortcut, shortcutExists) {
+function sortFavorites(shortcuts, usedShortcut, shortcutExists) {
     if (shortcuts.length < maxNumberOfFavs && !shortcutExists) {
-        shortcuts.push(newShortcut);
-    } else {
+        shortcuts.push(usedShortcut);
+    }else if(shortcuts.length >= maxNumberOfFavs && !shortcutExists)  {
         let lowestCountIndex = 0;
         for (let i = 1; i < shortcuts.length; i++) {
             if (shortcuts[i].count < shortcuts[lowestCountIndex].count) {
                 lowestCountIndex = i;
             }
         }
-        if (newShortcut.count > shortcuts[lowestCountIndex].count) {
-            shortcuts[lowestCountIndex] = newShortcut;
+        if (usedShortcut.count > shortcuts[lowestCountIndex].count) {
+            shortcuts[lowestCountIndex] = usedShortcut;
+        }else{
+            // what to do with new favs?
         }
     }
-    shortcuts.sort((a, b) => b.count - a.count);
+    
+    return shortcuts.sort((a, b) => b.count - a.count);
 }
 
-  export async function getFavorites(type, handlers){
+export async function getFavorites(type, handlers){
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || undefined;
     if (favorites == undefined || favorites === {} || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
