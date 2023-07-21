@@ -47,7 +47,7 @@ function createFloatingBtn(){
   myDiv.id = "sqab_mydiv";
   const myDivHeader = document.createElement('div');
   myDivHeader.id = "sqab_mydivheader";
-  myDivHeader.textContent = "Open Shortcuts";
+  // myDivHeader.textContent = "Open Shortcuts";
   myDiv.appendChild(myDivHeader);
   sfPageBody.appendChild(myDiv);
   myDiv.onclick = function() {
