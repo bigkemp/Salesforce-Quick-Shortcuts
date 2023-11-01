@@ -95,6 +95,13 @@ async function buildContent(selectedType) {
         floatingBtnInput.checked = getDefualts("enableFloatingBtn");
         floatingBtnInput.onchange = (event) => checkboxChanged(event,"enableFloatingBtn");
 
+        const ResetFavoritesBtn = document.getElementById('sqab_ResetFavoritesBtn');
+        if(await IhaveFavorites()){
+            ResetFavoritesBtn.onclick = (event) => resetFavorites(event);
+        }else{
+            ResetFavoritesBtn.style.display = "none";
+        }
+
         const enableHotKeyInput = document.getElementById('sqab_enable_hotkey_input');
         enableHotKeyInput.checked = getDefualts("enableHotKey");
         enableHotKeyInput.onchange = (event) => checkboxChanged(event,"enableHotKey");
@@ -119,6 +126,27 @@ async function buildContent(selectedType) {
             }            
         }
     }
+}
+
+async function IhaveFavorites(){
+    let localmem = await chrome.storage.sync.get("favorites");
+    let favorites = localmem["favorites"] || undefined;
+    if (favorites == undefined || Object.keys(favorites).length === 0  || favorites == []){
+        return false;
+    }
+    return true;
+}
+
+async function resetFavorites(e){
+    await handlers["data"].overrideManualData("favorites",{});
+    const ResetFavoritesBtn = document.getElementById('sqab_ResetFavoritesBtn');
+    const parent = ResetFavoritesBtn.parentNode;
+    ResetFavoritesBtn.style.display = "none";
+    const message = document.createElement('div');
+    message.textContent = 'Please refresh';
+    message.style.color = 'red';
+
+    parent.replaceChild(message, ResetFavoritesBtn);
 }
 
 function buttonEditClicked(e){

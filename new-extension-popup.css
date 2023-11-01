@@ -81,6 +81,9 @@
     font: normal normal 12px 'Open Sans';
 }
 
+#sqab_ResetFavoritesBtn{
+    margin-top:10px;
+}
 .ac-container article.mypreferences div {
     padding: 10px;
 }

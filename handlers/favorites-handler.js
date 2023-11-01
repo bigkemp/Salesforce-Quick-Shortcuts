@@ -32,10 +32,8 @@ function sortFavorites(shortcuts, usedShortcut, shortcutExists) {
                 lowestCountIndex = i;
             }
         }
-        if (usedShortcut.count > shortcuts[lowestCountIndex].count) {
+        if (usedShortcut.count >= shortcuts[lowestCountIndex].count) {
             shortcuts[lowestCountIndex] = usedShortcut;
-        }else{
-            // what to do with new favs?
         }
     }
     
@@ -45,7 +43,7 @@ function sortFavorites(shortcuts, usedShortcut, shortcutExists) {
 export async function getFavorites(type, handlers){
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || undefined;
-    if (favorites == undefined || favorites === {} || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
+    if (favorites == undefined ||  Object.keys(favorites).length === 0 || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
         return [];
     }
     let finalFavList = [];
