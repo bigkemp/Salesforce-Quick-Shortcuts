@@ -4,7 +4,8 @@ var modalOpened = false;
 var suggestions = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"];
 var tabsPane
 var inputbar
-var inputPlaceholders = {     "#00acee": {"placeholder":"Enter Shortcut Name","type":"shortcuts"},
+var inputPlaceholders = {
+"#00acee": {"placeholder":"Enter Shortcut Name","type":"shortcuts"},
 "#FFB562": {"placeholder":"Enter Object Label","type":"objs"},
 "#6BCB77": {"placeholder":"Enter Object Label","type":"listview"},
 "#FF6B6B": {"placeholder":"add","type":"add"}
@@ -321,8 +322,7 @@ function initSuggesionsDropdown(){
 }
 
 function defineSettingsIcon(){
-  let icon = document.getElementById("icon");
-  icon.src = chrome.runtime.getURL("/resources/gear.png");
+  let icon = document.getElementById("settingsIcon");
   icon.onclick = openSettings;
 }
 

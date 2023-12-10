@@ -109,8 +109,8 @@
 		transition: right 0.3s ease-in-out;
 		cursor: pointer;
 		top:200px;
-    	border-radius: 15px;
-    	background-color: #838383;
+    	border-radius: 5px;
+    	background-color: white;
     	opacity: 0.7;
 		box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3); /* add a sharper shadow effect */
 	}
@@ -122,10 +122,11 @@
 		padding-left: 15px;
     	/* margin-right:-5px; */
 		z-index: 1000;
-		border-radius: 15px;
-    	border: 5px solid lightgray; /* add a 2px white border */
-		color: #fff;
+		border-radius: 5px;
+    	border: 5px solid aliceblue; /* add a 2px white border */
+		color: #898a8b;
 	   	opacity: 0.7;
+		font-weight: 600;
 	}
 
 	#sqab_mydiv:hover {
@@ -238,31 +239,6 @@
 	flex-direction: column;
 	}
 
-	.setting_icon{
-		margin: 0;
-		padding: 0;
-		text-align: right;
-		display: block;
-		position: inherit;
-		right: 3%;
-		top: 8%;
-		margin-bottom: -15px;
-	}
-
-	img#icon{
-		height: 20px;
-		cursor: pointer;
-	}
-
-	img#icon:hover{
-		transform: rotate(360deg);
-		transition: transform 1s; /* optional: adds a smooth transition effect */
-	}
-
-	img#icon:active{
-		transform: scale(4);
-	}
-
 
 	#slide-out-menu {
 	position: fixed;
@@ -328,7 +304,7 @@
 	.sqab_modal > .sqab_tabs {
 		font-family: sans-serif;
 		min-height: 120px;
-		box-shadow: rgb(204 204 204) 5px 10px 5px;
+		box-shadow: rgb(204 204 204 / 29%) 5px 10px 5px;
 		position: unset;
 		display: block;
 		transform: none;
@@ -338,3 +314,47 @@
 		transition: none 0s ease 0s;
 		margin: 33vh auto;
 	}
+
+	/* Styles for the vertical tab */
+.sqab_settings-icon {
+	position: fixed;
+	top: 50%;
+	right: 0;
+	background-color: #f2f2f2;
+	width: 10px; /* Adjust the width as needed */
+	height: 120px; /* Adjust the height as needed */
+	cursor: pointer;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	transition: width 0.3s ease-in-out, right 0.3s ease-in-out;
+	overflow: hidden; /* Hide overflowing content */
+  }
+  
+  .sqab_settings-icon:hover {
+	width: 40px; /* Adjust the expanded width as needed */
+  }
+  
+  /* Styles for the rotated text */
+  .sqab_settings-icon-vertical-text {
+	display: inline-block;
+	opacity: 0; /* Initially invisible */
+	transform: rotate(-90deg);
+	transform-origin: left bottom;
+	white-space: nowrap; /* Prevent text from wrapping */
+	position: absolute;
+	font-weight: 600;
+    font-family: cursive;
+    top: 73%;
+    left: 73%;
+    color: dimgray;
+	margin-top: -50%; /* Adjust this value based on half of the text height */
+	margin-left: 0;
+	transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Make the text visible on hover */
+  .sqab_settings-icon:hover .sqab_settings-icon-vertical-text {
+	opacity: 1;
+  }
+  
+  
