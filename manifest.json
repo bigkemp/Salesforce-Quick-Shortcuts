@@ -1,10 +1,12 @@
 {
     "name": "Salesforce Quick Shortcuts",
     "description": "Easy access to Salesforce's Setup page options and Object Manager's Objects via a quick access bar on all Lightning pages",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "manifest_version": 3,
     "permissions": [
-        "storage"
+        "storage",
+        "tabs",
+        "cookies"
     ],
     "action": {
         "default_popup": "popup.html",
@@ -16,6 +18,15 @@
         "48": "resources/icon48.png",
         "128": "resources/icon128.png"
     },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "https://*.salesforce.com/*",
+        "https://*.force.com/*",
+        "https://*.cloudforce.com/*",
+        "https://*.visualforce.com/*"
+    ],
     "content_scripts": [
         {
             "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],

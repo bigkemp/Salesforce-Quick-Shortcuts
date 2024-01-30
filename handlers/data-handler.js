@@ -121,9 +121,9 @@ export function getShortcuts(name){
     result.push(data);
   }
   
-  if (result.length === 0) {
-    return [];
-  }
+  // if (result.length === 0) { // I dont think this is needed
+  //   return [];
+  // }
   return result;
 }
 
@@ -200,6 +200,22 @@ async function loadMyData(mySpecificData){
     data_library[mySpecificData] = filteredData?.length == 0 ? undefined : filteredData;
   }
 
+}
+
+export async function clearTempSearchData(type) {
+  try {
+    delete data_library[type];
+  } catch (e) {
+    console.log(e);
+  }
+}
+export async function setTempSearchData(type,parsed) {
+  try {
+    data_library[type] = parsed["defaults"];
+    data_library[type]["urls"] = parsed["urls"];
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function loadJson(data) {

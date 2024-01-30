@@ -14,13 +14,15 @@ var handlers = {};
 var initied = false;
 var filteredSuggestions = [];
 var selectedSuggestionIndex = 0;
-var currentSelectedTab="shortcuts";
+var currentSelectedTab = "shortcuts";
 var savedShortcuts
 var loadingScreen;
+var tempSearchBox;
 var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'rgb(213 213 213 / 33%)';
 var suggestionsDropdown;
+var tempSearch = false;
 init();
 
 async function init(){
@@ -37,6 +39,8 @@ async function init(){
   await loadHandler("handlers/save-handler", "save");
   await loadHandler("handlers/favorites-handler", "favorites");
   await loadHandler("handlers/suggestions-handler", "suggestions");
+  await loadHandler("handlers/messenger-handler", "messenger");
+  await loadHandler("handlers/connector-handler", "connector");
   if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
     createFloatingBtn();
   }
@@ -103,7 +107,7 @@ function keyPress(e) {
               currentSelectedTab = inputPlaceholders[tabsPane[nextIndex].dataset.color]["type"];
               suggestionsDropdown.style.display = "none";
               inputbar.focus();
-            e.preventDefault();
+              e.preventDefault();
           }
         break;
         case false:
@@ -157,10 +161,13 @@ function loading_Start(){
 
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
+  let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
+  console.log('type',type);
+  console.log('inputValue',inputValue);
   if (inputValue != '') {
-    filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(currentSelectedTab),inputValue);
+    filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
   }else{
-    filteredSuggestions =  handlers["suggestions"].getFavoritesSuggestions(await handlers["favorites"].getFavorites(currentSelectedTab,handlers));
+    filteredSuggestions =  handlers["suggestions"].getFavoritesSuggestions(await handlers["favorites"].getFavorites(type,handlers));
   }
   if(filteredSuggestions.length != 0){
     suggestionsDropdown.style.display = "contents";
@@ -194,13 +201,15 @@ function closeSidePanel(){
 }
 
 async function initModal(){
+  tempSearch = false;
   currentSelectedTab="shortcuts";
-  defineSettingsIcon();
+  defineSettingsPanel();
   defineOutsideAsCloseModal();
   //define elements
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
   const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
+  tempSearchBox = document.getElementsByClassName("sqab_dynamic_search")[0];
   tabsPane = tabHeader.getElementsByTagName("div");
   inputbar = document.getElementById("modalInput");
   inputbar.focus();
@@ -214,6 +223,7 @@ async function initModal(){
   r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].onclick = async function(e){
+      cancelTempSearch();
       closeSidePanel();
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
@@ -239,14 +249,15 @@ async function initModal(){
 
 function selectedShortcut(){
   const myshortcut = filteredSuggestions[selectedSuggestionIndex];
+  let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
   let shortcutResult;
   if(myshortcut){
     shortcutResult = myshortcut;
-    handlers["favorites"].add2Favorites(currentSelectedTab,shortcutResult,handlers);
+    handlers["favorites"].add2Favorites(type,shortcutResult,handlers);
   }else{
     shortcutResult = inputbar.value;
   }
-  handlers["navigation"].redirectShortcuts(currentSelectedTab,shortcutResult,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
+  handlers["navigation"].redirectShortcuts(type,shortcutResult,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
   suggestionsDropdown.style.display = "none";
   selectedSuggestionIndex = 0;
   filteredSuggestions = [];
@@ -266,14 +277,61 @@ async function openSettings() {
     handlers["popup"].init(handlers);
   }
 }
+async function getRemoteData(type){
+  let res = await handlers["connector"].search(type);
+  console.log("testy2",res);
+  handlers["data"].setTempSearchData(type,res);
 
+}
+
+function cancelTempSearch(){
+  if(tempSearch == false){
+    return;
+  }
+  handlers["data"].clearTempSearchData(tempSearchBox.innerText.toLowerCase());
+  tempSearchBox.classList.add("hide");
+  tempSearch = false;
+}
 function initInput(){
+
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
-    showSuggestions(inputValue);
+    if(inputValue.startsWith("/")){
+      switch (inputValue) {
+        case "/flows ":
+          tempSearchBox.classList.remove("hide");
+          tempSearchBox.innerText = "Flows";
+          tempSearchBox.style.color = "purple";
+          inputbar.value = "";
+          tempSearch = true;
+          getRemoteData('flows');
+          return;
+
+        case "/users ":
+          tempSearchBox.classList.remove("hide");
+          tempSearchBox.innerText = "Users";
+          tempSearchBox.style.color = "purple";
+          inputbar.value = "";
+          tempSearch = true;
+          getRemoteData('users');
+          return;
+        case "/profiles ":
+          tempSearchBox.classList.remove("hide");
+          tempSearchBox.innerText = "Profiles";
+          tempSearchBox.style.color = "purple";
+          inputbar.value = "";
+          tempSearch = true;
+          getRemoteData('profiles');
+          return;
+      }
+    }
+  showSuggestions(inputValue);
   };
 
   inputbar.onkeydown = async function(event) {
+    if (!inputbar.value && event.key === 'Backspace'){
+      cancelTempSearch();
+    }
     const isArrowDown = event.key === "ArrowDown";
     const isArrowUp = event.key === "ArrowUp";
     const isEnter = event.key === "Enter";
@@ -321,7 +379,7 @@ function initSuggesionsDropdown(){
   };
 }
 
-function defineSettingsIcon(){
+function defineSettingsPanel(){
   let icon = document.getElementById("settingsIcon");
   icon.onclick = openSettings;
 }

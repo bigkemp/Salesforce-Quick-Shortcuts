@@ -239,6 +239,19 @@
 	flex-direction: column;
 	}
 
+	.sqab_dynamic_search{
+		display: block;
+		color: purple;
+		border-radius: 5px;
+		border-color: purple;
+		border-width: medium;
+		background: white;
+		font-weight: bold;
+	}
+	.sqab_dynamic_search.hide{
+	display: none;
+	}
+
 
 	#slide-out-menu {
 	position: fixed;
