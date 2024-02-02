@@ -296,7 +296,7 @@ function initInput(){
 
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
-    if(inputValue.startsWith("/")){
+    if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts'){
       switch (inputValue) {
         case "/flows ":
           tempSearchBox.classList.remove("hide");
