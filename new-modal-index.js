@@ -306,7 +306,6 @@ function initInput(){
           tempSearch = true;
           getRemoteData('flows');
           return;
-
         case "/users ":
           tempSearchBox.classList.remove("hide");
           tempSearchBox.innerText = "Users";
@@ -322,6 +321,14 @@ function initInput(){
           inputbar.value = "";
           tempSearch = true;
           getRemoteData('profiles');
+          return;
+        case "/metadata ":
+          tempSearchBox.classList.remove("hide");
+          tempSearchBox.innerText = "Metadata";
+          tempSearchBox.style.color = "purple";
+          inputbar.value = "";
+          tempSearch = true;
+          getRemoteData('metadata');
           return;
       }
     }

@@ -17,6 +17,24 @@ function init(){
 }
 
 // Function to convert the response map of MasterLabel to Id
+function convertCustomMetadata2ResponseToMap(response) {
+    const defaults = [];
+    const urls = {};
+
+    if (response && response.records) {
+        response.records.forEach(record => {
+            const MetadataDefinitionId = record.DurableId;
+            const masterLabel = record.NamespacePrefix != null ? record.NamespacePrefix+' ' : '' + record.DeveloperName;
+            defaults.push({name: masterLabel});
+            if (masterLabel) {
+              urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/CustomMetadata/page?address=%2F${MetadataDefinitionId}%3Fsetupid%3DCustomMetadata`;
+            }
+        });
+    }
+    let idLabelMap = {defaults: defaults, urls: urls};
+    return idLabelMap;
+}
+
 function convertFlow2ResponseToMap(response) {
     const defaults = [];
     const urls = {};
@@ -41,11 +59,11 @@ function convertUser2ResponseToMap(response) {
 
     if (response && response.records) {
         response.records.forEach(record => {
-            const flowDefinitionId = record.Id;
+            const userDefinitionId = record.Id;
             const masterLabel = record.Name;
             defaults.push({name: masterLabel});
             if (masterLabel) {
-              urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/ManageUsers/page?address=%2F${flowDefinitionId}%3Fnoredirect%3D1%26isUserEntityOverride%3D1`;
+              urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/ManageUsers/page?address=%2F${userDefinitionId}%3Fnoredirect%3D1%26isUserEntityOverride%3D1`;
             }
         });
     }
@@ -59,11 +77,11 @@ function convertProfiles2ResponseToMap(response) {
 
     if (response && response.records) {
         response.records.forEach(record => {
-            const flowDefinitionId = record.Id;
+            const profileDefinitionId = record.Id;
             const masterLabel = record.Name;
             defaults.push({name: masterLabel});
             if (masterLabel) {
-              urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/EnhancedProfiles/page?address=%2F${flowDefinitionId}`;
+              urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/EnhancedProfiles/page?address=%2F${profileDefinitionId}`;
             }
         });
     }
@@ -82,12 +100,21 @@ function convertProfiles2ResponseToMap(response) {
  }
 
  async function search_users() {
-    let query = `select Id,Name FROM User`;
+    let query = `select Id,Name,Email FROM User`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     console.log('search results:',JSON.stringify(res));
     return convertUser2ResponseToMap(res);
     // return res.records;
  }
+
+ async function search_metadata() {
+    let query = `SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
+    let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
+    console.log('search results:',JSON.stringify(res));
+    return convertCustomMetadata2ResponseToMap(res);
+    // return res.records;
+ }
+
  async function search_profiles() {
     let query = `SELECT Id, Name FROM Profile`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
@@ -155,6 +182,8 @@ function convertProfiles2ResponseToMap(response) {
         return await search_users();
       case "profiles":
         return await search_profiles();
+      case "metadata":
+        return await search_metadata();
     
       default:
         return true;
