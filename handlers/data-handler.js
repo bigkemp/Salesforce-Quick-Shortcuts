@@ -106,7 +106,7 @@ export function getDataFromLibrary(name){
 
 
 export function getShortcuts(name){
-  if(name == 'listview'){
+  if(name == 'listviews'){
     name = 'objs';
   }
   const myData = data_library['my' + name];
@@ -128,9 +128,9 @@ export function getShortcuts(name){
 }
 
 export function findDefaultShortcut(type,nameForJson){
-  if(type == 'listview'){
-    type = 'objs';
-  }
+  // if(type == 'listviews'){
+  //   type = 'objs';
+  // }
   return data_library[type]["urls"][nameForJson];
 }
 
@@ -142,6 +142,7 @@ export async function buildData(){
   await loadMyData('myobjs');
   await loadMyData('mypreferences');
   await loadJson('shortcuts');
+  await loadJson('extensions');
   await loadJson('obj-shortcuts');
 }
 

@@ -19,7 +19,7 @@ function getSpecificShortcut(type,shortcut,handlers){
         targetUrl = shortcut.charAt(0) === "/" ? shortcut.substring(1) : shortcut;
         if(type == 'objs'){
             finalURL = `/lightning/setup/ObjectManager/${targetUrl}/Details/view`
-        }else if(type == 'listview'){
+        }else if(type == 'listviews'){
             finalURL = `/lightning/o/${targetUrl}/list?filterName=Recent`
         }else{
             finalURL = '/'+targetUrl;
@@ -30,7 +30,7 @@ function getSpecificShortcut(type,shortcut,handlers){
             finalURL = targetUrl
                 if(type == 'objs'){
                     finalURL = `/lightning/setup/ObjectManager/${targetUrl}/Details/view`
-                }else if(type == 'listview'){
+                }else if(type == 'listviews'){
                     finalURL = `/lightning/o/${targetUrl}/list?filterName=Recent`
                 }else{
                     if (targetUrl.includes(".com") && !targetUrl.includes("http")) {
@@ -47,7 +47,7 @@ function getSpecificShortcut(type,shortcut,handlers){
                 finalURL = defaultShortcut || shortcut;
                 if(defaultShortcut != undefined && type == 'objs'){
                     finalURL = `/lightning/setup/ObjectManager/${defaultShortcut}/Details/view`
-                }else if(defaultShortcut != undefined && type == 'listview'){
+                }else if(defaultShortcut != undefined && type == 'listviews'){
                     finalURL = `/lightning/o/${defaultShortcut}/list?filterName=Recent`
                 }
             }

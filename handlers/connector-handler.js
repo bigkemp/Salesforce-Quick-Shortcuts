@@ -89,6 +89,51 @@ function convertProfiles2ResponseToMap(response) {
     return idLabelMap;
 }
 
+function convertObj2ResponseToMap(response,type) {
+    const defaults = [];
+    const urls = {};
+
+    if (response && response.records) {
+      if(type == 'objs'){
+        response.records.forEach(record => {
+          const objectId = record.DurableId ;
+          const masterLabel = record.QualifiedApiName;
+          defaults.push({name: masterLabel});
+          if (masterLabel) {
+            urls[masterLabel.replaceAll(" ","-")] = objectId;
+          }
+        });
+      }else{
+        response.records.forEach(record => {
+          const masterLabel = record.QualifiedApiName;
+          defaults.push({name: masterLabel});
+          if (masterLabel) {
+            urls[masterLabel.replaceAll(" ","-")] = masterLabel;
+          }
+        });
+      }
+    }
+    let idLabelMap = {defaults: defaults, urls: urls};
+    return idLabelMap;
+}
+// function convertObjManager2ResponseToMap(response) {
+//     const defaults = [];
+//     const urls = {};
+
+//     if (response && response.records) {
+//         response.records.forEach(record => {
+//             const objectId = record.Id;
+//             const masterLabel = record.Name;
+//             defaults.push({name: masterLabel});
+//             if (masterLabel) {
+//               urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/ObjectManager/%2F${objectId}/Details/view`;
+//             }
+//         });
+//     }
+//     let idLabelMap = {defaults: defaults, urls: urls};
+//     return idLabelMap;
+// }
+
 
 
  async function search_flows() {
@@ -120,6 +165,24 @@ function convertProfiles2ResponseToMap(response) {
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     console.log('search results:',JSON.stringify(res));
     return convertProfiles2ResponseToMap(res);
+    // return res.records;
+ }
+
+//  async function search_records(type) {
+//     let query = `SELECT Id, Name FROM ${type}`;
+//     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
+//     console.log('search results:',JSON.stringify(res));
+//     return convertObjManager2ResponseToMap(res);
+//     // return res.records;
+//  }
+
+ async function search_objects(type) {
+  console.log('type',type);
+    let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') `;
+    // let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') AND QualifiedApiName LIKE '%__c'`;
+    let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
+    console.log('search results:',JSON.stringify(res));
+    return convertObj2ResponseToMap(res,type);
     // return res.records;
  }
 
@@ -172,7 +235,7 @@ function convertProfiles2ResponseToMap(response) {
     }
   }
 
-
+//TODO: need to support more then 2k records (next url from response)
 
   export async function search(type){
     switch (type) {
@@ -184,9 +247,12 @@ function convertProfiles2ResponseToMap(response) {
         return await search_profiles();
       case "metadata":
         return await search_metadata();
-    
-      default:
-        return true;
+      case "objs":
+        return await search_objects(type);
+      case "listviews":
+        return await search_objects(type);
+      // default:
+      //   return await search_records(type);
     }
   }
 //   chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {

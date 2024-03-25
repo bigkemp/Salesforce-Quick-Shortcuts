@@ -4,10 +4,11 @@ var modalOpened = false;
 var suggestions = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"];
 var tabsPane
 var inputbar
+var checkedOnline = false;
 var inputPlaceholders = {
 "#00acee": {"placeholder":"Enter Shortcut Name","type":"shortcuts"},
 "#FFB562": {"placeholder":"Enter Object Label","type":"objs"},
-"#6BCB77": {"placeholder":"Enter Object Label","type":"listview"},
+"#6BCB77": {"placeholder":"Enter Object Label","type":"listviews"},
 "#FF6B6B": {"placeholder":"add","type":"add"}
 }
 var handlers = {};
@@ -162,8 +163,11 @@ function loading_Start(){
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
   let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
-  console.log('type',type);
-  console.log('inputValue',inputValue);
+  console.log('showSuggestions.type',type);
+  if(type == '/'){
+    type = 'extensions';
+  }
+  console.log('showSuggestions.type',type);
   if (inputValue != '') {
     filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
   }else{
@@ -239,6 +243,10 @@ async function initModal(){
       currentSelectedTab = inputPlaceholders[tabsPane[i].dataset.color]["type"];
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabsPane[i].dataset.color);
+      if((currentSelectedTab == 'objs' || currentSelectedTab == 'listviews') && checkedOnline == false){
+        getRemoteData(currentSelectedTab);
+        checkedOnline = true;
+      }
       showSuggestions();
       inputbar.focus();
     }
@@ -250,6 +258,11 @@ async function initModal(){
 function selectedShortcut(){
   const myshortcut = filteredSuggestions[selectedSuggestionIndex];
   let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
+  if(type == '/'){
+    type = 'extensions';
+  }
+  console.log('selectedShortcut.myshortcut',myshortcut);
+  console.log('selectedShortcut.type',type);
   let shortcutResult;
   if(myshortcut){
     shortcutResult = myshortcut;
@@ -257,11 +270,24 @@ function selectedShortcut(){
   }else{
     shortcutResult = inputbar.value;
   }
-  handlers["navigation"].redirectShortcuts(type,shortcutResult,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
-  suggestionsDropdown.style.display = "none";
-  selectedSuggestionIndex = 0;
-  filteredSuggestions = [];
-  deleteModal();
+  console.log('selectedShortcut.shortcutResult',shortcutResult);
+  if(type == 'extensions'){
+    inputbar.value = shortcutResult.name;
+    var event = new Event('input', {
+      bubbles: true,
+      cancelable: true,
+    });
+    inputbar.dispatchEvent(event);
+    suggestionsDropdown.style.display = "none";
+    selectedSuggestionIndex = 0;
+    filteredSuggestions = [];
+  }else{
+    handlers["navigation"].redirectShortcuts(type,shortcutResult,handlers, handlers["data"].findDataByNode('linkOpenNewTab','mypreferences'));
+    suggestionsDropdown.style.display = "none";
+    selectedSuggestionIndex = 0;
+    filteredSuggestions = [];
+    deleteModal();
+  }
 }
 
 async function openSettings() {
@@ -279,10 +305,17 @@ async function openSettings() {
 }
 async function getRemoteData(type){
   let res = await handlers["connector"].search(type);
-  console.log("testy2",res);
-  handlers["data"].setTempSearchData(type,res);
-
+  console.log("testy2-res",res);
+  console.log("testy2-type",type);
+  handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
+
+// async function getPossibleExtensions(type){
+//   let res = await handlers["data"].getShortcuts(type);
+//   console.log("testy2-res",res);
+//   console.log("testy2-res",res);
+//   handlers["data"].setTempSearchData(type,res);
+// }
 
 function cancelTempSearch(){
   if(tempSearch == false){
@@ -292,8 +325,8 @@ function cancelTempSearch(){
   tempSearchBox.classList.add("hide");
   tempSearch = false;
 }
-function initInput(){
 
+function initInput(){
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
     if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts'){
@@ -330,9 +363,24 @@ function initInput(){
           tempSearch = true;
           getRemoteData('metadata');
           return;
+        case "/":
+          tempSearchBox.innerText = "/";
+          tempSearch = true;
+          // getPossibleExtensions("extensions");
       }
     }
-  showSuggestions(inputValue);
+    // else if(inputValue.startsWith("/") && currentSelectedTab == 'objs'){
+    //   if(inputValue.endsWith(" ")){
+    //     tempSearchBox.classList.remove("hide");
+    //     tempSearchBox.innerText = inputValue.replace("/","");
+    //     tempSearchBox.style.color = "purple";
+    //     inputbar.value = "";
+    //     tempSearch = true;
+    //     getRemoteData(inputValue.replace("/",""));
+    //     return;
+    //   }
+    // }
+    showSuggestions(inputValue);
   };
 
   inputbar.onkeydown = async function(event) {
@@ -406,8 +454,8 @@ function ADDpage(){
   alertbox.classList.remove("show");
   const addsection = document.getElementById("sqab_add_section")
   addsection.classList.remove("hide");
-  const objOption = document.getElementById("option2");
-  const shortcutOption = document.getElementById("option1"); 
+  // const objOption = document.getElementById("option2");
+  // const shortcutOption = document.getElementById("option1"); 
   const addlabel = document.getElementById("add_label_input"); 
   const rowElement = addlabel.parentNode;
   rowElement.style.display = 'flex';
@@ -415,15 +463,15 @@ function ADDpage(){
   let type = "shortcuts";
 
   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-  if(inputbar.value.includes("/setup/ObjectManager/") && !inputbar.value.includes("/ObjectManager/home") ){
-    const try2findDetailTable = findByClass("object-detail-column")[0];
-    inputbar.value= try2findDetailTable.getElementsByTagName("ul")[0].getElementsByClassName("slds-form-element__static")[0].innerText;
-    objOption.checked = true;
-  }else{
-    shortcutOption.checked = true;
+  // if(inputbar.value.includes("/setup/ObjectManager/") && !inputbar.value.includes("/ObjectManager/home") ){
+  //   const try2findDetailTable = findByClass("object-detail-column")[0];
+  //   inputbar.value= try2findDetailTable.getElementsByTagName("ul")[0].getElementsByClassName("slds-form-element__static")[0].innerText;
+  //   objOption.checked = true;
+  // }else{
+    // shortcutOption.checked = true;
     let possibleLabel = inputbar.value.split('/');
     addlabel.value = possibleLabel[possibleLabel.length -1];
-  }
+  // }
 
   let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
   let data = '<option>All Orgs</option>';
@@ -435,24 +483,24 @@ function ADDpage(){
   }
   targetList.innerHTML = data;
 
-  objOption.onclick = function(e) {
-    type = "objs";
-    inputbar.placeholder = 'Enter Object API Name';
-    if(inputbar.value.includes("__c")){
-      let obgInUrl = inputbar.value.split("/").filter(element => element.includes("__c"));
-      inputbar.value = obgInUrl;
-    }else{
-      inputbar.value = '';
-    }
-    rowElement.style.display = 'none';
-  }
+  // objOption.onclick = function(e) {
+  //   type = "objs";
+  //   inputbar.placeholder = 'Enter Object API Name';
+  //   if(inputbar.value.includes("__c")){
+  //     let obgInUrl = inputbar.value.split("/").filter(element => element.includes("__c"));
+  //     inputbar.value = obgInUrl;
+  //   }else{
+  //     inputbar.value = '';
+  //   }
+  //   rowElement.style.display = 'none';
+  // }
 
-  shortcutOption.onclick = function(e) {
-    rowElement.style.display = 'flex';
-    inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-    addlabel.placeholder = "Enter Label";
-    type = "shortcuts";
-  }
+  // shortcutOption.onclick = function(e) {
+  //   rowElement.style.display = 'flex';
+  //   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
+  //   addlabel.placeholder = "Enter Label";
+  //   type = "shortcuts";
+  // }
 
   let addSave = document.getElementById("sqab_addSave"); 
   addSave.onclick = async function(e) {
