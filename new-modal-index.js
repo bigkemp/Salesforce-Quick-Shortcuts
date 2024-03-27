@@ -322,6 +322,7 @@ function cancelTempSearch(){
   }
   handlers["data"].clearTempSearchData(tempSearchBox.innerText.toLowerCase());
   tempSearchBox.classList.add("hide");
+  tempSearchBox.innerText = "";
   tempSearch = false;
 }
 
@@ -365,9 +366,12 @@ function initInput(){
         case "/":
           tempSearchBox.innerText = "/";
           tempSearch = true;
+
           // getPossibleExtensions("extensions");
-      }
-    }
+        }
+      }else{
+        cancelTempSearch();
+      } 
     // else if(inputValue.startsWith("/") && currentSelectedTab == 'objs'){
     //   if(inputValue.endsWith(" ")){
     //     tempSearchBox.classList.remove("hide");
