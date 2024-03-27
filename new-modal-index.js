@@ -135,6 +135,8 @@ function getURLminized(){
 async function startUp(){
   await handlers["data"].buildData();
   await handlers["data"].loadModalHTML();
+  getRemoteData('objs');
+  getRemoteData('listviews');
   initModal();
 }
 
@@ -243,10 +245,7 @@ async function initModal(){
       currentSelectedTab = inputPlaceholders[tabsPane[i].dataset.color]["type"];
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabsPane[i].dataset.color);
-      if((currentSelectedTab == 'objs' || currentSelectedTab == 'listviews') && checkedOnline == false){
-        getRemoteData(currentSelectedTab);
-        checkedOnline = true;
-      }
+
       showSuggestions();
       inputbar.focus();
     }
