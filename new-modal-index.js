@@ -165,11 +165,9 @@ function loading_Start(){
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
   let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
-  console.log('showSuggestions.type',type);
   if(type == '/'){
     type = 'extensions';
   }
-  console.log('showSuggestions.type',type);
   if (inputValue != '') {
     filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
   }else{
@@ -260,8 +258,6 @@ function selectedShortcut(){
   if(type == '/'){
     type = 'extensions';
   }
-  console.log('selectedShortcut.myshortcut',myshortcut);
-  console.log('selectedShortcut.type',type);
   let shortcutResult;
   if(myshortcut){
     shortcutResult = myshortcut;
@@ -269,7 +265,6 @@ function selectedShortcut(){
   }else{
     shortcutResult = inputbar.value;
   }
-  console.log('selectedShortcut.shortcutResult',shortcutResult);
   if(type == 'extensions'){
     inputbar.value = shortcutResult.name;
     var event = new Event('input', {
@@ -304,15 +299,12 @@ async function openSettings() {
 }
 async function getRemoteData(type){
   let res = await handlers["connector"].search(type);
-  console.log("testy2-res",res);
-  console.log("testy2-type",type);
+
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
 
 // async function getPossibleExtensions(type){
 //   let res = await handlers["data"].getShortcuts(type);
-//   console.log("testy2-res",res);
-//   console.log("testy2-res",res);
 //   handlers["data"].setTempSearchData(type,res);
 // }
 
@@ -329,7 +321,7 @@ function cancelTempSearch(){
 function initInput(){
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
-    if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts'){
+    if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts' ){
       switch (inputValue) {
         case "/flows ":
           tempSearchBox.classList.remove("hide");
@@ -364,12 +356,13 @@ function initInput(){
           getRemoteData('metadata');
           return;
         case "/":
-          tempSearchBox.innerText = "/";
-          tempSearch = true;
-
+          if(tempSearchBox.classList.contains("hide") == true && tempSearch == false){
+            tempSearchBox.innerText = "/";
+            tempSearch = true;
+          }
           // getPossibleExtensions("extensions");
         }
-      }else{
+      }else if(tempSearchBox.classList.contains("hide") == true && tempSearch == true){
         cancelTempSearch();
       } 
     // else if(inputValue.startsWith("/") && currentSelectedTab == 'objs'){

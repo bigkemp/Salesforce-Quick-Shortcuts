@@ -4,11 +4,8 @@ const apiVer = '52.0';
 
 init();
 function init(){
-    console.log(location.host);
     if (location.host.endsWith("my.salesforce.com") || location.host.endsWith("lightning.force.com") || location.host.endsWith("visualforce.com")) {
-        console.log('Starting');
         chrome.runtime.sendMessage({message: "getSfHost", url: location.href}, sfHost => {
-            console.log('sfHost',sfHost);
           if (sfHost) {
             getSession(sfHost);
           }
@@ -139,7 +136,6 @@ function convertObj2ResponseToMap(response,type) {
  async function search_flows() {
     let query = `SELECT Id,ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow' `;
     let res = await rest("/services/data/v"+apiVer+"/tooling/query/?q=" + encodeURIComponent(query));
-    console.log('search results:',JSON.stringify(res));
     return convertFlow2ResponseToMap(res);
     // return res.records;
  }
@@ -147,7 +143,6 @@ function convertObj2ResponseToMap(response,type) {
  async function search_users() {
     let query = `select Id,Name,Email FROM User`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-    console.log('search results:',JSON.stringify(res));
     return convertUser2ResponseToMap(res);
     // return res.records;
  }
@@ -155,7 +150,6 @@ function convertObj2ResponseToMap(response,type) {
  async function search_metadata() {
     let query = `SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-    console.log('search results:',JSON.stringify(res));
     return convertCustomMetadata2ResponseToMap(res);
     // return res.records;
  }
@@ -163,7 +157,6 @@ function convertObj2ResponseToMap(response,type) {
  async function search_profiles() {
     let query = `SELECT Id, Name FROM Profile`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-    console.log('search results:',JSON.stringify(res));
     return convertProfiles2ResponseToMap(res);
     // return res.records;
  }
@@ -177,23 +170,18 @@ function convertObj2ResponseToMap(response,type) {
 //  }
 
  async function search_objects(type) {
-  console.log('type',type);
     let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') `;
     // let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') AND QualifiedApiName LIKE '%__c'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-    console.log('search results:',JSON.stringify(res));
     return convertObj2ResponseToMap(res,type);
     // return res.records;
  }
 
 
   async function getSession(sfHost) {
-    console.log('getting session');
 
     let message = await new Promise(resolve => chrome.runtime.sendMessage({message: "getSession", sfHost}, resolve));
     if (message) {
-        console.log("getSession",message);
-
       instanceHostname = message.hostname;
       sessionId = message.key;
     }
