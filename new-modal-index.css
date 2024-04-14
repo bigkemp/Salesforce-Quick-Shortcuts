@@ -1,373 +1,334 @@
-	:root{
-		--indicatorcolor: #00acee;
-	}
-	
-	.sqab_modal {
-		display: block; 
-		position: fixed; 
-		z-index: 1000; 
-		overflow: hidden;
-		left: 0;
-		top: 0;
-		width: 100%; 
-		height: 100%; 
-		/* overflow: auto;  */
-		/* background-color: rgb(0,0,0);  */
-		background-color: rgba(0,0,0,0.4); 
-	}
-	
-	.sqab_tabs{
-		font-family: sans-serif;
-		position:absolute;
-		top:30%;
-		left:50%;
-		transform:translate(-50%,-50%);
-		width:40%;
-		min-height:120px;
-		background:#f5f5f5;
-		padding:20px 30px;
-		border-radius: 30px;
-		box-shadow: 5px 10px 5px #f1f1f1;
-		z-index: 1000;
-	}
-	
-	#modalInput,#add_label_input,#targetList{
-		width: 100%;
-		height:40px;
-		position: relative;
-		border-radius: 5px;
-		border-color:#f5f5f5;
-	}
+:root{
+	--indicatorcolor: #00acee;
+	--numOfTabs: 1;
+}
 
-	#modalInput{
-		outline-color: var(--indicatorcolor);
-	}
+.sqab_modal {
+	display: block;
+	position: fixed;
+	z-index: 1000;
+	overflow: hidden;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.4);
+}
 
-	.sqab_divider{
-		border:1px solid rgba(229, 229, 229, 0.499);
-		color:gray;
-		border-radius: 3px;
-		padding: 0.5%;
-		margin-right:1%;
-		pointer-events: none;
-		display: inline-block;
-	}
-	
-	.sqab_tabs .sqab_tab-header{
-		height:40px;
-		display:flex;
-		align-items:center;
-		font-family: sans-serif;
-	
-	}
-	.sqab_tabs .sqab_tab-header > div {
-		width:calc((100%/4));
-		text-align:center;
-		color:#888;
-		font-weight:600;
-		cursor:pointer;
-		font-size:14px;
-		text-transform:uppercase;
-		outline:none;
-		
-	}
-	/* 
-	.tabs .tab-header > div >i{
-		display:block;
-		margin-bottom:5px;
-		
-	} */
-	
-	.sqab_tabs .sqab_tab-header > div.active {
-		color: var(--indicatorcolor);
-		
-	}
-	
-	.sqab_tabs .sqab_tab-indicator {
-		position: relative;
-		width:calc(100%/4);
-		height:5px;
-		background: var(--indicatorcolor);
-		left:0px;
-		border-radius:5px;
-		transition: all 200ms ease-in-out;
-	}
-	
-	.sqab_tabs .sqab_tab-body{
-		position:relative;
-	}
-	
-	.sqab_tabs .sqab_tab-body > div{
-		display:none;
-	}
+.sqab_tabs {
+	font-family: sans-serif;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 40%;
+	min-height: 120px;
+	background: #f5f5f5;
+	padding: 30px 50px 30px 20px;
+	border-radius: 30px;
+	box-shadow: 5px 10px 5px #f1f1f1;
+	z-index: 1000;
+}
 
-	#sqab_mydiv {
-		position: fixed;
-		z-index: 1000;
-		text-align: center;
-		right: -100px;
-		transition: right 0.3s ease-in-out;
-		cursor: pointer;
-		top:200px;
-    	border-radius: 5px;
-    	background-color: white;
-    	opacity: 0.7;
-		box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3); /* add a sharper shadow effect */
-	}
-	  
-	#sqab_mydivheader {
-		padding: 5px;
-		width: 115px;
-		height: 40px;
-		padding-left: 15px;
-    	/* margin-right:-5px; */
-		z-index: 1000;
-		border-radius: 5px;
-    	border: 5px solid aliceblue; /* add a 2px white border */
-		color: #898a8b;
-	   	opacity: 0.7;
-		font-weight: 600;
-	}
+#modalInput,
+#add_label_input,
+#targetList {
+	width: 100%;
+	height: 40px;
+	position: relative;
+	border-radius: 5px;
+	border-color: #f5f5f5;
+}
 
-	#sqab_mydiv:hover {
-		cursor:auto;
-		opacity: 1;
-		right: -15px;
-		cursor: pointer;
-	}
-	  
-	#sqab_mydivheader:hover {
-		  opacity: 1;
-	}
+#modalInput {
+	outline-color: var(--indicatorcolor);
+}
 
-	#sqab_mydivheader::after {
-		  content:"Shortcuts";
-	}
-	
-	.sqab_tabs .sqab_tab-body > div.active{
-		top:0px;
-		opacity:1;
-		transform:scale(1);
-		margin-top:0px;
-		display:block;
-	}
-	
-	.suggestions-dropdown {
-		position: absolute; /* Position the dropdown relative to the parent div */
-		top: 100%; /* Position the top of the dropdown at the bottom of the parent div */
-		left: 0; /* Align the left edge of the dropdown with the left edge of the parent div */
-		width: 100%; /* Set the width of the dropdown to match the width of the parent div */
-		max-height: 150px; /* Set a fixed height for the dropdown */
-		overflow-y: auto; /* Enable vertical scrolling when the dropdown overflows the max-height */
-	}
+.sqab_divider {
+	border: 1px solid rgba(229, 229, 229, 0.499);
+	color: gray;
+	border-radius: 3px;
+	padding: 0.5%;
+	margin-right: 1%;
+	pointer-events: none;
+	display: inline-block;
+}
 
-	.sqab_body_shortcuts{
-		max-height: 150px;
-		overflow: auto;
-		position: relative; /* Ensure that child elements are positioned relative to this div */
+.sqab_tabs .sqab_tab-header {
+	height: 40px;
+	display: flex;
+	align-items: center;
+	position: relative;
+	font-family: sans-serif;
+}
 
-	}
+.sqab_tabs .sqab_tab-header > div {
+	width: calc((100% / var(--numOfTabs)));
+	text-align: center;
+	color: #888;
+	font-weight: 600;
+	cursor: pointer;
+	font-size: 14px;
+	text-transform: uppercase;
+	outline: none;
+}
 
-	.sqab_suggestions {
-		color: var(--indicatorcolor);
-		font-size: 14px;
-		padding: 10px 12px;
-		cursor: pointer;
-		border-radius: 5px;
+.sqab_tabs .sqab_tab-header > div.active {
+	color: var(--indicatorcolor);
+}
 
-	}
-	
-	.suggestions-dropdown-item {
-		padding: 10px;
-		cursor: pointer;
-		color: var(--indicatorcolor);
-		font-family: sans-serif;
-	}
+.sqab_tabs .sqab_tab-indicator {
+	position: relative;
+	width: calc((100% / var(--numOfTabs)));
+	height: 5px;
+	background: var(--indicatorcolor);
+	left: 0px;
+	border-radius: 5px;
+	transition: all 200ms ease-in-out;
+}
 
-	#loading-screen {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: white;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		z-index: 9999;
-		display: none; /* hide the loading screen by default */
-	}
-	.success {
-		background:#4cbe83  no-repeat 10px 50%;
-		border:1px solid #36ad6f;
-	}
+.sqab_tabs .sqab_tab-body {
+	position: relative;
+}
 
-	.alert-box {
-	color:#555;
-	font-family:Tahoma, Geneva, Arial, sans-serif;
-	font-size:11px;
-	padding:10px 36px;
-	color:#fff;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-khtml-border-radius: 5px;
+.sqab_tabs .sqab_tab-body > div {
+	display: none;
+}
+
+#sqab_mydiv {
+	position: fixed;
+	z-index: 1000;
+	text-align: center;
+	right: -100px;
+	transition: right 0.3s ease-in-out;
+	cursor: pointer;
+	top: 200px;
+	border-radius: 5px;
+	background-color: white;
+	opacity: 0.7;
+	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+#sqab_mydivheader {
+	padding: 5px;
+	width: 115px;
+	height: 40px;
+	padding-left: 15px;
+	z-index: 1000;
+	border-radius: 5px;
+	border: 5px solid aliceblue;
+	color: #898a8b;
+	opacity: 0.7;
+	font-weight: 600;
+}
+
+#sqab_mydiv:hover {
+	cursor: auto;
+	opacity: 1;
+	right: -15px;
+	cursor: pointer;
+}
+
+#sqab_mydivheader:hover {
+	opacity: 1;
+}
+
+#sqab_mydivheader::after {
+	content: "Shortcuts";
+}
+
+.sqab_tabs .sqab_tab-body > div.active {
+	top: 0px;
+	opacity: 1;
+	transform: scale(1);
+	margin-top: 0px;
+	display: block;
+}
+
+.suggestions-dropdown {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 100%;
+	max-height: 150px;
+	overflow-y: auto;
+}
+
+.sqab_body_shortcuts {
+	max-height: 150px;
+	overflow: auto;
+	position: relative;
+}
+
+.sqab_suggestions {
+	color: var(--indicatorcolor);
+	font-size: 14px;
+	padding: 10px 12px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.suggestions-dropdown-item {
+	padding: 10px;
+	cursor: pointer;
+	color: var(--indicatorcolor);
+	font-family: sans-serif;
+}
+
+#loading-screen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+	display: none;
+}
+
+.success {
+	background: #4cbe83 no-repeat 10px 50%;
+	border: 1px solid #36ad6f;
+}
+
+.alert-box {
+	color: #555;
+	font-family: Tahoma, Geneva, Arial, sans-serif;
+	font-size: 11px;
+	padding: 10px 36px;
+	color: #fff;
 	border-radius: 5px;
 	display: none;
-	}
+}
 
-	.alert-box.success{
-		background:#4cbe83  no-repeat 10px 50%;
-		border:1px solid #36ad6f;
-	}
+.alert-box.success {
+	background: #4cbe83 no-repeat 10px 50%;
+	border: 1px solid #36ad6f;
+}
 
-	.alert-box.error{
-		background:#be4c4c  no-repeat 10px 50%;
-		border:1px solid #be4c4c;
-	}
+.alert-box.error {
+	background: #be4c4c no-repeat 10px 50%;
+	border: 1px solid #be4c4c;
+}
 
-	.alert-box.show{
+.alert-box.show {
 	display: block;
-	}
+}
 
-	.sqab_add_section{
+.sqab_add_section {
 	display: flex;
 	flex-direction: column;
-	}
+}
 
-	.sqab_add_section.hide{
+.sqab_add_section.hide {
 	display: none;
 	flex-direction: column;
-	}
+}
 
-	.sqab_dynamic_search{
-		display: block;
-		color: purple;
-		border-radius: 5px;
-		border-color: purple;
-		border-width: medium;
-		background: white;
-		font-weight: bold;
-	}
-	.sqab_dynamic_search.hide{
+.sqab_dynamic_search {
+	display: block;
+	color: purple;
+	border-radius: 5px;
+	border-color: purple;
+	border-width: medium;
+	background: white;
+	font-weight: bold;
+}
+
+.sqab_dynamic_search.hide {
 	display: none;
-	}
+}
 
-
-	#slide-out-menu {
+#slide-out-menu {
 	position: fixed;
 	top: 0;
-	right: -430px; /* Initially hidden off the page */
+	right: -430px;
 	width: 430px;
 	height: 100%;
 	background-color: #f2f2f2;
 	z-index: 9999;
 	transition: right 0.3s ease-in-out;
-	}
-/* 
-	#slide-out-menu ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	}
+}
 
-	#slide-out-menu li {
-	padding: 10px;
-	border-bottom: 1px solid #ccc;
-	} */
-
-	#menu-button {
+#menu-button {
 	position: fixed;
 	top: 10px;
 	right: 10px;
 	z-index: 99999;
-	}
-	.close-btn {
+}
+
+.close-btn {
 	font-size: x-large;
 	font-weight: bold;
 	color: #000;
 	cursor: pointer;
-	}
+}
 
-	.row{
+.row {
 	padding: 5px;
-	}
+}
 
-	.col{
-	padding:10px;
-	}
+.col {
+	padding: 10px;
+}
 
-	#sqab_addSave{
-	padding:10px;
+#sqab_addSave {
+	padding: 10px;
 	width: 50%;
-	border:1px solid var(--indicatorcolor);
+	border: 1px solid var(--indicatorcolor);
 	border-radius: 5px;
 	background-color: var(--indicatorcolor);
 	font-weight: bold;
-	color:white;
-	}
+	color: white;
+}
 
-	.sqab_tabs .sqab_tab-body > div.active{
-		top: 0px;
-		opacity: 1;
-		transform: scale(1);
-		margin-top: 0px;
-		display: block;
-	}
-
-	.sqab_modal > .sqab_tabs {
-		font-family: sans-serif;
-		min-height: 120px;
-		box-shadow: rgb(204 204 204 / 29%) 5px 10px 5px;
-		position: unset;
-		display: block;
-		transform: none;
-		background: rgba(255, 255, 255, 0.966);
-		padding: 20px 30px;
-		border-radius: 30px;
-		transition: none 0s ease 0s;
-		margin: 33vh auto;
-	}
-
-	/* Styles for the vertical tab */
-.sqab_settings-icon {
-	position: fixed;
-	top: 50%;
-	right: 0;
-	background-color: #f2f2f2;
-	width: 10px; /* Adjust the width as needed */
-	height: 120px; /* Adjust the height as needed */
-	cursor: pointer;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
-	transition: width 0.3s ease-in-out, right 0.3s ease-in-out;
-	overflow: hidden; /* Hide overflowing content */
-  }
-  
-  .sqab_settings-icon:hover {
-	width: 40px; /* Adjust the expanded width as needed */
-  }
-  
-  /* Styles for the rotated text */
-  .sqab_settings-icon-vertical-text {
-	display: inline-block;
-	opacity: 0; /* Initially invisible */
-	transform: rotate(-90deg);
-	transform-origin: left bottom;
-	white-space: nowrap; /* Prevent text from wrapping */
-	position: absolute;
-	font-weight: 600;
-    font-family: cursive;
-    top: 73%;
-    left: 73%;
-    color: dimgray;
-	margin-top: -50%; /* Adjust this value based on half of the text height */
-	margin-left: 0;
-	transition: opacity 0.3s ease-in-out;
-  }
-  
-  /* Make the text visible on hover */
-  .sqab_settings-icon:hover .sqab_settings-icon-vertical-text {
+.sqab_tabs .sqab_tab-body > div.active {
+	top: 0px;
 	opacity: 1;
-  }
-  
-  
+	transform: scale(1);
+	margin-top: 0px;
+	display: block;
+}
+
+.sqab_modal > .sqab_tabs {
+	font-family: sans-serif;
+	min-height: 120px;
+	box-shadow: rgb(204 204 204 / 29%) 5px 10px 5px;
+	position: unset;
+	display: block;
+	transform: none;
+	background: rgba(255, 255, 255, 0.966);
+	padding: 30px 50px 30px 20px;
+	border-radius: 30px;
+	transition: none 0s ease 0s;
+	margin: 33vh auto;
+}
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.sqab_side_icons {
+	position: absolute;
+    right: -35px;
+	font-size: large;
+	cursor: pointer;
+	transition: transform 0.5s ease; 
+}
+
+#sqab_setting_icon {
+	top: -14px;
+}
+#sqab_monitoring_icon {
+	top: 20px;
+}
+#sqab_add_icon {
+	top: 50px;
+}
+
+.sqab_side_icons:hover {
+	animation: spin 1s infinite linear; 
+}

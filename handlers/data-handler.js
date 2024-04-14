@@ -139,11 +139,11 @@ export async function buildData(){
   orgExists = {bool:false,name:"",value:""};
   await loadMyOrgs();
   await loadMyData('myshortcuts');
-  await loadMyData('myobjs');
+  // await loadMyData('myobjs');
   await loadMyData('mypreferences');
   await loadJson('shortcuts');
-  await loadJson('extensions');
-  await loadJson('obj-shortcuts');
+  // await loadJson('extensions');
+  // await loadJson('obj-shortcuts');
 }
 
 async function loadMyOrgs(){
@@ -224,9 +224,9 @@ async function loadJson(data) {
     const response = await fetch(chrome.runtime.getURL(`data/${data}.json`));
     const json = await response.text();
     let parsed = JSON.parse(json);
-    if(data == "obj-shortcuts"){
-      data = "objs";
-    }
+    // if(data == "obj-shortcuts"){
+    //   data = "objs";
+    // }
     data_library[data] = parsed["defaults"];
     data_library[data]["urls"] = parsed["urls"];
   } catch (e) {

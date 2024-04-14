@@ -1,16 +1,20 @@
 
 var r = document.querySelector(':root');
 var modalOpened = false;
-var suggestions = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew"];
+var suggestions = [];
 var tabsPane
 var inputbar
 var checkedOnline = false;
-var inputPlaceholders = {
-"#00acee": {"placeholder":"Enter Shortcut Name","type":"shortcuts"},
-"#FFB562": {"placeholder":"Enter Object Label","type":"objs"},
-"#6BCB77": {"placeholder":"Enter Object Label","type":"listviews"},
-"#FF6B6B": {"placeholder":"add","type":"add"}
+var tabtypes = {
+  "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name"},
+  "objs": {"color":"#378CE7","placeholder":"Enter Object Label"},
+  "listviews": {"color":"#67C6E3","placeholder":"Enter Object Label"},
+  "flows": {"color":"#67C6E3","placeholder":"Enter Flow Name"},
+  "metadatas": {"color":"#67C6E3","placeholder":"Enter Metadata Type Name"},
+  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name"},
+  "add": {"color":"#FF6B6B","placeholder":"Enter Object Label"}
 }
+
 var handlers = {};
 var initied = false;
 var filteredSuggestions = [];
@@ -27,6 +31,7 @@ var tempSearch = false;
 init();
 
 async function init(){
+  
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if(modalOpened === false && message?.text == "Wake Up!"){
       startUp();   
@@ -105,7 +110,7 @@ function keyPress(e) {
               tabsPane[nextIndex].classList.add("active");
               // Trigger a click event on the next tab to update the UI
               tabsPane[nextIndex].click();
-              currentSelectedTab = inputPlaceholders[tabsPane[nextIndex].dataset.color]["type"];
+              currentSelectedTab = tabsPane[nextIndex].dataset.type;
               suggestionsDropdown.style.display = "none";
               inputbar.focus();
               e.preventDefault();
@@ -135,8 +140,11 @@ function getURLminized(){
 async function startUp(){
   await handlers["data"].buildData();
   await handlers["data"].loadModalHTML();
-  getRemoteData('objs');
-  getRemoteData('listviews');
+  // getRemoteData('objs');
+  // getRemoteData('listviews');
+  // getRemoteData('flows');
+  // getRemoteData('metadatas');
+  // getRemoteData('profiles');
   initModal();
 }
 
@@ -164,9 +172,14 @@ function loading_Start(){
 
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
-  let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
-  if(type == '/'){
-    type = 'extensions';
+  let type = currentSelectedTab;
+  // if(type == '/'){
+  //   type = 'extensions';
+  // }
+  if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
+    loading_Start();
+    await getRemoteData(type);
+    loading_End();
   }
   if (inputValue != '') {
     filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
@@ -208,41 +221,43 @@ async function initModal(){
   tempSearch = false;
   currentSelectedTab="shortcuts";
   defineSettingsPanel();
+  defineAddLayout();
   defineOutsideAsCloseModal();
   //define elements
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
-  const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
+  // const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
   tempSearchBox = document.getElementsByClassName("sqab_dynamic_search")[0];
   tabsPane = tabHeader.getElementsByTagName("div");
   inputbar = document.getElementById("modalInput");
   inputbar.focus();
   loadingScreen = document.getElementById("loading-screen");
   suggestionsDropdown = document.getElementById("suggestions-dropdown");
-
+  r.style.setProperty('--numOfTabs', tabsPane.length);
   showSuggestions();
-  inputbar.placeholder = inputPlaceholders[tabsPane[0].dataset.color]["placeholder"];
-  currentSelectedTab = inputPlaceholders[tabsPane[0].dataset.color]["type"];
+  inputbar.placeholder = tabtypes[tabsPane[0].dataset.type]["placeholder"];
+  currentSelectedTab = tabsPane[0].dataset.type;
   tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
-  r.style.setProperty('--indicatorcolor', tabsPane[0].dataset.color);
+  r.style.setProperty('--indicatorcolor', tabtypes[tabsPane[0].dataset.type]["color"]);
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].onclick = async function(e){
-      cancelTempSearch();
+      // cancelTempSearch();
       closeSidePanel();
+      resetLayout("main");
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
-      tabBody.getElementsByClassName("active")[0].classList.remove("active");
-      if(tabsPane[i].innerText == 'ADD'){
-        tabBody.getElementsByTagName("div")[1].classList.add("active");
-        ADDpage();
-      }else{
-        tabBody.getElementsByTagName("div")[0].classList.add("active");
-      }
-      inputbar.placeholder = inputPlaceholders[tabsPane[i].dataset.color]["placeholder"];
-      currentSelectedTab = inputPlaceholders[tabsPane[i].dataset.color]["type"];
+      // tabBody.getElementsByClassName("active")[0].classList.remove("active");
+      // if(tabsPane[i].dataset.type == "add"){
+      //   tabBody.getElementsByTagName("div")[1].classList.add("active");
+      //   ADDpage();
+      // }else{
+        // tabBody.getElementsByTagName("div")[0].classList.add("active");
+      // }
+      inputbar.placeholder = tabtypes[tabsPane[i].dataset.type]["placeholder"];
+      currentSelectedTab = tabsPane[i].dataset.type;
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
-      r.style.setProperty('--indicatorcolor', tabsPane[i].dataset.color);
+      r.style.setProperty('--indicatorcolor', tabtypes[tabsPane[i].dataset.type]["color"]);
 
       showSuggestions();
       inputbar.focus();
@@ -255,9 +270,9 @@ async function initModal(){
 function selectedShortcut(){
   const myshortcut = filteredSuggestions[selectedSuggestionIndex];
   let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
-  if(type == '/'){
-    type = 'extensions';
-  }
+  // if(type == '/'){
+  //   type = 'extensions';
+  // }
   let shortcutResult;
   if(myshortcut){
     shortcutResult = myshortcut;
@@ -321,61 +336,50 @@ function cancelTempSearch(){
 function initInput(){
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
-    if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts' ){
-      switch (inputValue) {
-        case "/flows ":
-          tempSearchBox.classList.remove("hide");
-          tempSearchBox.innerText = "Flows";
-          tempSearchBox.style.color = "purple";
-          inputbar.value = "";
-          tempSearch = true;
-          getRemoteData('flows');
-          return;
-        case "/users ":
-          tempSearchBox.classList.remove("hide");
-          tempSearchBox.innerText = "Users";
-          tempSearchBox.style.color = "purple";
-          inputbar.value = "";
-          tempSearch = true;
-          getRemoteData('users');
-          return;
-        case "/profiles ":
-          tempSearchBox.classList.remove("hide");
-          tempSearchBox.innerText = "Profiles";
-          tempSearchBox.style.color = "purple";
-          inputbar.value = "";
-          tempSearch = true;
-          getRemoteData('profiles');
-          return;
-        case "/metadata ":
-          tempSearchBox.classList.remove("hide");
-          tempSearchBox.innerText = "Metadata";
-          tempSearchBox.style.color = "purple";
-          inputbar.value = "";
-          tempSearch = true;
-          getRemoteData('metadata');
-          return;
-        case "/":
-          if(tempSearchBox.classList.contains("hide") == true && tempSearch == false){
-            tempSearchBox.innerText = "/";
-            tempSearch = true;
-          }
-          // getPossibleExtensions("extensions");
-        }
-      }else if(tempSearchBox.classList.contains("hide") == true && tempSearch == true){
-        cancelTempSearch();
-      } 
-    // else if(inputValue.startsWith("/") && currentSelectedTab == 'objs'){
-    //   if(inputValue.endsWith(" ")){
-    //     tempSearchBox.classList.remove("hide");
-    //     tempSearchBox.innerText = inputValue.replace("/","");
-    //     tempSearchBox.style.color = "purple";
-    //     inputbar.value = "";
-    //     tempSearch = true;
-    //     getRemoteData(inputValue.replace("/",""));
-    //     return;
-    //   }
-    // }
+    // if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts' ){
+    //   switch (inputValue) {
+    //     case "/flows ":
+    //       tempSearchBox.classList.remove("hide");
+    //       tempSearchBox.innerText = "Flows";
+    //       tempSearchBox.style.color = "purple";
+    //       inputbar.value = "";
+    //       tempSearch = true;
+    //       getRemoteData('flows');
+    //       return;
+    //     case "/users ":
+    //       tempSearchBox.classList.remove("hide");
+    //       tempSearchBox.innerText = "Users";
+    //       tempSearchBox.style.color = "purple";
+    //       inputbar.value = "";
+    //       tempSearch = true;
+    //       getRemoteData('users');
+    //       return;
+    //     case "/profiles ":
+    //       tempSearchBox.classList.remove("hide");
+    //       tempSearchBox.innerText = "Profiles";
+    //       tempSearchBox.style.color = "purple";
+    //       inputbar.value = "";
+    //       tempSearch = true;
+    //       getRemoteData('profiles');
+    //       return;
+    //     case "/metadata ":
+    //       tempSearchBox.classList.remove("hide");
+    //       tempSearchBox.innerText = "Metadata";
+    //       tempSearchBox.style.color = "purple";
+    //       inputbar.value = "";
+    //       tempSearch = true;
+    //       getRemoteData('metadata');
+    //       return;
+    //     case "/":
+    //       if(tempSearchBox.classList.contains("hide") == true && tempSearch == false){
+    //         tempSearchBox.innerText = "/";
+    //         tempSearch = true;
+    //       }
+    //       // getPossibleExtensions("extensions");
+    //     }
+    //   }else if(tempSearchBox.classList.contains("hide") == true && tempSearch == true){
+    //     cancelTempSearch();
+    //   } 
     showSuggestions(inputValue);
   };
 
@@ -431,9 +435,30 @@ function initSuggesionsDropdown(){
 }
 
 function defineSettingsPanel(){
-  let icon = document.getElementById("settingsIcon");
+  let icon = document.getElementById("sqab_setting_icon");
   icon.onclick = openSettings;
 }
+
+function defineAddLayout(){
+  let icon = document.getElementById("sqab_add_icon");
+  icon.onclick = ADDpage;
+}
+
+function resetLayout(type){
+  const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
+  tabBody.getElementsByClassName("active")[0].classList.remove("active");
+
+  switch (type) {
+    case "add" :
+      tabBody.getElementsByTagName("div")[1].classList.add("active");
+      break;
+  
+    default:
+      tabBody.getElementsByTagName("div")[0].classList.add("active");
+      break;
+  }
+}
+ 
 
 function defineOutsideAsCloseModal(){
   window.onclick = function(event) {
@@ -445,6 +470,7 @@ function defineOutsideAsCloseModal(){
 }
 
 function ADDpage(){
+  resetLayout("add");
   suggestionsDropdown.innerHTML = "";
   const alertbox = document.getElementById("alert-box");
   alertbox.classList.remove("show");
