@@ -30,13 +30,13 @@
     "content_scripts": [
         {
             "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],
-            "js": ["new-modal-index.js"],
-            "css": ["new-modal-index.css","new-extension-popup.css"],
+            "js": ["sqab_modal.js"],
+            "css": ["sqab_modal.css","/panels/settings/panel-settings.css"],
             "all_frames": true
         }
     ],
     "web_accessible_resources": [{
-        "resources": ["data/*.json","new-extension-popup.css","new-extension-popup.html","new-extension-popup.js","handlers/*.js","new-modal-index.css","new-modal-index.html","resources/*.png","resources/*.svg"],
+        "resources": ["data/*.json","/panels/*/*.css","/panels/*/*.html","/panels/*/*.js","handlers/*.js","sqab_modal.css","sqab_modal.html","resources/*.png"],
         "matches": ["https://*.lightning.force.com/*"]
     }]
 }

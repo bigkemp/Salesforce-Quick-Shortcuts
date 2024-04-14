@@ -236,7 +236,7 @@ async function loadJson(data) {
 
 export async function loadModalHTML() {
   try {
-    const file = await fetch(chrome.runtime.getURL("/new-modal-index.html"));
+    const file = await fetch(chrome.runtime.getURL("/sqab_modal.html"));
     const html = await file.text();
     document.body.insertAdjacentHTML("beforeend", html);
   } catch (e) {
@@ -246,7 +246,7 @@ export async function loadModalHTML() {
 
 export async function loadPopHTML() {
   try {
-    const file = await fetch(chrome.runtime.getURL("/new-extension-popup.html"));
+    const file = await fetch(chrome.runtime.getURL("/panels/settings/panel-settings.html"));
     const html = await file.text();
     return html;
   } catch (e) {

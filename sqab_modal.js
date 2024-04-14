@@ -39,7 +39,7 @@ async function init(){
     }
   });
   window.onkeydown = keyPress;
-  await loadHandler("new-extension-popup", "popup");
+  await loadHandler("/panels/settings/panel-settings", "popup");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
