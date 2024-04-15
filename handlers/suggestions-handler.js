@@ -32,9 +32,9 @@ export function buildSuggestionsHTML(shortcutFinding, inputValue) {
       const modifiedName = formatModifiedName(shortcut, inputValue);
       let specialDivider;
       if(shortcut.favorite != undefined){
-        specialDivider = shortcut.favorite ? `<img src="${chrome.runtime.getURL("/resources/star.png")}" width="20px" height="20px"/>` : '';
+        specialDivider = shortcut.favorite ? `<span width="30px" height="30px">📌</span>` : '';
       }else{
-        specialDivider = shortcut.custom ? `<img src="${chrome.runtime.getURL("/resources/pencil.png")}" width="30px" height="30px"/>` : '';
+        specialDivider = shortcut.custom ? `<span width="30px" height="30px">✏️</span>` : '';
       }
       return generateSuggestionHTML(index, specialDivider, modifiedName, shortcut.name);
     });
