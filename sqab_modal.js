@@ -6,13 +6,13 @@ var tabsPane
 var inputbar
 var checkedOnline = false;
 var tabtypes = {
-  "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name"},
-  "objs": {"color":"#378CE7","placeholder":"Enter Object Label"},
-  "listviews": {"color":"#67C6E3","placeholder":"Enter Object Label"},
-  "flows": {"color":"#67C6E3","placeholder":"Enter Flow Name"},
-  "metadatas": {"color":"#67C6E3","placeholder":"Enter Metadata Type Name"},
-  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name"},
-  "add": {"color":"#FF6B6B","placeholder":"Enter Object Label"}
+  "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name","title":"Shortcuts"},
+  "objs": {"color":"#378CE7","placeholder":"Enter Object Label","title":"Objects"},
+  "listviews": {"color":"#67C6E3","placeholder":"Enter Object Label","title":"ListViews"},
+  "flows": {"color":"#67C6E3","placeholder":"Enter Flow Name","title":"Flows"},
+  "metadatas": {"color":"#67C6E3","placeholder":"Enter Metadata Type Name","title":"Metadata"},
+  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name","title":"Profiles"},
+  "add": {"color":"#FF6B6B","placeholder":"Enter Object Label","title":"Add"}
 }
 
 var handlers = {};
@@ -39,7 +39,7 @@ async function init(){
     }
   });
   window.onkeydown = keyPress;
-  await loadHandler("/panels/settings/panel-settings", "popup");
+  await loadHandler("/panels/settings/panel-settings", "settings");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
@@ -240,6 +240,7 @@ async function initModal(){
   tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
   r.style.setProperty('--indicatorcolor', tabtypes[tabsPane[0].dataset.type]["color"]);
   for(let i=0; i < tabsPane.length; i++){
+    tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
     tabsPane[i].onclick = async function(e){
       // cancelTempSearch();
       closeSidePanel();
@@ -309,7 +310,7 @@ async function openSettings() {
     let html = await handlers["data"].loadPopHTML();
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px'; /* Slide out the menu */
-    handlers["popup"].init(handlers);
+    handlers["settings"].init(handlers);
   }
 }
 async function getRemoteData(type){
@@ -451,10 +452,21 @@ function resetLayout(type){
   switch (type) {
     case "add" :
       tabBody.getElementsByTagName("div")[1].classList.add("active");
+      for(let i=0; i < tabsPane.length; i++){
+        if(tabsPane[i].dataset.type == currentSelectedTab){
+          tabsPane[i].innerText = "Add";
+        }
+        else{
+          tabsPane[i].innerText = "-";
+        }
+      }
       break;
   
     default:
       tabBody.getElementsByTagName("div")[0].classList.add("active");
+      for(let i=0; i < tabsPane.length; i++){
+        tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
+      }
       break;
   }
 }
@@ -471,13 +483,12 @@ function defineOutsideAsCloseModal(){
 
 function ADDpage(){
   resetLayout("add");
+
   suggestionsDropdown.innerHTML = "";
   const alertbox = document.getElementById("alert-box");
   alertbox.classList.remove("show");
   const addsection = document.getElementById("sqab_add_section")
   addsection.classList.remove("hide");
-  // const objOption = document.getElementById("option2");
-  // const shortcutOption = document.getElementById("option1"); 
   const addlabel = document.getElementById("add_label_input"); 
   const rowElement = addlabel.parentNode;
   rowElement.style.display = 'flex';
@@ -485,15 +496,8 @@ function ADDpage(){
   let type = "shortcuts";
 
   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-  // if(inputbar.value.includes("/setup/ObjectManager/") && !inputbar.value.includes("/ObjectManager/home") ){
-  //   const try2findDetailTable = findByClass("object-detail-column")[0];
-  //   inputbar.value= try2findDetailTable.getElementsByTagName("ul")[0].getElementsByClassName("slds-form-element__static")[0].innerText;
-  //   objOption.checked = true;
-  // }else{
-    // shortcutOption.checked = true;
-    let possibleLabel = inputbar.value.split('/');
-    addlabel.value = possibleLabel[possibleLabel.length -1];
-  // }
+  let possibleLabel = inputbar.value.split('/');
+  addlabel.value = possibleLabel[possibleLabel.length -1];
 
   let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
   let data = '<option>All Orgs</option>';
@@ -505,24 +509,6 @@ function ADDpage(){
   }
   targetList.innerHTML = data;
 
-  // objOption.onclick = function(e) {
-  //   type = "objs";
-  //   inputbar.placeholder = 'Enter Object API Name';
-  //   if(inputbar.value.includes("__c")){
-  //     let obgInUrl = inputbar.value.split("/").filter(element => element.includes("__c"));
-  //     inputbar.value = obgInUrl;
-  //   }else{
-  //     inputbar.value = '';
-  //   }
-  //   rowElement.style.display = 'none';
-  // }
-
-  // shortcutOption.onclick = function(e) {
-  //   rowElement.style.display = 'flex';
-  //   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-  //   addlabel.placeholder = "Enter Label";
-  //   type = "shortcuts";
-  // }
 
   let addSave = document.getElementById("sqab_addSave"); 
   addSave.onclick = async function(e) {
