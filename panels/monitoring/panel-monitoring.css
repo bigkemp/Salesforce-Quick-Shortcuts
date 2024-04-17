@@ -1,0 +1,162 @@
+#pageCounter {
+    padding: 10px;
+  }
+
+  .hide-me{
+    display: none;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    padding: 10px;
+    text-align: -webkit-center;
+    max-height: 680px;
+    min-width: 300px;
+
+  }
+  .filter-input {
+    padding: 5px;
+    margin-bottom: 10px;
+    /* Add any other styling you want */
+}
+  .search-container {
+    display: none;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #00A1E0;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  label {
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  /* Style for the dropdown */
+  .search-dropdown {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: auto;
+    appearance: none;
+    min-width: 80px;
+  }
+  
+  /* Adjust the input field and button to align properly */
+  .search-input {
+    padding: 10px;
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid #ccc;
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #00A1E0;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  .result-container {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+    padding: 20px;
+    border: 2px solid #00A1E0;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .edit-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #0070d2;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  /* Add this CSS to your stylesheet or in a style tag in your HTML file */
+
+#jsonTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#jsonTable th, #jsonTable td {
+  border: 1px solid #e0e0e0;
+  padding: 10px;
+  text-align: left;
+}
+
+#jsonTable th {
+  background-color: #f4f6f9;
+}
+
+#jsonTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#jsonTable tr:hover {
+  background-color: #f0f5ff;
+}
+
+.filter-input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: -webkit-fill-available;
+}
+
+/* Color coding for percentage cells */
+#jsonTable td:nth-child(4) {
+  color: #fff;
+  text-align: center;
+}
+
+#jsonTable td.percentage-green {
+  background-color: #00b25c;
+}
+
+#jsonTable td.percentage-orange {
+  background-color: #ffab00;
+}
+
+#jsonTable td.percentage-red {
+  background-color: #ff4b4b;
+}

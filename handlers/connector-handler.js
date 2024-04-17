@@ -147,7 +147,7 @@ function convertObj2ResponseToMap(response,type) {
     // return res.records;
  }
 
- async function search_metadata() {
+ async function search_metadatas() {
     let query = `SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     return convertCustomMetadata2ResponseToMap(res);
@@ -168,6 +168,13 @@ function convertObj2ResponseToMap(response,type) {
 //     return convertObjManager2ResponseToMap(res);
 //     // return res.records;
 //  }
+
+ async function search_monitors(type) {
+    // let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') AND QualifiedApiName LIKE '%__c'`;
+    let res = await rest("/services/data/v"+apiVer+"/limits/");
+    return res;
+    // return res.records;
+ }
 
  async function search_objects(type) {
     let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') `;
@@ -233,12 +240,14 @@ function convertObj2ResponseToMap(response,type) {
         return await search_users();
       case "profiles":
         return await search_profiles();
-      case "metadata":
-        return await search_metadata();
+      case "metadatas":
+        return await search_metadatas();
       case "objs":
         return await search_objects(type);
       case "listviews":
         return await search_objects(type);
+      case "monitoring":
+        return await search_monitors(type);
       // default:
       //   return await search_records(type);
     }

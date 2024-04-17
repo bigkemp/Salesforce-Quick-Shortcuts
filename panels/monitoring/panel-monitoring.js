@@ -1,14 +1,13 @@
 
 // const searchDropDown = document.getElementById("searchDropdown");
-const resultContainer = document.getElementById("resultContainer");
-const resultContent = document.getElementById("resultContent");
-const itemsPerPage = 5; // Number of items per page
+var resultContainer = document.getElementById("resultContainer");
+var resultContent = document.getElementById("resultContent");
+var itemsPerPage = 5; // Number of items per page
 var currentPage = 1; 
 var totalPages = 1; 
 
 var activeTab;
 var objectArray;
-init();
 
 function getPageData(pageNumber) {
   const startIndex = (pageNumber - 1) * itemsPerPage;
@@ -17,6 +16,8 @@ function getPageData(pageNumber) {
 }
 
 function createTable(jsonData) {
+  resultContainer = document.getElementById("resultContainer");
+  resultContent = document.getElementById("resultContent");
   // Create a table element
   var table = document.createElement("table");
   table.setAttribute("id", "jsonTable");
@@ -129,39 +130,17 @@ function filterTable(table, filter) {
   }
 }
 
-function init() {
-  chrome.tabs.query({currentWindow: true, active: true}, async function (tabs) {
-    activeTab = tabs[0];
-    if(activeTab.url == undefined || !activeTab.url.includes(".force.com")){
-      return;
-    }else{
-      chrome.tabs.sendMessage(activeTab.id, {"type": "active"},async   function(res) {
-        document.getElementById("status-connector").innerText = activeTab.url.split('.')[0].replace('https://','');
-        document.getElementById("status-connector").style.color = "green";
-        chrome.tabs.sendMessage(activeTab.id, {"message": "","type":"search"}, function(res) {
-          // resultContent.innerHTML = JSON.stringify(res);
-          console.log(res);
-          if(res == null){
-            resultContent.innerText= "no results"
-            return;
-          }else{
-            if (res instanceof Error) {
-              resultContent.innerText= "no results"
-            } else {
-                // resultContent.innerHTML = JSON.stringify(res);
-                createTable(res);
-                // objectArray = res;
-                // // Get the div where you want to inject the table
-                // totalPages = Math.ceil(objectArray.length / itemsPerPage);
-                // currentPage = 1;
-                // createTable(getPageData(currentPage));
-            }
-          }
-          resultContainer.style.display = "inline-block";
-        });
-      });
-
+export async function init(handlers) {
+  let res = await handlers["connector"].search('monitoring');
+  if(res == null){
+    resultContent.innerText= "no results"
+    return;
+  }else{
+    if (res instanceof Error) {
+      resultContent.innerText= "no results"
+    } else {
+        createTable(res);
     }
-  });
+  }
+  resultContainer.style.display = "inline-block";
 }
-

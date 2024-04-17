@@ -40,6 +40,7 @@ async function init(){
   });
   window.onkeydown = keyPress;
   await loadHandler("/panels/settings/panel-settings", "settings");
+  await loadHandler("/panels/monitoring/panel-monitoring", "monitoring");
   await loadHandler("handlers/navigation-handler", "navigation");
   await loadHandler("handlers/data-handler", "data");
   await loadHandler("handlers/save-handler", "save");
@@ -221,6 +222,7 @@ async function initModal(){
   tempSearch = false;
   currentSelectedTab="shortcuts";
   defineSettingsPanel();
+  defineMonitoringPanel();
   defineAddLayout();
   defineOutsideAsCloseModal();
   //define elements
@@ -307,12 +309,27 @@ async function openSettings() {
     return;
   }else{
     const slideOutMenuBody = document.getElementById('slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML();
+    let html = await handlers["data"].loadPopHTML("/panels/settings/panel-settings.html");
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px'; /* Slide out the menu */
     handlers["settings"].init(handlers);
   }
 }
+
+async function openMonitoring() {
+  const slideOutMenu = document.getElementById('slide-out-menu');
+  if(slideOutMenu.style.right == "0px"){
+    closeSidePanel();
+    return;
+  }else{
+    const slideOutMenuBody = document.getElementById('slide-out-menu-body');
+    let html = await handlers["data"].loadPopHTML("/panels/monitoring/panel-monitoring.html");
+    slideOutMenuBody.innerHTML = html;
+    slideOutMenu.style.right = '0px'; /* Slide out the menu */
+    handlers["monitoring"].init(handlers);
+  }
+}
+
 async function getRemoteData(type){
   let res = await handlers["connector"].search(type);
 
@@ -438,6 +455,11 @@ function initSuggesionsDropdown(){
 function defineSettingsPanel(){
   let icon = document.getElementById("sqab_setting_icon");
   icon.onclick = openSettings;
+}
+
+function defineMonitoringPanel(){
+  let icon = document.getElementById("sqab_monitoring_icon");
+  icon.onclick = openMonitoring;
 }
 
 function defineAddLayout(){

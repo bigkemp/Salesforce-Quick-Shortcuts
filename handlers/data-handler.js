@@ -244,9 +244,9 @@ export async function loadModalHTML() {
   }
 }
 
-export async function loadPopHTML() {
+export async function loadPopHTML(path) {
   try {
-    const file = await fetch(chrome.runtime.getURL("/panels/settings/panel-settings.html"));
+    const file = await fetch(chrome.runtime.getURL(path));
     const html = await file.text();
     return html;
   } catch (e) {
