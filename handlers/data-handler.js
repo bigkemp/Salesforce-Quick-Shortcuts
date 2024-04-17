@@ -121,16 +121,11 @@ export function getShortcuts(name){
     result.push(data);
   }
   
-  // if (result.length === 0) { // I dont think this is needed
-  //   return [];
-  // }
   return result;
 }
 
 export function findDefaultShortcut(type,nameForJson){
-  // if(type == 'listviews'){
-  //   type = 'objs';
-  // }
+
   return data_library[type]["urls"][nameForJson];
 }
 
@@ -139,11 +134,8 @@ export async function buildData(){
   orgExists = {bool:false,name:"",value:""};
   await loadMyOrgs();
   await loadMyData('myshortcuts');
-  // await loadMyData('myobjs');
   await loadMyData('mypreferences');
   await loadJson('shortcuts');
-  // await loadJson('extensions');
-  // await loadJson('obj-shortcuts');
 }
 
 async function loadMyOrgs(){
@@ -224,9 +216,6 @@ async function loadJson(data) {
     const response = await fetch(chrome.runtime.getURL(`data/${data}.json`));
     const json = await response.text();
     let parsed = JSON.parse(json);
-    // if(data == "obj-shortcuts"){
-    //   data = "objs";
-    // }
     data_library[data] = parsed["defaults"];
     data_library[data]["urls"] = parsed["urls"];
   } catch (e) {

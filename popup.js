@@ -11,26 +11,20 @@ const menuItems = document.querySelectorAll('.menu-item');
 const tabContents = document.querySelectorAll('.tab-content');
 
 function activateTab(tab) {
-  // Deactivate all menu items
   menuItems.forEach(item => item.classList.remove('active'));
-  // Activate the selected menu item
   tab.classList.add('active');
 
-  // Hide all tab contents
   tabContents.forEach(content => content.classList.remove('active'));
-  // Show the selected tab content
   const tabContent = document.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`);
   tabContent.classList.add('active');
 }
 
-// Set up event listeners for the menu items
 menuItems.forEach(item => {
   item.addEventListener('click', () => {
     activateTab(item);
   });
 });
 
-// Activate the first tab on page load
 activateTab(menuItems[0]);
 var resetbtn = document.getElementById('sqab_ResetEverything');
 resetbtn.onclick = doubleCheck;

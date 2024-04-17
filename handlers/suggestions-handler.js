@@ -1,12 +1,10 @@
 const DIVIDER = '.';
 export function getSuggestions(array_data, input) {
-  if (!input) return []; // handle empty input
+  if (!input) return []; 
   const suggestions = [];
 
   let isCustom = array_data.length == 2 ? true : false ;
-  // loop through all array data
   for (const element of array_data) {
-    // loop through all shortcuts of an element
     for (const shortcut of element) {
       const finalshortcutname = shortcut.name;
       if (!finalshortcutname.split('.')[finalshortcutname.split('.').length -1].toUpperCase().includes(input.toUpperCase())) continue;

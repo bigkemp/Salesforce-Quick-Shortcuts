@@ -22,12 +22,10 @@ var selectedSuggestionIndex = 0;
 var currentSelectedTab = "shortcuts";
 var savedShortcuts
 var loadingScreen;
-var tempSearchBox;
 var savedObjs
 var currentOrg = getURLminized()
 var highlightColor = 'rgb(213 213 213 / 33%)';
 var suggestionsDropdown;
-var tempSearch = false;
 init();
 
 async function init(){
@@ -59,7 +57,6 @@ function createFloatingBtn(){
   myDiv.id = "sqab_mydiv";
   const myDivHeader = document.createElement('div');
   myDivHeader.id = "sqab_mydivheader";
-  // myDivHeader.textContent = "Open Shortcuts";
   myDiv.appendChild(myDivHeader);
   sfPageBody.appendChild(myDiv);
   myDiv.onclick = function() {
@@ -96,7 +93,6 @@ function keyPress(e) {
             }
             selectedSuggestionIndex = 0;
             inputbar.value = '';
-               // Find the index of the currently active tab
               let currentIndex = -1;
               for (let i = 0; i < tabsPane.length; i++) {
                 if (tabsPane[i].classList.contains("active")) {
@@ -104,12 +100,9 @@ function keyPress(e) {
                   break;
                 }
               }
-              // Calculate the index of the next tab to activate
               let nextIndex = (currentIndex + 1) % tabsPane.length;
-              // Deactivate the current tab and activate the next one
               tabsPane[currentIndex].classList.remove("active");
               tabsPane[nextIndex].classList.add("active");
-              // Trigger a click event on the next tab to update the UI
               tabsPane[nextIndex].click();
               currentSelectedTab = tabsPane[nextIndex].dataset.type;
               suggestionsDropdown.style.display = "none";
@@ -141,11 +134,6 @@ function getURLminized(){
 async function startUp(){
   await handlers["data"].buildData();
   await handlers["data"].loadModalHTML();
-  // getRemoteData('objs');
-  // getRemoteData('listviews');
-  // getRemoteData('flows');
-  // getRemoteData('metadatas');
-  // getRemoteData('profiles');
   initModal();
 }
 
@@ -174,9 +162,6 @@ function loading_Start(){
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
   let type = currentSelectedTab;
-  // if(type == '/'){
-  //   type = 'extensions';
-  // }
   if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
     loading_Start();
     await getRemoteData(type);
@@ -219,17 +204,13 @@ function closeSidePanel(){
 }
 
 async function initModal(){
-  tempSearch = false;
   currentSelectedTab="shortcuts";
   defineSettingsPanel();
   defineMonitoringPanel();
   defineAddLayout();
   defineOutsideAsCloseModal();
-  //define elements
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
-  // const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
-  tempSearchBox = document.getElementsByClassName("sqab_dynamic_search")[0];
   tabsPane = tabHeader.getElementsByTagName("div");
   inputbar = document.getElementById("modalInput");
   inputbar.focus();
@@ -244,19 +225,11 @@ async function initModal(){
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
     tabsPane[i].onclick = async function(e){
-      // cancelTempSearch();
       closeSidePanel();
       resetLayout("main");
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
-      // tabBody.getElementsByClassName("active")[0].classList.remove("active");
-      // if(tabsPane[i].dataset.type == "add"){
-      //   tabBody.getElementsByTagName("div")[1].classList.add("active");
-      //   ADDpage();
-      // }else{
-        // tabBody.getElementsByTagName("div")[0].classList.add("active");
-      // }
       inputbar.placeholder = tabtypes[tabsPane[i].dataset.type]["placeholder"];
       currentSelectedTab = tabsPane[i].dataset.type;
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
@@ -272,10 +245,7 @@ async function initModal(){
 
 function selectedShortcut(){
   const myshortcut = filteredSuggestions[selectedSuggestionIndex];
-  let type = tempSearch ==  true ? tempSearchBox.innerText.toLowerCase() : currentSelectedTab;
-  // if(type == '/'){
-  //   type = 'extensions';
-  // }
+  let type = currentSelectedTab;
   let shortcutResult;
   if(myshortcut){
     shortcutResult = myshortcut;
@@ -311,7 +281,7 @@ async function openSettings() {
     const slideOutMenuBody = document.getElementById('slide-out-menu-body');
     let html = await handlers["data"].loadPopHTML("/panels/settings/panel-settings.html");
     slideOutMenuBody.innerHTML = html;
-    slideOutMenu.style.right = '0px'; /* Slide out the menu */
+    slideOutMenu.style.right = '0px';
     handlers["settings"].init(handlers);
   }
 }
@@ -325,7 +295,7 @@ async function openMonitoring() {
     const slideOutMenuBody = document.getElementById('slide-out-menu-body');
     let html = await handlers["data"].loadPopHTML("/panels/monitoring/panel-monitoring.html");
     slideOutMenuBody.innerHTML = html;
-    slideOutMenu.style.right = '0px'; /* Slide out the menu */
+    slideOutMenu.style.right = '0px'; 
     handlers["monitoring"].init(handlers);
   }
 }
@@ -336,89 +306,23 @@ async function getRemoteData(type){
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
 
-// async function getPossibleExtensions(type){
-//   let res = await handlers["data"].getShortcuts(type);
-//   handlers["data"].setTempSearchData(type,res);
-// }
-
-function cancelTempSearch(){
-  if(tempSearch == false){
-    return;
-  }
-  handlers["data"].clearTempSearchData(tempSearchBox.innerText.toLowerCase());
-  tempSearchBox.classList.add("hide");
-  tempSearchBox.innerText = "";
-  tempSearch = false;
-}
-
 function initInput(){
   inputbar.oninput = async function() {
     const inputValue = inputbar.value.toLowerCase();
-    // if(inputValue.startsWith("/") && currentSelectedTab == 'shortcuts' ){
-    //   switch (inputValue) {
-    //     case "/flows ":
-    //       tempSearchBox.classList.remove("hide");
-    //       tempSearchBox.innerText = "Flows";
-    //       tempSearchBox.style.color = "purple";
-    //       inputbar.value = "";
-    //       tempSearch = true;
-    //       getRemoteData('flows');
-    //       return;
-    //     case "/users ":
-    //       tempSearchBox.classList.remove("hide");
-    //       tempSearchBox.innerText = "Users";
-    //       tempSearchBox.style.color = "purple";
-    //       inputbar.value = "";
-    //       tempSearch = true;
-    //       getRemoteData('users');
-    //       return;
-    //     case "/profiles ":
-    //       tempSearchBox.classList.remove("hide");
-    //       tempSearchBox.innerText = "Profiles";
-    //       tempSearchBox.style.color = "purple";
-    //       inputbar.value = "";
-    //       tempSearch = true;
-    //       getRemoteData('profiles');
-    //       return;
-    //     case "/metadata ":
-    //       tempSearchBox.classList.remove("hide");
-    //       tempSearchBox.innerText = "Metadata";
-    //       tempSearchBox.style.color = "purple";
-    //       inputbar.value = "";
-    //       tempSearch = true;
-    //       getRemoteData('metadata');
-    //       return;
-    //     case "/":
-    //       if(tempSearchBox.classList.contains("hide") == true && tempSearch == false){
-    //         tempSearchBox.innerText = "/";
-    //         tempSearch = true;
-    //       }
-    //       // getPossibleExtensions("extensions");
-    //     }
-    //   }else if(tempSearchBox.classList.contains("hide") == true && tempSearch == true){
-    //     cancelTempSearch();
-    //   } 
     showSuggestions(inputValue);
   };
 
   inputbar.onkeydown = async function(event) {
-    if (!inputbar.value && event.key === 'Backspace'){
-      cancelTempSearch();
-    }
     const isArrowDown = event.key === "ArrowDown";
     const isArrowUp = event.key === "ArrowUp";
     const isEnter = event.key === "Enter";
     const isEscape = event.key === "Escape";
     if (isArrowDown || isArrowUp) {
-      // Remove highlight from previously selected suggestion
       if (selectedSuggestionIndex >= 0) {
         suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
       }
 
-      // Update selected suggestion index
       selectedSuggestionIndex = Math.max(0, Math.min(selectedSuggestionIndex + (isArrowDown ? 1 : -1), filteredSuggestions.length - 1));
-
-      // Highlight selected suggestion and scroll into view
       suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = highlightColor;
       suggestionsDropdown.children[selectedSuggestionIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
 
@@ -435,7 +339,7 @@ function initInput(){
 
 function initSuggesionsDropdown(){
   suggestionsDropdown.onmouseover = function(event) {
-    // Remove highlight from previously selected suggestion
+    
     if (selectedSuggestionIndex >= 0 && suggestionsDropdown.children[selectedSuggestionIndex] != undefined) {
       suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
     }

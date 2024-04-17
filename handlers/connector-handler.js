@@ -13,7 +13,6 @@ function init(){
       }
 }
 
-// Function to convert the response map of MasterLabel to Id
 function convertCustomMetadata2ResponseToMap(response) {
     const defaults = [];
     const urls = {};
@@ -113,23 +112,6 @@ function convertObj2ResponseToMap(response,type) {
     let idLabelMap = {defaults: defaults, urls: urls};
     return idLabelMap;
 }
-// function convertObjManager2ResponseToMap(response) {
-//     const defaults = [];
-//     const urls = {};
-
-//     if (response && response.records) {
-//         response.records.forEach(record => {
-//             const objectId = record.Id;
-//             const masterLabel = record.Name;
-//             defaults.push({name: masterLabel});
-//             if (masterLabel) {
-//               urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/ObjectManager/%2F${objectId}/Details/view`;
-//             }
-//         });
-//     }
-//     let idLabelMap = {defaults: defaults, urls: urls};
-//     return idLabelMap;
-// }
 
 
 
@@ -137,51 +119,35 @@ function convertObj2ResponseToMap(response,type) {
     let query = `SELECT Id,ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow' `;
     let res = await rest("/services/data/v"+apiVer+"/tooling/query/?q=" + encodeURIComponent(query));
     return convertFlow2ResponseToMap(res);
-    // return res.records;
  }
 
  async function search_users() {
     let query = `select Id,Name,Email FROM User`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     return convertUser2ResponseToMap(res);
-    // return res.records;
  }
 
  async function search_metadatas() {
     let query = `SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     return convertCustomMetadata2ResponseToMap(res);
-    // return res.records;
  }
 
  async function search_profiles() {
     let query = `SELECT Id, Name FROM Profile`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     return convertProfiles2ResponseToMap(res);
-    // return res.records;
  }
 
-//  async function search_records(type) {
-//     let query = `SELECT Id, Name FROM ${type}`;
-//     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-//     console.log('search results:',JSON.stringify(res));
-//     return convertObjManager2ResponseToMap(res);
-//     // return res.records;
-//  }
-
  async function search_monitors(type) {
-    // let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') AND QualifiedApiName LIKE '%__c'`;
     let res = await rest("/services/data/v"+apiVer+"/limits/");
     return res;
-    // return res.records;
  }
 
  async function search_objects(type) {
     let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') `;
-    // let query = `SELECT DurableId ,QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt') AND QualifiedApiName LIKE '%__c'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
     return convertObj2ResponseToMap(res,type);
-    // return res.records;
  }
 
 
@@ -248,20 +214,7 @@ function convertObj2ResponseToMap(response,type) {
         return await search_objects(type);
       case "monitoring":
         return await search_monitors(type);
-      // default:
-      //   return await search_records(type);
     }
   }
-//   chrome.runtime.onMessage.addListener( (message, sender, sendResponse) => {
 
-//     switch (message.type) {
-//         case "flow":
-//             search_flows(message.by,message.type).then(sendResponse);
-//             return true;
-//         default:
-//             return true;
-//     }
-//   });
-  
-//SELECT Id,DeveloperName FROM CustomObject
 

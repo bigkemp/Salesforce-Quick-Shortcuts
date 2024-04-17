@@ -1,8 +1,6 @@
-
-// const searchDropDown = document.getElementById("searchDropdown");
 var resultContainer = document.getElementById("resultContainer");
 var resultContent = document.getElementById("resultContent");
-var itemsPerPage = 5; // Number of items per page
+var itemsPerPage = 5; 
 var currentPage = 1; 
 var totalPages = 1; 
 
@@ -18,25 +16,21 @@ function getPageData(pageNumber) {
 function createTable(jsonData) {
   resultContainer = document.getElementById("resultContainer");
   resultContent = document.getElementById("resultContent");
-  // Create a table element
   var table = document.createElement("table");
   table.setAttribute("id", "jsonTable");
 
-  // Create header row
   var headerRow = table.insertRow(0);
   var headerCell1 = headerRow.insertCell(0);
   var headerCell2 = headerRow.insertCell(1);
   var headerCell3 = headerRow.insertCell(2);
-  var headerCell4 = headerRow.insertCell(3); // New column for percentage
+  var headerCell4 = headerRow.insertCell(3); 
   headerCell1.innerHTML = "Key";
   headerCell2.innerHTML = "Max";
   headerCell3.innerHTML = "Remaining";
   headerCell4.innerHTML = "Usage %";
 
-  // Array to store rows for sorting
   var rowsArray = [];
 
-  // Loop through the JSON data and populate the table
   for (var key in jsonData) {
       if (jsonData.hasOwnProperty(key)) {
           var max = jsonData[key].Max;
@@ -56,28 +50,22 @@ function createTable(jsonData) {
           cell3.innerHTML = remaining;
           cell4.innerHTML = percentage.toFixed(2) + "%";
 
-          // Add the row to the array for sorting
           rowsArray.push({ row: row, percentage: percentage });
       }
   }
 
-  // Sort the table based on the percentage column
   rowsArray.sort(function (a, b) {
       return b.percentage - a.percentage;
   });
 
-  // Append sorted rows to the table
   for (var i = 0; i < rowsArray.length; i++) {
       table.appendChild(rowsArray[i].row);
   }
 
-  // Color code the percentage cells' background
   colorCodePercentageCells(table);
 
-  // Append the table to the specified resultContent element
   resultContent.appendChild(table);
 
-  // Add filtering input field
   var filterInput = document.createElement("input");
   filterInput.setAttribute("type", "text");
   filterInput.setAttribute("id", "filterInput");
@@ -85,19 +73,17 @@ function createTable(jsonData) {
   filterInput.addEventListener("input", function () {
       filterTable(table, this.value);
   });
-  filterInput.classList.add("filter-input"); // Add the CSS class
+  filterInput.classList.add("filter-input"); 
 
   resultContent.insertBefore(filterInput, table);
 }
 
 function formatKeyWithSpaces(key) {
-  // Insert spaces in the Key column based on uppercase characters
   var formattedKey = key.replace(/([a-z])([A-Z])/g, '$1 $2');
   return formattedKey;
 }
 
 function colorCodePercentageCells(table) {
-  // Color code the percentage cells' background
   var rows = table.rows;
 
   for (var i = 1; i < rows.length; i++) {
@@ -115,7 +101,6 @@ function colorCodePercentageCells(table) {
 }
 
 function filterTable(table, filter) {
-  // Hide rows that do not contain the filter string
   var rows = table.rows;
 
   for (var i = 1; i < rows.length; i++) {
