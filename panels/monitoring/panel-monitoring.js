@@ -1,21 +1,7 @@
-var resultContainer = document.getElementById("resultContainer");
-var resultContent = document.getElementById("resultContent");
-var itemsPerPage = 5; 
-var currentPage = 1; 
-var totalPages = 1; 
-
-var activeTab;
-var objectArray;
-
-function getPageData(pageNumber) {
-  const startIndex = (pageNumber - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return objectArray.slice(startIndex, endIndex);
-}
-
+var resultContainer;
 function createTable(jsonData) {
-  resultContainer = document.getElementById("resultContainer");
-  resultContent = document.getElementById("resultContent");
+  resultContainer = document.getElementById("sqab_resultContainer");
+  var resultContent = document.getElementById("sqab_resultContent");
   var table = document.createElement("table");
   table.setAttribute("id", "jsonTable");
 

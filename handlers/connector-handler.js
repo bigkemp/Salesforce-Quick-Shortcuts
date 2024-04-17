@@ -199,6 +199,7 @@ function convertObj2ResponseToMap(response,type) {
 //TODO: need to support more then 2k records (next url from response)
 
   export async function search(type){
+    console.log('ding');
     switch (type) {
       case "flows":
         return await search_flows();
