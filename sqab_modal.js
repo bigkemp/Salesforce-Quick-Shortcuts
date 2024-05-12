@@ -1,10 +1,9 @@
 
 var r = document.querySelector(':root');
-var modalOpened = false;
+var isModalOpened = false;
 var suggestions = [];
 var tabsPane
 var inputbar
-var checkedOnline = false;
 var tabtypes = {
   "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name","title":"Shortcuts"},
   "objs": {"color":"#378CE7","placeholder":"Enter Object Label","title":"Objects"},
@@ -15,15 +14,28 @@ var tabtypes = {
   "add": {"color":"#FF6B6B","placeholder":"Enter Object Label","title":"Add"}
 }
 
+var handlersMap = {
+  "settings": "/panels/settings/panel-settings",
+  "monitoring": "/panels/monitoring/panel-monitoring",
+  "navigation": "handlers/navigation-handler",
+  "data": "handlers/data-handler",
+  "save": "handlers/save-handler",
+  "favorites": "handlers/favorites-handler",
+  "suggestions": "handlers/suggestions-handler",
+  "connector": "handlers/connector-handler"
+}
+
+
+var paneltypes =  {
+  "settings":"/panels/settings/panel-settings.html",
+  "monitoring":"/panels/monitoring/panel-monitoring.html"
+}
+
 var handlers = {};
-var initied = false;
 var filteredSuggestions = [];
 var selectedSuggestionIndex = 0;
 var currentSelectedTab = "shortcuts";
-var savedShortcuts
 var loadingScreen;
-var savedObjs
-var currentOrg = getURLminized()
 var highlightColor = 'rgb(213 213 213 / 33%)';
 var suggestionsDropdown;
 init();
@@ -31,21 +43,16 @@ init();
 async function init(){
   
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if(modalOpened === false && message?.text == "Wake Up!"){
+    if(isModalOpened === false && message?.text == "Wake Up!"){
       startUp();   
-      modalOpened = true;
+      isModalOpened = true;
     }
   });
   window.onkeydown = keyPress;
-  await loadHandler("/panels/settings/panel-settings", "settings");
-  await loadHandler("/panels/monitoring/panel-monitoring", "monitoring");
-  await loadHandler("handlers/navigation-handler", "navigation");
-  await loadHandler("handlers/data-handler", "data");
-  await loadHandler("handlers/save-handler", "save");
-  await loadHandler("handlers/favorites-handler", "favorites");
-  await loadHandler("handlers/suggestions-handler", "suggestions");
-  await loadHandler("handlers/messenger-handler", "messenger");
-  await loadHandler("handlers/connector-handler", "connector");
+  for (let [handlerKey, handlerPath] of Object.entries(handlersMap)) {
+    console.log(handlerKey,handlerPath);
+    await loadHandler(handlerKey,handlerPath);
+  }
   if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
     createFloatingBtn();
   }
@@ -60,9 +67,9 @@ function createFloatingBtn(){
   myDiv.appendChild(myDivHeader);
   sfPageBody.appendChild(myDiv);
   myDiv.onclick = function() {
-    if(modalOpened === false){
+    if(isModalOpened === false){
       startUp();   
-      modalOpened = true;
+      isModalOpened = true;
     }
   };
 }
@@ -79,12 +86,11 @@ function isHotkeyEnabled(){
 function keyPress(e) {
     let evtobj = e;
     e.stopPropagation();
-    switch (modalOpened) {
+    switch (isModalOpened) {
         case true:
           if(evtobj.key === "Escape"){
             deleteModal();
-          }
-          if(evtobj.key === "Tab"){
+          }else if(evtobj.key === "Tab"){
             closeSidePanel();
             if(document.activeElement != inputbar){
               inputbar.focus();
@@ -93,18 +99,13 @@ function keyPress(e) {
             }
             selectedSuggestionIndex = 0;
             inputbar.value = '';
-              let currentIndex = -1;
-              for (let i = 0; i < tabsPane.length; i++) {
-                if (tabsPane[i].classList.contains("active")) {
-                  currentIndex = i;
-                  break;
-                }
-              }
-              let nextIndex = (currentIndex + 1) % tabsPane.length;
-              tabsPane[currentIndex].classList.remove("active");
-              tabsPane[nextIndex].classList.add("active");
-              tabsPane[nextIndex].click();
-              currentSelectedTab = tabsPane[nextIndex].dataset.type;
+            let currentIndex = Array.prototype.findIndex.call(tabsPane, tab => tab.classList.contains("active"));
+
+            if (currentIndex !== -1) {
+                let nextIndex = (currentIndex + (evtobj.shiftKey ? -1 : 1)) % tabsPane.length;
+                tabsPane[nextIndex].click();
+                currentSelectedTab = tabsPane[nextIndex].dataset.type;
+            }
               suggestionsDropdown.style.display = "none";
               inputbar.focus();
               e.preventDefault();
@@ -113,7 +114,7 @@ function keyPress(e) {
         case false:
             if (handlers["data"] != undefined && isHotkeyEnabled() && hotkeyDetector(evtobj)){
                 startUp();   
-                modalOpened = true;
+                isModalOpened = true;
                 e.preventDefault();
             }
         break;
@@ -121,14 +122,9 @@ function keyPress(e) {
 
 }
 
-async function loadHandler(handlerName, handlerKey){
-  const src = chrome.runtime.getURL(`${handlerName}.js`);
+async function loadHandler(handlerKey,handlerPath){
+  const src = chrome.runtime.getURL(`${handlerPath}.js`);
   handlers[handlerKey] = await import(src);
-}
-
-function getURLminized(){
-  let org = window.location.href.replace("https://","").substring(0,window.location.href.indexOf("."));
-  return org.replace(org.substring(org.indexOf(".")),"");
 }
 
 async function startUp(){
@@ -144,7 +140,7 @@ function deleteModal(){
     return;
   }
   findByClass("sqab_modal")[0].remove();
-  modalOpened = false;
+  isModalOpened = false;
 }
 
 function findById(targetId){
@@ -162,11 +158,7 @@ function loading_Start(){
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
   let type = currentSelectedTab;
-  if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
-    loading_Start();
-    await getRemoteData(type);
-    loading_End();
-  }
+
   if (inputValue != '') {
     filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
   }else{
@@ -225,17 +217,23 @@ async function initModal(){
   for(let i=0; i < tabsPane.length; i++){
     tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
     tabsPane[i].onclick = async function(e){
+      let type = tabsPane[i].dataset.type;
       closeSidePanel();
       resetLayout("main");
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
-      inputbar.placeholder = tabtypes[tabsPane[i].dataset.type]["placeholder"];
-      currentSelectedTab = tabsPane[i].dataset.type;
+      inputbar.placeholder = tabtypes[type]["placeholder"];
+      currentSelectedTab = type;
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
-      r.style.setProperty('--indicatorcolor', tabtypes[tabsPane[i].dataset.type]["color"]);
-
+      r.style.setProperty('--indicatorcolor', tabtypes[type]["color"]);
       showSuggestions();
+      console.log(handlers["data"].findDataByNode(type));
+      if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
+        loading_Start();
+        getRemoteData(type);
+        loading_End();
+      }
       inputbar.focus();
     }
   }
@@ -279,7 +277,7 @@ async function openSettings() {
     return;
   }else{
     const slideOutMenuBody = document.getElementById('slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML("/panels/settings/panel-settings.html");
+    let html = await handlers["data"].loadPopHTML(paneltypes["settings"]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px';
     handlers["settings"].init(handlers);
@@ -293,7 +291,7 @@ async function openMonitoring() {
     return;
   }else{
     const slideOutMenuBody = document.getElementById('slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML("/panels/monitoring/panel-monitoring.html");
+    let html = await handlers["data"].loadPopHTML(paneltypes["monitoring"]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px'; 
     handlers["monitoring"].init(handlers);
@@ -306,33 +304,37 @@ async function getRemoteData(type){
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
 
-function initInput(){
-  inputbar.oninput = async function() {
+function initInput() {
+  inputbar.oninput = function() {
     const inputValue = inputbar.value.toLowerCase();
-    showSuggestions(inputValue);
+    if(inputValue.length >= 3 || inputValue.length == 0){
+      showSuggestions(inputValue);
+    }
   };
 
-  inputbar.onkeydown = async function(event) {
-    const isArrowDown = event.key === "ArrowDown";
-    const isArrowUp = event.key === "ArrowUp";
-    const isEnter = event.key === "Enter";
-    const isEscape = event.key === "Escape";
-    if (isArrowDown || isArrowUp) {
-      if (selectedSuggestionIndex >= 0) {
-        suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
-      }
+  inputbar.onkeydown = function(event) {
+    const key = event.key;
+    switch (key) {
+      case "ArrowDown":
+      case "ArrowUp":
+        if (selectedSuggestionIndex >= 0) {
+          suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = "";
+        }
 
-      selectedSuggestionIndex = Math.max(0, Math.min(selectedSuggestionIndex + (isArrowDown ? 1 : -1), filteredSuggestions.length - 1));
-      suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = highlightColor;
-      suggestionsDropdown.children[selectedSuggestionIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
+        selectedSuggestionIndex = Math.max(0, Math.min(selectedSuggestionIndex + (key === "ArrowDown" ? 1 : -1), filteredSuggestions.length - 1));
+        suggestionsDropdown.children[selectedSuggestionIndex].style.backgroundColor = highlightColor;
+        suggestionsDropdown.children[selectedSuggestionIndex].scrollIntoView({ behavior: "smooth", block: "nearest" });
 
-      event.preventDefault();
-    } else if (isEnter) {
-      selectedShortcut();
-      event.preventDefault();
-    } else if (isEscape) {
-      deleteModal();
-      event.preventDefault();
+        event.preventDefault();
+        break;
+      case "Enter":
+        selectedShortcut();
+        event.preventDefault();
+        break;
+      case "Escape":
+        deleteModal();
+        event.preventDefault();
+        break;
     }
   }
 }
