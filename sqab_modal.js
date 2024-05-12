@@ -50,7 +50,6 @@ async function init(){
   });
   window.onkeydown = keyPress;
   for (let [handlerKey, handlerPath] of Object.entries(handlersMap)) {
-    console.log(handlerKey,handlerPath);
     await loadHandler(handlerKey,handlerPath);
   }
   if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
@@ -228,7 +227,6 @@ async function initModal(){
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabtypes[type]["color"]);
       showSuggestions();
-      console.log(handlers["data"].findDataByNode(type));
       if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
         loading_Start();
         getRemoteData(type);
