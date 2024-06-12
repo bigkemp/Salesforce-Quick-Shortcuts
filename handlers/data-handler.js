@@ -136,6 +136,7 @@ export async function buildData(){
   await loadMyData('myshortcuts');
   await loadMyData('mypreferences');
   await loadJson('shortcuts');
+  await loadJson('tips');
 }
 
 async function loadMyOrgs(){
@@ -216,7 +217,7 @@ async function loadJson(data) {
     const response = await fetch(chrome.runtime.getURL(`data/${data}.json`));
     const json = await response.text();
     let parsed = JSON.parse(json);
-    data_library[data] = parsed["defaults"];
+    data_library[data] = parsed["defaults"] != undefined ? parsed["defaults"] : parsed["tips"]
     data_library[data]["urls"] = parsed["urls"];
   } catch (e) {
     console.log(e);

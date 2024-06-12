@@ -31,7 +31,7 @@
         {
             "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],
             "js": ["sqab_modal.js"],
-            "css": ["sqab_modal.css","/panels/settings/panel-settings.css","/panels/monitoring/panel-monitoring.css"],
+            "css": ["sqab_modal.css","/panels/settings/panel-settings.css","/panels/monitoring/panel-monitoring.css","/panels/add/panel-add.css"],
             "all_frames": true
         }
     ],

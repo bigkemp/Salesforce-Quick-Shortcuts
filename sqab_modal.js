@@ -16,6 +16,7 @@ var tabtypes = {
 
 var handlersMap = {
   "settings": "/panels/settings/panel-settings",
+  "add": "/panels/add/panel-add",
   "monitoring": "/panels/monitoring/panel-monitoring",
   "navigation": "handlers/navigation-handler",
   "data": "handlers/data-handler",
@@ -28,6 +29,7 @@ var handlersMap = {
 
 var paneltypes =  {
   "settings":"/panels/settings/panel-settings.html",
+  "add":"/panels/add/panel-add.html",
   "monitoring":"/panels/monitoring/panel-monitoring.html"
 }
 
@@ -194,11 +196,20 @@ function closeSidePanel(){
   handlers["data"].doStartFromPopup(false);
 }
 
+function defineTipsBar(){
+  const tipsBar = document.getElementById('sqab_tips_bar');
+  const tipsArray = handlers["data"].getDataFromLibrary("tips");
+  const randomTip = tipsArray[Math.floor(Math.random() * tipsArray.length)];
+  tipsBar.innerText = `Quick Tip : ${randomTip}`;
+}
+
 async function initModal(){
   currentSelectedTab="shortcuts";
-  defineSettingsPanel();
-  defineMonitoringPanel();
-  defineAddLayout();
+  definePanel("settings");
+  definePanel("monitoring");
+  definePanel("add");
+  defineTipsBar();
+  // defineAddLayout();
   defineOutsideAsCloseModal();
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
@@ -296,6 +307,20 @@ async function openMonitoring() {
   }
 }
 
+async function openAdd() {
+  const slideOutMenu = document.getElementById('slide-out-menu');
+  if(slideOutMenu.style.right == "0px"){
+    closeSidePanel();
+    return;
+  }else{
+    const slideOutMenuBody = document.getElementById('slide-out-menu-body');
+    let html = await handlers["data"].loadPopHTML(paneltypes["add"]);
+    slideOutMenuBody.innerHTML = html;
+    slideOutMenu.style.right = '0px'; 
+    handlers["add"].init(handlers);
+  }
+}
+
 async function getRemoteData(type){
   let res = await handlers["connector"].search(type);
 
@@ -356,14 +381,19 @@ function initSuggesionsDropdown(){
   };
 }
 
-function defineSettingsPanel(){
-  let icon = document.getElementById("sqab_setting_icon");
-  icon.onclick = openSettings;
-}
-
-function defineMonitoringPanel(){
-  let icon = document.getElementById("sqab_monitoring_icon");
-  icon.onclick = openMonitoring;
+function definePanel(panel){
+  let icon = document.getElementById(`sqab_${panel}_icon`);
+  switch (panel) {
+    case "settings":
+      icon.onclick = openSettings;
+      break;
+    case "monitoring":
+      icon.onclick = openMonitoring;
+      break;
+    case "add":
+      icon.onclick = openAdd;
+      break;
+  }
 }
 
 function defineAddLayout(){

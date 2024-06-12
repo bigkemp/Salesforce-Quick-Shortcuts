@@ -1,4 +1,4 @@
-
+<!-- 
 <section class="ac-container">
   <div class="sqab_pop_addMsg"></div>
   <div id="sqab_pop_modal" class="sqab_pop_modal sqab_pop_hide" >
@@ -71,4 +71,75 @@
           </div>
       </article>
     </div>
-  </section>
+  </section> -->
+  <div class="sqab_p_settings_tab-container">
+    <div class="sqab_p_settings_tab" data-target="saved-orgs-content">
+        <div class="sqab_p_settings_icon">&#x1F3E2;</div>
+        <span>Saved Orgs</span>
+    </div>
+    <div class="sqab_p_settings_tab" data-target="saved-shortcuts-content">
+        <div class="sqab_p_settings_icon">&#x1F517;</div>
+        <span>Saved Shortcuts</span>
+    </div>
+    <div class="sqab_p_settings_tab" data-target="saved-objects-content">
+        <div class="sqab_p_settings_icon">&#x1F4E6;</div>
+        <span>Saved Objects</span>
+    </div>
+    <div class="sqab_p_settings_tab" data-target="preferences-content">
+        <div class="sqab_p_settings_icon">&#x2699;</div>
+        <span>Preferences</span>
+    </div>
+</div>
+
+<div class="sqab_p_settings_content-container">
+    <div id="saved-orgs-content" class="sqab_p_settings_content">
+        <article class="ac-small">
+            <div id="container_myorgs"></div>
+        </article>
+    </div>
+    <div id="saved-shortcuts-content" class="sqab_p_settings_content" style="display: none;">
+        <article class="ac-large">
+            <div id="container_myshortcuts"></div>
+        </article>
+    </div>
+    <div id="saved-objects-content" class="sqab_p_settings_content" style="display: none;">
+        <article class="ac-medium">
+            <div id="container_myobjs"></div>
+        </article>
+    </div>
+    <div id="preferences-content" class="sqab_p_settings_content" style="display: none;">
+        <article class="ac-large mypreferences">
+            <fieldset>
+                <legend><b class="preferenceTitle">Change Hotkey:</b></legend>
+                <div style="display: flex; margin-top: 15px;">
+                    <div style="border:1px solid rgb(222, 222, 222); width: 25%; text-align: center;">CTRL</div>
+                    <div style="width: 10%; border: solid; border-width: 1px; border-color: #d5d5d5; text-align: center;">+</div>
+                    <input id="sqab_hotkey_input" style="display: inline; width: 65%;" class="sqab_pop_inputClass" type="text" placeholder="Click on any key">
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend><b class="preferenceTitle">Tab:</b></legend>
+                <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_new_tab_input">
+                Open links in a new Tab.
+            </fieldset>
+            <fieldset>
+                <legend><b class="preferenceTitle">Shortcuts:</b></legend>
+                <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_show_all_input">
+                Show `All` custom shortcuts/objects on unsaved orgs.
+            </fieldset>
+            <fieldset>
+                <legend><b class="preferenceTitle">Favorites:</b></legend>
+                <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_show_favorites_input">
+                Show Favorites.<br/>
+                <button id="sqab_ResetFavoritesBtn">Reset Favorites (refresh required.)</button>
+            </fieldset>
+            <fieldset>
+                <legend><b class="preferenceTitle">Trigger Modal:</b></legend>
+                <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_show_floating_btn_input">
+                Enable floating button. (refresh required.)<br/>
+                <input style="margin-top: 10px; display: inline;" type="checkbox" id="sqab_enable_hotkey_input">
+                Enable Hot Key.
+            </fieldset>
+        </article>
+    </div>
+</div>
