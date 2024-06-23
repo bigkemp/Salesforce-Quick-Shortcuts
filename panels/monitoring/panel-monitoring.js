@@ -1,9 +1,9 @@
 var resultContainer;
 function createTable(jsonData) {
-  resultContainer = document.getElementById("sqab_panel_monitoring_resultContainer");
-  var resultContent = document.getElementById("sqab_panel_monitoring_resultContent");
+  resultContainer = document.getElementById("sqab_p_monitoring_resultContainer");
+  var resultContent = document.getElementById("sqab_p_monitoring_resultContent");
   var table = document.createElement("table");
-  table.setAttribute("id", "sqab_panel_monitoring_jsonTable");
+  table.setAttribute("id", "sqab_p_monitoring_jsonTable");
 
   var headerRow = table.insertRow(0);
   var headerCell1 = headerRow.insertCell(0);
@@ -54,12 +54,12 @@ function createTable(jsonData) {
 
   var filterInput = document.createElement("input");
   filterInput.setAttribute("type", "text");
-  filterInput.setAttribute("id", "sqab_panel_monitoring_filterInput");
+  filterInput.setAttribute("id", "sqab_p_monitoring_filterInput");
   filterInput.setAttribute("placeholder", "Filter keys");
   filterInput.addEventListener("input", function () {
       filterTable(table, this.value);
   });
-  filterInput.classList.add("sqab_panel_monitoring_filter-input"); 
+  filterInput.classList.add("sqab_p_monitoring_filter-input"); 
 
   resultContent.insertBefore(filterInput, table);
 }
@@ -77,11 +77,11 @@ function colorCodePercentageCells(table) {
       var percentage = parseFloat(percentageCell.innerHTML);
 
       if (percentage < 30) {
-          percentageCell.classList.add("sqab_panel_monitoring_percentage-green");
+          percentageCell.classList.add("sqab_p_monitoring_percentage-green");
       } else if (percentage >= 30 && percentage < 60) {
-          percentageCell.classList.add("sqab_panel_monitoring_percentage-orange");
+          percentageCell.classList.add("sqab_p_monitoring_percentage-orange");
       } else {
-          percentageCell.classList.add("sqab_panel_monitoring_percentage-red");
+          percentageCell.classList.add("sqab_p_monitoring_percentage-red");
       }
   }
 }

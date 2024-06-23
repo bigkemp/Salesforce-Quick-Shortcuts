@@ -1,11 +1,11 @@
-#sqab_panel_monitoring_pageCounter {
+#sqab_p_monitoring_pageCounter {
     padding: 10px;
   }
 
-  .sqab_panel_monitoring_hide-me{
+  .sqab_p_monitoring_hide-me{
     display: none;
   }
-  .sqab_panel_monitoring_container {
+  .sqab_p_monitoring_container {
     padding: 10px;
     text-align: -webkit-center;
     max-height: 680px;
@@ -30,7 +30,7 @@
   }
   
   /* Style for the dropdown */
-  .sqab_panel_monitoring_search-dropdown {
+  .sqab_p_monitoring_search-dropdown {
     padding: 10px;
     border: none;
     border-radius: 5px 0 0 5px;
@@ -40,14 +40,14 @@
   }
   
   /* Adjust the input field and button to align properly */
-  .sqab_panel_monitoring_search-input {
+  .sqab_p_monitoring_search-input {
     padding: 10px;
     border: none;
     border-radius: 0;
     border-left: 1px solid #ccc;
   }
   
-  .sqab_panel_monitoring_search-button {
+  .sqab_p_monitoring_search-button {
     padding: 10px 20px;
     background-color: #00A1E0;
     color: white;
@@ -55,7 +55,7 @@
     border-radius: 0 5px 5px 0;
     cursor: pointer;
   }
-  .sqab_panel_monitoring_sqab_result-container {
+  .sqab_p_monitoring_sqab_result-container {
     display: none;
     margin-top: 20px;
     animation: fadeIn 1s ease-in-out;
@@ -73,7 +73,7 @@
       opacity: 1;
     }
   }
-  .sqab_panel_monitoring_edit-button {
+  .sqab_p_monitoring_edit-button {
     background-color: transparent;
     border: none;
     padding: 0;
@@ -81,7 +81,7 @@
     color: #0070d2;
   }
 
-#sqab_panel_monitoring_jsonTable {
+#sqab_p_monitoring_jsonTable {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -90,26 +90,26 @@
     margin-bottom: 20px;
 }
 
-#sqab_panel_monitoring_jsonTable th, #sqab_panel_monitoring_jsonTable td {
+#sqab_p_monitoring_jsonTable th, #sqab_p_monitoring_jsonTable td {
   border: 1px solid #e0e0e0;
   padding: 10px;
   text-align: left;
 }
 
-#sqab_panel_monitoring_jsonTable th {
+#sqab_p_monitoring_jsonTable th {
   background-color: #f4f6f9;
   font-weight: bold;
 }
 
-#sqab_panel_monitoring_jsonTable tr:nth-child(even) {
+#sqab_p_monitoring_jsonTable tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-#sqab_panel_monitoring_jsonTable tr:hover {
+#sqab_p_monitoring_jsonTable tr:hover {
   background-color: #f0f5ff;
 }
 
-.sqab_panel_monitoring_filter-input {
+.sqab_p_monitoring_filter-input {
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -118,19 +118,19 @@
 }
 
 /* Color coding for percentage cells */
-#sqab_panel_monitoring_jsonTable td:nth-child(4) {
+#sqab_p_monitoring_jsonTable td:nth-child(4) {
   color: #fff;
   text-align: center;
 }
 
-#sqab_panel_monitoring_jsonTable td.percentage-green {
+#sqab_p_monitoring_jsonTable td.sqab_p_monitoring_percentage-green {
   background-color: #00b25c;
 }
 
-#sqab_panel_monitoring_jsonTable td.percentage-orange {
+#sqab_p_monitoring_jsonTable td.sqab_p_monitoring_percentage-orange {
   background-color: #ffab00;
 }
 
-#sqab_panel_monitoring_jsonTable td.percentage-red {
+#sqab_p_monitoring_jsonTable td.sqab_p_monitoring_percentage-red {
   background-color: #ff4b4b;
 }
