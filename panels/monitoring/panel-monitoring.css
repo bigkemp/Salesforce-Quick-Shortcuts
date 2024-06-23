@@ -1,23 +1,23 @@
-#pageCounter {
+#sqab_panel_monitoring_pageCounter {
     padding: 10px;
   }
 
-  .hide-me{
+  .sqab_panel_monitoring_hide-me{
     display: none;
   }
-  .sqab_container {
+  .sqab_panel_monitoring_container {
     padding: 10px;
     text-align: -webkit-center;
     max-height: 680px;
     min-width: 300px;
 
   }
-  .filter-input {
+  .sqab_filter-input {
     padding: 5px;
     margin-bottom: 10px;
     /* Add any other styling you want */
 }
-  .search-container {
+  .sqab_search-container {
     display: none;
     width: fit-content;
     justify-content: center;
@@ -30,7 +30,7 @@
   }
   
   /* Style for the dropdown */
-  .search-dropdown {
+  .sqab_panel_monitoring_search-dropdown {
     padding: 10px;
     border: none;
     border-radius: 5px 0 0 5px;
@@ -40,14 +40,14 @@
   }
   
   /* Adjust the input field and button to align properly */
-  .search-input {
+  .sqab_panel_monitoring_search-input {
     padding: 10px;
     border: none;
     border-radius: 0;
     border-left: 1px solid #ccc;
   }
   
-  .search-button {
+  .sqab_panel_monitoring_search-button {
     padding: 10px 20px;
     background-color: #00A1E0;
     color: white;
@@ -55,7 +55,7 @@
     border-radius: 0 5px 5px 0;
     cursor: pointer;
   }
-  .sqab_result-container {
+  .sqab_panel_monitoring_sqab_result-container {
     display: none;
     margin-top: 20px;
     animation: fadeIn 1s ease-in-out;
@@ -73,7 +73,7 @@
       opacity: 1;
     }
   }
-  .edit-button {
+  .sqab_panel_monitoring_edit-button {
     background-color: transparent;
     border: none;
     padding: 0;
@@ -81,7 +81,7 @@
     color: #0070d2;
   }
 
-#jsonTable {
+#sqab_panel_monitoring_jsonTable {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -90,26 +90,26 @@
     margin-bottom: 20px;
 }
 
-#jsonTable th, #jsonTable td {
+#sqab_panel_monitoring_jsonTable th, #sqab_panel_monitoring_jsonTable td {
   border: 1px solid #e0e0e0;
   padding: 10px;
   text-align: left;
 }
 
-#jsonTable th {
+#sqab_panel_monitoring_jsonTable th {
   background-color: #f4f6f9;
   font-weight: bold;
 }
 
-#jsonTable tr:nth-child(even) {
+#sqab_panel_monitoring_jsonTable tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-#jsonTable tr:hover {
+#sqab_panel_monitoring_jsonTable tr:hover {
   background-color: #f0f5ff;
 }
 
-.filter-input {
+.sqab_panel_monitoring_filter-input {
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -118,19 +118,19 @@
 }
 
 /* Color coding for percentage cells */
-#jsonTable td:nth-child(4) {
+#sqab_panel_monitoring_jsonTable td:nth-child(4) {
   color: #fff;
   text-align: center;
 }
 
-#jsonTable td.percentage-green {
+#sqab_panel_monitoring_jsonTable td.percentage-green {
   background-color: #00b25c;
 }
 
-#jsonTable td.percentage-orange {
+#sqab_panel_monitoring_jsonTable td.percentage-orange {
   background-color: #ffab00;
 }
 
-#jsonTable td.percentage-red {
+#sqab_panel_monitoring_jsonTable td.percentage-red {
   background-color: #ff4b4b;
 }

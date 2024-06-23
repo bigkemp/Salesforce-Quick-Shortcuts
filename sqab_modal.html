@@ -1,8 +1,11 @@
 <div class="sqab_modal">
-  <div id="slide-out-menu">
-    <div id="slide-out-menu-body"></div>
+  <div id="sqab_slide-out-menu">
+    <div id="sqab_slide-out-menu-body"></div>
   </div> 
   <div class="sqab_tabs">
+    <div id="sqab_loading-screen">
+      <p>Loading...</p>
+    </div>
       <div class="sqab_tab-header">
           <div data-type="shortcuts" class="active">Shortcuts</div>
           <div data-type="objs">Objects</div>
@@ -19,46 +22,13 @@
       <div class="sqab_tab-body">
         <p style="display: flex;">
           <button disabled class="sqab_dynamic_search hide"></button>
-          <input id="modalInput" autocomplete="off" type="text" placeholder="Enter Shortcut" />
+          <input id="sqab_modalInput" autocomplete="off" type="text" placeholder="Enter Shortcut" />
         </p>
           <div class="sqab_body_shortcuts active">
-                <ul id="suggestions-dropdown" class="suggestions-dropdown"></ul>
-          </div>
-          <div class="sqab_body_add">
-            <div id="loading-screen">
-              <p>Loading...</p>
-            </div>
-            <div id="alert-box" class="alert-box">Save was successful.</div>
-              <p>
-                <div id="sqab_add_section" class="sqab_add_section">
-                  <div class="row" style="display: flex; flex-direction: row;">
-                    <div class="col" style="flex: 1;">
-                      <span style="font-weight:bold">Shortcut's Label:</span><br/><span style="padding: 5px;font-size: 11px;">Write a label for the shortcut.</span>
-                    </div>
-                    <div class="" style="flex: 1;">
-                      <input id="add_label_input" autocomplete="off" type="text" placeholder="Enter Label" />
-                    </div>
-                  </div>
-                  <div class="row" style="display: flex; flex-direction: row;">
-                    <div class="col" style="flex: 1;">
-                      <span style="font-weight:bold">Shortcut's Org:</span><br/><span style="padding: 5px;font-size: 11px;">Pick the org where the shortcut will appear.</span>
-                    </div>
-                    <div class="" style="flex: 1;">
-                      <select id = "targetList"  >  
-                      </select>  
-                    </div>
-                  </div>
-                  <div class="" style="display: flex; flex-direction: row;">
-                    <div class="" style="padding: 10px; flex: 1; text-align: right;">
-                      <button id="sqab_addSave">Save</button>
-                    </div>
-                  </div>
-                </div>                                         
-              </p>
+                <ul id="sqab_suggestions-dropdown" class="sqab_suggestions-dropdown"></ul>
           </div>
       </div>
       <div id="sqab_tips_bar" style="height: 30px; padding: 5px; color: rgb(173, 173, 173);text-align:center">
-        
       </div>
     </div>
 </div>

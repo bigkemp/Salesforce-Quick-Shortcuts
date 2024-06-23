@@ -52,43 +52,43 @@
         display: block;
     }
 
-    .mypreferences fieldset, #sqab_add_section fieldset {
+    .sqab_p_settings_mypreferences fieldset, #sqab_add_section fieldset {
         border: 1px solid #ccc;
         padding: 10px;
         margin-bottom: 10px;
         text-align: left;
     }
 
-    .mypreferences legend, #sqab_add_section legend {
+    .sqab_p_settings_mypreferences legend, #sqab_add_section legend {
         font-weight: bold;
         padding: 0 10px;
         margin-left: 10px;
     }
 
-    .mypreferences div, #sqab_add_section div {
+    .sqab_p_settings_mypreferences div, #sqab_add_section div {
         text-align: left;
     }
 
-    .mypreferences input[type="checkbox"], #sqab_add_section input[type="checkbox"] {
+    .sqab_p_settings_mypreferences input[type="checkbox"], #sqab_add_section input[type="checkbox"] {
         margin-left: 10px;
     }
 
-    .mypreferences button, #sqab_add_section button {
+    .sqab_p_settings_mypreferences button, #sqab_add_section button {
         margin-top: 10px;
     }
 
-    .preferenceTitle {
+    .sqab_p_settings_preferenceTitle {
         font-weight: bold;
     }
 
-    .sqab_pop_inputClass {
+    .sqab_p_settings_inputClass {
         margin-top: 10px;
         padding: 5px;
         width: calc(100% - 22px);
     }
 
-    .sqab_pop_inputlabel,
-    .sqab_pop_inputvalue {
+    .sqab_p_settings_inputlabel,
+    .sqab_p_settings_inputvalue {
         width: calc(100% - 20px);
     }
 
@@ -96,21 +96,21 @@
         font-size: 18px;
     }
 
-    .sqab_form-group {
+    .sqab_p_settings_form-group {
         margin-bottom: 15px;
     }
 
-    .sqab_form-group label {
+    .sqab_p_settings_form-group label {
         font-weight: bold;
         display: block;
         margin-bottom: 5px;
     }
 
-    .sqab_form-group textarea#modalInput {
+    .sqab_p_settings_form-group textarea#modalInput {
         height: 100px;
     }
 
-    .sqab_form-group textarea, .sqab_form-group input, .sqab_form-group select {
+    .sqab_p_settings_form-group textarea, .sqab_p_settings_form-group input, .sqab_p_settings_form-group select {
         width: 100%;
         padding: 10px;
         margin-top: 5px;
@@ -119,21 +119,21 @@
         font-size: 14px;
     }
 
-    .description {
+    .sqab_p_settings_description {
         font-size: 11px;
         color: #555;
         margin-bottom: 5px;
     }
 
-    .sqab_save-button-container {
+    .sqab_p_settings_save-button-container {
         text-align: right;
     }
 
-    #sqab_add_section {
+    #sqab_p_settings_add_section {
         padding: 10px;
     }
 
-    .sqab_save-button-container button {
+    .sqab_p_settings_save-button-container button {
         padding: 10px 20px;
         background-color: #007bff;
         color: white;
@@ -143,6 +143,6 @@
         font-size: 14px;
     }
 
-    .sqab_save-button-container button:hover {
+    .sqab_p_settings_save-button-container button:hover {
         background-color: #0056b3;
     }

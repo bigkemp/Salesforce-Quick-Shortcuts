@@ -135,7 +135,7 @@ async function startUp(){
 }
 
 function deleteModal(){
-  const slideOutMenu = document.getElementById('slide-out-menu');
+  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   if(slideOutMenu.style.right == "0px"){
     closeSidePanel();
     return;
@@ -191,7 +191,7 @@ function loading_End(){
 }
 
 function closeSidePanel(){
-  const slideOutMenu = document.getElementById('slide-out-menu');
+  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   slideOutMenu.style.right = '-430px'; /* Slide the menu back out */
   handlers["data"].doStartFromPopup(false);
 }
@@ -214,10 +214,10 @@ async function initModal(){
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
   tabsPane = tabHeader.getElementsByTagName("div");
-  inputbar = document.getElementById("modalInput");
+  inputbar = document.getElementById("sqab_modalInput");
   inputbar.focus();
-  loadingScreen = document.getElementById("loading-screen");
-  suggestionsDropdown = document.getElementById("suggestions-dropdown");
+  loadingScreen = document.getElementById("sqab_loading-screen");
+  suggestionsDropdown = document.getElementById("sqab_suggestions-dropdown");
   r.style.setProperty('--numOfTabs', tabsPane.length);
   showSuggestions();
   inputbar.placeholder = tabtypes[tabsPane[0].dataset.type]["placeholder"];
@@ -280,12 +280,12 @@ function selectedShortcut(){
 }
 
 async function openSettings() {
-  const slideOutMenu = document.getElementById('slide-out-menu');
+  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   if(slideOutMenu.style.right == "0px"){
     closeSidePanel();
     return;
   }else{
-    const slideOutMenuBody = document.getElementById('slide-out-menu-body');
+    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
     let html = await handlers["data"].loadPopHTML(paneltypes["settings"]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px';
@@ -294,12 +294,12 @@ async function openSettings() {
 }
 
 async function openMonitoring() {
-  const slideOutMenu = document.getElementById('slide-out-menu');
+  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   if(slideOutMenu.style.right == "0px"){
     closeSidePanel();
     return;
   }else{
-    const slideOutMenuBody = document.getElementById('slide-out-menu-body');
+    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
     let html = await handlers["data"].loadPopHTML(paneltypes["monitoring"]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px'; 
@@ -308,12 +308,12 @@ async function openMonitoring() {
 }
 
 async function openAdd() {
-  const slideOutMenu = document.getElementById('slide-out-menu');
+  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   if(slideOutMenu.style.right == "0px"){
     closeSidePanel();
     return;
   }else{
-    const slideOutMenuBody = document.getElementById('slide-out-menu-body');
+    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
     let html = await handlers["data"].loadPopHTML(paneltypes["add"]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px'; 
@@ -396,10 +396,10 @@ function definePanel(panel){
   }
 }
 
-function defineAddLayout(){
-  let icon = document.getElementById("sqab_add_icon");
-  icon.onclick = ADDpage;
-}
+// function defineAddLayout(){
+//   let icon = document.getElementById("sqab_add_icon");
+//   icon.onclick = ADDpage;
+// }
 
 function resetLayout(type){
   const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
@@ -437,50 +437,50 @@ function defineOutsideAsCloseModal(){
   }
 }
 
-function ADDpage(){
-  resetLayout("add");
+// function ADDpage(){
+//   resetLayout("add");
 
-  suggestionsDropdown.innerHTML = "";
-  const alertbox = document.getElementById("alert-box");
-  alertbox.classList.remove("show");
-  const addsection = document.getElementById("sqab_add_section")
-  addsection.classList.remove("hide");
-  const addlabel = document.getElementById("add_label_input"); 
-  const rowElement = addlabel.parentNode;
-  rowElement.style.display = 'flex';
-  const targetList = document.getElementById("targetList");
-  let type = "shortcuts";
+//   suggestionsDropdown.innerHTML = "";
+//   const alertbox = document.getElementById("alert-box");
+//   alertbox.classList.remove("show");
+//   const addsection = document.getElementById("sqab_add_section")
+//   addsection.classList.remove("hide");
+//   const addlabel = document.getElementById("add_label_input"); 
+//   const rowElement = addlabel.parentNode;
+//   rowElement.style.display = 'flex';
+//   const targetList = document.getElementById("targetList");
+//   let type = "shortcuts";
 
-  inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-  let possibleLabel = inputbar.value.split('/');
-  addlabel.value = possibleLabel[possibleLabel.length -1];
+//   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
+//   let possibleLabel = inputbar.value.split('/');
+//   addlabel.value = possibleLabel[possibleLabel.length -1];
 
-  let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
-  let data = '<option>All Orgs</option>';
-  orgOptions.forEach(org => {
-    data+=  `<option>${org.name}</option>`;
-  });
-  if(!handlers["data"].orgExists.bool){
-    data+=  `<option>${handlers["data"].orgExists.name}</option>`;
-  }
-  targetList.innerHTML = data;
+//   let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
+//   let data = '<option>All Orgs</option>';
+//   orgOptions.forEach(org => {
+//     data+=  `<option>${org.name}</option>`;
+//   });
+//   if(!handlers["data"].orgExists.bool){
+//     data+=  `<option>${handlers["data"].orgExists.name}</option>`;
+//   }
+//   targetList.innerHTML = data;
 
 
-  let addSave = document.getElementById("sqab_addSave"); 
-  addSave.onclick = async function(e) {
-    loading_Start();
-    let result = await handlers["save"].save(handlers,inputbar.value,addlabel.value,document.getElementById("targetList").value,type);
-    alertbox.classList.remove("success");
-    alertbox.classList.remove("error");
-    if(result.success){
-      alertbox.classList.add("success");
-    }else{
-      alertbox.classList.add("error");
-    }
-    alertbox.classList.add("show");
-    alertbox.innerText = result.message;
-    addsection.classList.add("hide");
-    inputbar.value = "";
-    loading_End();
-  }
-}
+//   let addSave = document.getElementById("sqab_addSave"); 
+//   addSave.onclick = async function(e) {
+//     loading_Start();
+//     let result = await handlers["save"].save(handlers,inputbar.value,addlabel.value,document.getElementById("targetList").value,type);
+//     alertbox.classList.remove("success");
+//     alertbox.classList.remove("error");
+//     if(result.success){
+//       alertbox.classList.add("success");
+//     }else{
+//       alertbox.classList.add("error");
+//     }
+//     alertbox.classList.add("show");
+//     alertbox.innerText = result.message;
+//     addsection.classList.add("hide");
+//     inputbar.value = "";
+//     loading_End();
+//   }
+// }
