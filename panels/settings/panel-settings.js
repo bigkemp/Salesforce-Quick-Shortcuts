@@ -191,7 +191,7 @@ const buildContentForType = (typeOfMemory) => {
 
 function buildTabsContent(){
     const container = document.getElementById('container_mytabs');
-
+    container.innerHTML = "";
     // Create container div
     const divContainer = document.createElement('div');
     divContainer.classList.add('sqab_p_settings_tab_container');
