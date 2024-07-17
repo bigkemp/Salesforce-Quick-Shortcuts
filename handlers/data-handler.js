@@ -7,6 +7,7 @@ var defaultPreferences = {
           alwaysShowFavorites:true,
           enableFloatingBtn:true,
           enableHotKey:true,
+          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles"]
         }
 export var orgExists = {bool:false,name:"",value:""};
 buildData();
@@ -163,20 +164,33 @@ async function loadMyOrgs(){
   }
 }
 
+async function firstConfiguration(mydata){
+  mydata = defaultPreferences;
+  if (navigator.userAgentData.platform.toLowerCase().includes('mac')) {
+    mydata.HotKey = {code:75 ,name:"k"}
+  } else {
+    mydata.HotKey = {code:81 ,name:"q"}
+  }
+  await chromeStorageSet(mydata,mySpecificData);
+  return mydata;
+}
+
+function checkUpdates(mydata){
+  if(mydata.tabs == undefined){
+    mydata.tabs = ["shortcuts","objs","listviews","flows","metadatas","profiles"];
+  }
+  return mydata;
+}
+
 async function loadMyData(mySpecificData){
   let myorg = data_library["myorgs"]?.filter(org => org.value.includes(currentOrg));
   let targetOrgSaved = myorg?.length != 0;
   let mydata = await getData(mySpecificData);
   if(mySpecificData == 'mypreferences'){
       if(mydata == undefined){ // if preferences were never defined, then define
-        mydata = defaultPreferences;
-        if (navigator.userAgentData.platform.toLowerCase().includes('mac')) {
-          mydata.HotKey = {code:75 ,name:"k"}
-        } else {
-          mydata.HotKey = {code:81 ,name:"q"}
-        }
-        await chromeStorageSet(mydata,mySpecificData);
+        mydata = await firstConfiguration(mydata);
       }
+      mydata = checkUpdates(mydata);
       data_library[mySpecificData] = mydata;
   }else{
     const filteredData = mydata?.filter(entry => {

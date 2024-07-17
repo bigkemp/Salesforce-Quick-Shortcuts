@@ -1,235 +1,311 @@
-// var handlers = [];
-// var type = "myorgs";
-// var editOldrecord = {};
 
-// export async function init(importedhandlers){
-//     handlers = importedhandlers
-//     handlers["data"].doStartFromPopup(true);
-//     document.getElementById('popup_myorgs').onclick = function () {buildContent("myorgs")};
-//     document.getElementById('popup_myobjs').onclick = function () {buildContent("myobjs")};
-//     document.getElementById('popup_myshortcuts').onclick = function () {buildContent("myshortcuts")};
-//     document.getElementById('popup_prefrences').onclick = function () {buildContent("myprefrences")};
-//     document.getElementById('edit_btn_save').onclick = saveEdit;
-//     document.getElementById('edit_btn_cancel').onclick = closeEdit;
-// }
+var myOrgs;
+const tabs =["shortcuts","objs","listviews","flows","metadatas","profiles"];
+function targetOrgPin(data, type, targetCell) {
+    const targetOrg = document.createElement('ul');
+    targetOrg.id = `orgs${type}-${data.name}`;
+    targetOrg.className = 'sqab_pop_tags sqab_pop_silent';
 
-// function closeEdit() {
-//     let editMenu = document.getElementById('sqab_pop_modal');
-//     editMenu.classList.add("sqab_pop_hide");
-// }
+        console.log(data.org);
+        for (const org of myOrgs) {
+            console.log(org);
+            const listItem = document.createElement('li');
+            listItem.textContent = org.name;
+            listItem.className = 'sqab_pop_tag';
+            if(Array.isArray(data.org) && data.org.length > 0 && data.org.includes(org.name)){
+                listItem.className += ' sqab_my_org';
+            }
+            listItem.onclick = () => {
+                let updatedData = data;
+                if(Array.isArray(data.org) && data.org.length > 0){
+                    if(data.org.includes(org.name)){
+                        data.org = data.org.filter(item => item !== org.name);
+                        listItem.classList.remove("sqab_my_org");
+                    }else{
+                        data.org.push(org.name);
+                        listItem.classList.add("sqab_my_org");
+                    }
+                }else{
+                    data.org = [];
+                    data.org.push(org.name);
+                    listItem.classList.add("sqab_my_org");
+                }
+                saveEdit(updatedData,data,type);
+            };
+            targetOrg.appendChild(listItem);
+        }
+    targetCell.appendChild(targetOrg);
+}
 
-// async function saveEdit() {
-//     const editMenu = document.getElementById("sqab_pop_modal");
-//     const orgtags = document.getElementById('orglist');
-//     const edit_inputs = editMenu.getElementsByTagName("input");
-//     let updatedRecord = {custom:true,name:edit_inputs[0].value,value:edit_inputs[1].value,org:undefined};
-//     for (const tag of orgtags.getElementsByClassName('sqab_my_org')) {
-//         if(updatedRecord.org == undefined){
-//             updatedRecord.org = [];
-//         }
-//         updatedRecord.org.push(tag.textContent);
-//     }
-//     if(updatedRecord.org != undefined && updatedRecord.org.length == handlers['data'].getDataFromLibrary('myorgs').length ){
-//         updatedRecord.org = undefined;
-//     }
-//     let response = await handlers["save"].edit(handlers,updatedRecord,editOldrecord,type);
-//     alert(response.message);
-//     buildContent(type);
-//     closeEdit();
-// }
+function createTable(type) {
+    let mySavedData = handlers["data"].getDataFromLibrary(type);
+    myOrgs = handlers["data"].getDataFromLibrary("myorgs")
+    const table = document.createElement('table');
+    table.id = 'dynamicTable';
 
-// function hotkeyChanged(event){
-//     event.preventDefault();
-//     event.target.value = event.key;
-//     handlers["save"].savePreferences(handlers,"HotKey",{code:event.code, name:event.key});
-//     event.target.blur();
-// }
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Value', 'Target', 'Act'];
 
-// function checkboxChanged(event,type){
-//     event.preventDefault();
-//     handlers["save"].savePreferences(handlers,type,event.target.checked);
-// }
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.appendChild(document.createTextNode(headerText));
+        headerRow.appendChild(th);
+    });
 
-// function hotkeyFocused(event){
-//     event.preventDefault();
-//     event.target.style.background = 'lightgray';
-//     event.target.value = "";
-// }
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
 
-// function getDefualts(type){
-//     let result = handlers["data"].findDataByNode(type,"mypreferences");
-//     return result;
-// }
+    const tbody = document.createElement('tbody');
+    mySavedData.forEach(rowData => {
+        tbody.appendChild( addRow(tbody, rowData, type));
+    });
+    table.appendChild(tbody);
 
-// async function buildContent(selectedType) {
-//     await handlers["data"].buildData();
-//     type = selectedType;
-//     if(type == 'myprefrences'){
-//         const hotkeyInput = document.getElementById('sqab_hotkey_input');
-//         hotkeyInput.style.background = 'white';
-//         hotkeyInput.value = handlers["data"].findDataByNode("HotKey","mypreferences").name;
-//         hotkeyInput.onkeydown = (event) => hotkeyChanged(event);
-//         hotkeyInput.onfocus = (event) => hotkeyFocused(event);
-//         hotkeyInput.onblur = (event) => {
-//           event.target.style.background = 'white';
-//           event.target.value = handlers["data"].findDataByNode("HotKey","mypreferences").name;
-//         };
+    return table;
+}
 
-//         const newTabInput = document.getElementById('sqab_new_tab_input');
-//         newTabInput.checked = getDefualts("linkOpenNewTab");
-//         newTabInput.onchange = (event) => checkboxChanged(event,"linkOpenNewTab");
+async function saveEdit(rowData,rowOldData,type) {
+    let response = await handlers["save"].edit(handlers,rowData,rowOldData,type);
+    alert(response.message);
+}
 
-//         const showAllInput = document.getElementById('sqab_show_all_input');
-//         showAllInput.checked = getDefualts("alwaysShowCustoms");
-//         showAllInput.onchange = (event) => checkboxChanged(event,"alwaysShowCustoms");
+ function addRow(table, rowData, type) {
+    const name = rowData.name;
+    const value = rowData.value;
 
-//         const favoritesInput = document.getElementById('sqab_show_favorites_input');
-//         favoritesInput.checked = getDefualts("alwaysShowFavorites");
-//         favoritesInput.onchange = (event) => checkboxChanged(event,"alwaysShowFavorites");
+    const row = table.insertRow();
 
-//         const floatingBtnInput = document.getElementById('sqab_show_floating_btn_input');
-//         floatingBtnInput.checked = getDefualts("enableFloatingBtn");
-//         floatingBtnInput.onchange = (event) => checkboxChanged(event,"enableFloatingBtn");
+    const nameCell = row.insertCell(0);
+    const valueCell = row.insertCell(1);
+    const targetCell = row.insertCell(2);
+    if(type != "myorgs"){
+        targetOrgPin(rowData, type, targetCell);
+    }
+    const actionCell = row.insertCell(3);
 
-//         const ResetFavoritesBtn = document.getElementById('sqab_ResetFavoritesBtn');
-//         if(await IhaveFavorites()){
-//             ResetFavoritesBtn.onclick = (event) => resetFavorites(event);
-//         }else{
-//             ResetFavoritesBtn.style.display = "none";
-//         }
+    nameCell.appendChild(document.createTextNode(name));
+    valueCell.appendChild(document.createTextNode(value));
 
-//         const enableHotKeyInput = document.getElementById('sqab_enable_hotkey_input');
-//         enableHotKeyInput.checked = getDefualts("enableHotKey");
-//         enableHotKeyInput.onchange = (event) => checkboxChanged(event,"enableHotKey");
-        
-//     }else{
-//         let allData = htmlBuild(type);
-//         let div = document.getElementById("container_"+type);
-//         div.innerHTML = allData;
-//         for (const row of div.children) {
-//             if (type != "myorgs") {
-//                 const editBtn = row.querySelector('.sqab_pop_btn:nth-of-type(1)');
-//                 const removeBtn = row.querySelector('.sqab_pop_btn:nth-of-type(2)');
-//                 editBtn.onclick = (event) => buttonEditClicked(event);
-//                 removeBtn.onclick = (event) => buttonRemoveClicked(event);
-//             } else {
-//                 const removeBtn = row.querySelector('.sqab_pop_btn:nth-of-type(1)');
-//                 removeBtn.onclick = (event) => buttonRemoveClicked(event);
-//             }            
-//         }
-//     }
-// }
+   nameCell.onclick = () => {
+        const newName = prompt("Edit Name:", nameCell.textContent);
+        if (newName !== null) {
+            nameCell.textContent = newName;
+            let newRowData = JSON.parse(JSON.stringify(rowData));
+            newRowData.name = newName; // Update the rowData
+            saveEdit(newRowData,rowData,type);
+        }
+    };
 
-// async function IhaveFavorites(){
-//     let localmem = await chrome.storage.sync.get("favorites");
-//     let favorites = localmem["favorites"] || undefined;
-//     if (favorites == undefined || Object.keys(favorites).length === 0  || favorites == []){
-//         return false;
-//     }
-//     return true;
-// }
+    valueCell.onclick = () => {
+        const newValue = prompt("Edit Value:", valueCell.textContent);
+        if (newValue !== null) {
+            valueCell.textContent = newValue;
+            let newRowData = JSON.parse(JSON.stringify(rowData));
+            newRowData.name = newName; // Update the rowData
+            saveEdit(newRowData,rowData,type);
+        }
+    };
 
-// async function resetFavorites(e){
-//     await handlers["data"].overrideManualData("favorites",{});
-//     const ResetFavoritesBtn = document.getElementById('sqab_ResetFavoritesBtn');
-//     const parent = ResetFavoritesBtn.parentNode;
-//     ResetFavoritesBtn.style.display = "none";
-//     const message = document.createElement('div');
-//     message.textContent = 'Please refresh';
-//     message.style.color = 'red';
 
-//     parent.replaceChild(message, ResetFavoritesBtn);
-// }
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = '✖️';
+    deleteButton.onclick = () => {
+        buttonRemoveClicked(rowData,type);
+        const row = deleteButton.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    };
 
-// function buttonEditClicked(e){
-//     const parent = e.target.parentElement;
-//     const input = parent.querySelector('input');
-//     let editMenu = document.getElementById('sqab_pop_modal');
-//     editMenu.classList.remove("sqab_pop_hide");
-//     let edit_inputs = editMenu.getElementsByTagName("input");
-//     editOldrecord = handlers["data"].findDataByLabel(input.value,type);
-//     edit_inputs[0].value = input.value; // Label
-//     edit_inputs[1].value = editOldrecord.value; // value
-//     const orglist = document.getElementById('orglist');
-//     orglist.innerHTML = "";
-//     if(type != "myorgs"){
-//         orglist.append(alltargetOrgPin(editOldrecord));
-//     }
-// }
-
-// async function  buttonRemoveClicked(e){
-//     const parent = e.target.parentElement;
-//     const input = parent.querySelector('input');
-//     handlers["save"].remove(handlers,input.value,type);
-//     buildContent(type);
-// }
-
-// function htmlBuild(type){
-//     let allData = '';
-//     let mySavedData = handlers["data"].getDataFromLibrary(type);
-//     for (const data of mySavedData) {
-//         allData+=`
-//         <div class="sqab_pop_row_container">
-//         ${type != "myorgs" ? `<button class=" sqab_pop_btn" style="background-color: #90cd90;">Edit</button>` : ''}
-//             <div class="sqab_pop_row" >
-//                 <input disabled value="${data.name}" class="sqab_pop_input"></input>
-//                 <div id="sqab_pin" class="sqab_pop_silent">
-//                     ${targetOrgPin(data)}
-//                 </div>
-//             </div>
-//             <button class=" sqab_pop_btn" style="background-color: #ce6363;">Remove</button>
-//         </div>
-//       `;
-//     }
-//     return allData;
-// }
-
-// function targetOrgPin(data) {
-//     let targetOrg=`<ul id="orgs${type}-${data.name}" class="sqab_pop_tags sqab_pop_silent">`;
-//     if(data.org != undefined){
-//         for (const org of data.org) {
-//             targetOrg +=`<li class="sqab_pop_tag sqab_pop_silent">${org}</li>`;
-//         }
-//     }else if(!type.includes("orgs")) {
-//         targetOrg +=`<li class="sqab_pop_tag sqab_pop_silent">all</li>`;
-//     }
-//     targetOrg += `</ul>`;
-//     return targetOrg;
-// }
-
-// function alltargetOrgPin(recordOrgs) {
-//     const targetOrg = document.createElement('ul');
-//     targetOrg.classList.add('sqab_pop_tags');
+    actionCell.appendChild(deleteButton);
+    return row;
+}
   
-//     const myOrgs = handlers['data'].getDataFromLibrary('myorgs');
-//     for (const savedOrg of myOrgs) {
-//       const li = document.createElement('li');
-//       li.classList.add('sqab_pop_tag');
-//       li.textContent = savedOrg.name;
-  
-//       if (recordOrgs.org == undefined || recordOrgs.org.includes(savedOrg.name)) {
-//         li.classList.add('sqab_my_org');
-//       }
-  
-//       targetOrg.appendChild(li);
-//     }
-  
-//     targetOrg.onclick = (event) => {
-//       if (event.target.tagName === 'LI') {
-//         const myorgtag = event.target;
-//         if (myorgtag.classList.contains('sqab_my_org')) {
-//           myorgtag.classList.remove('sqab_my_org');
-//         } else {
-//           myorgtag.classList.add('sqab_my_org');
-//         }
-//       }
-//     };
-  
-//     return targetOrg;
-//   } 
-  
+function hotkeyChanged(event){
+    event.preventDefault();
+    event.target.value = event.key;
+    handlers["save"].savePreferences(handlers,"HotKey",{code:event.code, name:event.key});
+    event.target.blur();
+}
+
+function hotkeyFocused(event){
+    event.preventDefault();
+    event.target.style.background = 'lightgray';
+    event.target.value = "";
+}
+
+function checkboxChanged(event,type){
+    event.preventDefault();
+    handlers["save"].savePreferences(handlers,type,event.target.checked);
+}
+
+function getDefualtPreference(type){
+    let result = handlers["data"].findDataByNode(type,"mypreferences");
+    return result;
+}
+
+async function resetFavorites(){
+    await handlers["data"].overrideManualData("favorites",{});
+    alert("Reset Completed, Please refresh page")
+}
+
+function  buttonRemoveClicked(rowData,type){
+     handlers["save"].remove(handlers,rowData.name,type);
+}
+
+async function buildPreferencesContent() {
+    const preferencesContent = document.getElementById('preferences-content');
+    const inputFields = preferencesContent.querySelectorAll('input');
+
+    inputFields.forEach(async input => {
+        let selectedPreference = input.getAttribute('data-target');
+        switch (selectedPreference) {
+            case "HotKey":
+                input.style.background = 'white';
+                input.value = getDefualtPreference(selectedPreference).name;
+                input.onkeydown = (event) => hotkeyChanged(event);
+                input.onfocus = (event) => hotkeyFocused(event);
+                input.onblur = (event) => {
+                    event.target.style.background = 'white';
+                    event.target.value = getDefualtPreference(selectedPreference).name;
+                };
+                break;
+            case "ResetFavoritesBtn":
+                input.onclick = (event) => resetFavorites(event);
+            case "linkOpenNewTab":
+            case "alwaysShowCustoms":
+            case "alwaysShowFavorites":
+            case "enableFloatingBtn":
+            case "enableHotKey":
+                input.checked = getDefualtPreference(selectedPreference);
+                input.onchange = (event) => checkboxChanged(event,selectedPreference);
+                break;
+        }
+    });
+}
+
+const buildContentForType = (typeOfMemory) => {
+    const div = document.getElementById("container_" + typeOfMemory);
+    div.innerHTML = '';
+    div.appendChild(createTable(typeOfMemory));
+};
+
+function buildTabsContent(){
+    const container = document.getElementById('container_mytabs');
+
+    // Create container div
+    const divContainer = document.createElement('div');
+    divContainer.classList.add('sqab_p_settings_tab_container');
+
+    // Create Active section
+    const activeSection = document.createElement('div');
+    const activeTitle = document.createElement('h2');
+    activeTitle.classList.add('sqab_p_settings_tab_h2');
+    activeTitle.textContent = 'Active';
+    activeSection.appendChild(activeTitle);
+
+    const activePicklist = document.createElement('ul');
+    activePicklist.id = 'sqab_p_settings_tab_activePicklist';
+    activePicklist.classList.add('sqab_p_settings_tab_picklist');
+    activeSection.appendChild(activePicklist);
+
+    // Create Inactive section
+    const inactiveSection = document.createElement('div');
+    const inactiveTitle = document.createElement('h2');
+    inactiveTitle.classList.add('sqab_p_settings_tab_h2');
+    inactiveTitle.textContent = 'Inactive';
+    inactiveSection.appendChild(inactiveTitle);
+
+    const inactivePicklist = document.createElement('ul');
+    inactivePicklist.id = 'sqab_p_settings_tab_inactivePicklist';
+    inactivePicklist.classList.add('sqab_p_settings_tab_picklist');
+
+    // Add items to Inactive picklist
+    const items = handlers["data"].findDataByNode('tabs','mypreferences');
+    tabs.forEach(tab => {
+        const li = document.createElement('li');
+        li.textContent = tab;
+        if(items.includes(tab)){
+            activePicklist.appendChild(li);
+        }else{
+            inactivePicklist.appendChild(li);
+        }
+    });
+
+    inactiveSection.appendChild(inactivePicklist);
+
+    // Append sections to container div
+    divContainer.appendChild(activeSection);
+    divContainer.appendChild(inactiveSection);
+
+    // Append container div to container_mytabs
+    container.appendChild(divContainer);
+
+    // Add event listeners for moving items
+    inactivePicklist.addEventListener('click', (event) => {
+        moveItem(event, activePicklist);
+        let newTabArray = [];
+        console.log(activePicklist);
+        let liElements = activePicklist.querySelectorAll('li');
+        liElements.forEach(tab => {
+            newTabArray.push(tab.textContent);
+        });
+        handlers["save"].savePreferences(handlers,"tabs",newTabArray);
+        window.refreshTabs();
+    });
+
+    activePicklist.addEventListener('click', (event) => {
+        moveItem(event, inactivePicklist);
+        let newTabArray = [];
+        console.log(activePicklist);
+        let liElements = activePicklist.querySelectorAll('li');
+        liElements.forEach(tab => {
+            newTabArray.push(tab.textContent);
+        });
+        handlers["save"].savePreferences(handlers,"tabs",newTabArray);
+        window.refreshTabs();
+    });
+
+    function moveItem(event, targetPicklist) {
+        if (event.target.tagName === 'LI') {
+            targetPicklist.appendChild(event.target);
+        }
+    }
+}
+
+function createTabs(tabHeader){
+    let firstActive = false;
+    handlers["data"].findDataByNode('tabs','mypreferences').forEach(tab => {
+      let newTab = document.createElement('div');
+      newTab.setAttribute('data-type', tab);
+      if(firstActive == false){
+        newTab.classList.add('active');
+        firstActive = true;
+      }
+      tabHeader.appendChild(newTab);
+    });
+  }
+async function buildContent(page){
+    await handlers["data"].buildData(); // refresh memory with each entry
+    switch (page) {
+        case "preferences-content":
+            buildPreferencesContent();
+            break;
+        case "saved-orgs-content":
+            buildContentForType("myorgs");
+            break;
+        case "saved-shortcuts-content":
+            buildContentForType("myshortcuts");
+            break;
+        case "saved-tabs-content":
+            buildTabsContent();
+            break;
+    }
+
+}
   
 export async function init(importedhandlers) {
+    handlers = importedhandlers
+    handlers["data"].doStartFromPopup(true);
     const tabs = document.querySelectorAll('.sqab_p_settings_tab');
     let activeTab = null;
 
@@ -244,6 +320,7 @@ export async function init(importedhandlers) {
             const currentContentId = tab.getAttribute('data-target');
             document.getElementById(currentContentId).style.display = 'block';
             activeTab = tab;
+            buildContent(activeTab.getAttribute('data-target'));
         });
 
         tab.addEventListener('mouseover', () => {

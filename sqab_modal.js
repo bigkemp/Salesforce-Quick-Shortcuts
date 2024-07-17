@@ -10,8 +10,7 @@ var tabtypes = {
   "listviews": {"color":"#67C6E3","placeholder":"Enter Object Label","title":"ListViews"},
   "flows": {"color":"#67C6E3","placeholder":"Enter Flow Name","title":"Flows"},
   "metadatas": {"color":"#67C6E3","placeholder":"Enter Metadata Type Name","title":"Metadata"},
-  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name","title":"Profiles"},
-  "add": {"color":"#FF6B6B","placeholder":"Enter Object Label","title":"Add"}
+  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name","title":"Profiles"}
 }
 
 var handlersMap = {
@@ -43,7 +42,6 @@ var suggestionsDropdown;
 init();
 
 async function init(){
-  
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if(isModalOpened === false && message?.text == "Wake Up!"){
       startUp();   
@@ -203,16 +201,32 @@ function defineTipsBar(){
   tipsBar.innerText = `Quick Tip : ${randomTip}`;
 }
 
-async function initModal(){
-  currentSelectedTab="shortcuts";
-  definePanel("settings");
-  definePanel("monitoring");
-  definePanel("add");
-  defineTipsBar();
-  // defineAddLayout();
-  defineOutsideAsCloseModal();
+function createTabs(tabHeader){
+  const children = Array.from(tabHeader.children);
+
+  // Iterate over the children and remove div elements
+  children.forEach(child => {
+    if (child.tagName.toLowerCase() === 'div') {
+      tabHeader.removeChild(child);
+    }
+  });
+  let firstActive = false;
+  handlers["data"].findDataByNode('tabs','mypreferences').forEach(tab => {
+    let newTab = document.createElement('div');
+    newTab.setAttribute('data-type', tab);
+    if(firstActive == false){
+      newTab.classList.add('active');
+      firstActive = true;
+    }
+    tabHeader.appendChild(newTab);
+  });
+}
+
+
+ async function refreshTabs(){
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
+  createTabs(tabHeader);
   tabsPane = tabHeader.getElementsByTagName("div");
   inputbar = document.getElementById("sqab_modalInput");
   inputbar.focus();
@@ -246,6 +260,16 @@ async function initModal(){
       inputbar.focus();
     }
   }
+}
+
+async function initModal(){
+  currentSelectedTab="shortcuts";
+  definePanel("settings");
+  definePanel("monitoring");
+  definePanel("add");
+  defineTipsBar();
+  defineOutsideAsCloseModal();
+  refreshTabs();
   initInput();
   initSuggesionsDropdown();
 }
@@ -279,45 +303,21 @@ function selectedShortcut(){
   }
 }
 
-async function openSettings() {
+async function openPanel(panelType) {
   const slideOutMenu = document.getElementById('sqab_slide-out-menu');
-  if(slideOutMenu.style.right == "0px"){
+  const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
+
+  if (slideOutMenu.style.right === "0px") {
     closeSidePanel();
-    return;
-  }else{
-    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML(paneltypes["settings"]);
+  }
+
+  try {
+    let html = await handlers["data"].loadPopHTML(paneltypes[panelType]);
     slideOutMenuBody.innerHTML = html;
     slideOutMenu.style.right = '0px';
-    handlers["settings"].init(handlers);
-  }
-}
-
-async function openMonitoring() {
-  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
-  if(slideOutMenu.style.right == "0px"){
-    closeSidePanel();
-    return;
-  }else{
-    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML(paneltypes["monitoring"]);
-    slideOutMenuBody.innerHTML = html;
-    slideOutMenu.style.right = '0px'; 
-    handlers["monitoring"].init(handlers);
-  }
-}
-
-async function openAdd() {
-  const slideOutMenu = document.getElementById('sqab_slide-out-menu');
-  if(slideOutMenu.style.right == "0px"){
-    closeSidePanel();
-    return;
-  }else{
-    const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
-    let html = await handlers["data"].loadPopHTML(paneltypes["add"]);
-    slideOutMenuBody.innerHTML = html;
-    slideOutMenu.style.right = '0px'; 
-    handlers["add"].init(handlers);
+    handlers[panelType].init(handlers);
+  } catch (error) {
+    console.error(`Error loading panel: ${panelType}`, error);
   }
 }
 
@@ -381,25 +381,20 @@ function initSuggesionsDropdown(){
   };
 }
 
-function definePanel(panel){
+function definePanel(panel) {
   let icon = document.getElementById(`sqab_${panel}_icon`);
   switch (panel) {
     case "settings":
-      icon.onclick = openSettings;
+      icon.onclick = () => openPanel("settings");
       break;
     case "monitoring":
-      icon.onclick = openMonitoring;
+      icon.onclick = () => openPanel("monitoring");
       break;
     case "add":
-      icon.onclick = openAdd;
+      icon.onclick = () => openPanel("add");
       break;
   }
 }
-
-// function defineAddLayout(){
-//   let icon = document.getElementById("sqab_add_icon");
-//   icon.onclick = ADDpage;
-// }
 
 function resetLayout(type){
   const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
@@ -436,51 +431,3 @@ function defineOutsideAsCloseModal(){
     }
   }
 }
-
-// function ADDpage(){
-//   resetLayout("add");
-
-//   suggestionsDropdown.innerHTML = "";
-//   const alertbox = document.getElementById("alert-box");
-//   alertbox.classList.remove("show");
-//   const addsection = document.getElementById("sqab_add_section")
-//   addsection.classList.remove("hide");
-//   const addlabel = document.getElementById("add_label_input"); 
-//   const rowElement = addlabel.parentNode;
-//   rowElement.style.display = 'flex';
-//   const targetList = document.getElementById("targetList");
-//   let type = "shortcuts";
-
-//   inputbar.value = window.location.href.substring(window.location.href.indexOf("com")+3);
-//   let possibleLabel = inputbar.value.split('/');
-//   addlabel.value = possibleLabel[possibleLabel.length -1];
-
-//   let orgOptions = handlers["data"].getDataFromLibrary("myorgs");
-//   let data = '<option>All Orgs</option>';
-//   orgOptions.forEach(org => {
-//     data+=  `<option>${org.name}</option>`;
-//   });
-//   if(!handlers["data"].orgExists.bool){
-//     data+=  `<option>${handlers["data"].orgExists.name}</option>`;
-//   }
-//   targetList.innerHTML = data;
-
-
-//   let addSave = document.getElementById("sqab_addSave"); 
-//   addSave.onclick = async function(e) {
-//     loading_Start();
-//     let result = await handlers["save"].save(handlers,inputbar.value,addlabel.value,document.getElementById("targetList").value,type);
-//     alertbox.classList.remove("success");
-//     alertbox.classList.remove("error");
-//     if(result.success){
-//       alertbox.classList.add("success");
-//     }else{
-//       alertbox.classList.add("error");
-//     }
-//     alertbox.classList.add("show");
-//     alertbox.innerText = result.message;
-//     addsection.classList.add("hide");
-//     inputbar.value = "";
-//     loading_End();
-//   }
-// }
