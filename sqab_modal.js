@@ -157,7 +157,6 @@ function loading_Start(){
 async function showSuggestions(inputValue = ''){
   inputValue == undefined ? '' : inputValue;
   let type = currentSelectedTab;
-
   if (inputValue != '') {
     filteredSuggestions = handlers["suggestions"].getSuggestions(handlers["data"].getShortcuts(type),inputValue);
   }else{
@@ -216,6 +215,7 @@ function createTabs(tabHeader){
     newTab.setAttribute('data-type', tab);
     if(firstActive == false){
       newTab.classList.add('active');
+      currentSelectedTab=tab;
       firstActive = true;
     }
     tabHeader.appendChild(newTab);
@@ -223,7 +223,7 @@ function createTabs(tabHeader){
 }
 
 
- async function refreshTabs(){
+function refreshTabs(){
   const tabHeader = document.getElementsByClassName("sqab_tab-header")[0];
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
   createTabs(tabHeader);
@@ -263,7 +263,6 @@ function createTabs(tabHeader){
 }
 
 async function initModal(){
-  currentSelectedTab="shortcuts";
   definePanel("settings");
   definePanel("monitoring");
   definePanel("add");

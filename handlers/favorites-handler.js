@@ -41,9 +41,13 @@ function sortFavorites(shortcuts, usedShortcut, shortcutExists) {
 }
 
 export async function getFavorites(type, handlers){
+    const showFavorites = handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences');
+    if(!showFavorites){
+        return [];
+    }
     let localmem = await chrome.storage.sync.get("favorites");
     let favorites = localmem["favorites"] || undefined;
-    if (favorites == undefined ||  Object.keys(favorites).length === 0 || !handlers["data"].findDataByNode('alwaysShowFavorites','mypreferences')){
+    if (favorites == undefined ||  Object.keys(favorites).length === 0 ){
         return [];
     }
     let finalFavList = [];

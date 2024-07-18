@@ -5,10 +5,7 @@ function targetOrgPin(data, type, targetCell) {
     const targetOrg = document.createElement('ul');
     targetOrg.id = `orgs${type}-${data.name}`;
     targetOrg.className = 'sqab_pop_tags sqab_pop_silent';
-
-        console.log(data.org);
         for (const org of myOrgs) {
-            console.log(org);
             const listItem = document.createElement('li');
             listItem.textContent = org.name;
             listItem.className = 'sqab_pop_tag';
@@ -170,10 +167,20 @@ async function buildPreferencesContent() {
                 };
                 break;
             case "ResetFavoritesBtn":
-                input.onclick = (event) => resetFavorites(event);
+                input.onclick = (event) => {
+                    resetFavorites(event);
+                    window.showSuggestions();
+                }
+                break;
+            case "alwaysShowFavorites":
+                input.checked = getDefualtPreference(selectedPreference);
+                input.onchange = (event) => {
+                    checkboxChanged(event,selectedPreference);
+                    window.showSuggestions();
+                };
+                break;
             case "linkOpenNewTab":
             case "alwaysShowCustoms":
-            case "alwaysShowFavorites":
             case "enableFloatingBtn":
             case "enableHotKey":
                 input.checked = getDefualtPreference(selectedPreference);
@@ -244,7 +251,6 @@ function buildTabsContent(){
     inactivePicklist.addEventListener('click', (event) => {
         moveItem(event, activePicklist);
         let newTabArray = [];
-        console.log(activePicklist);
         let liElements = activePicklist.querySelectorAll('li');
         liElements.forEach(tab => {
             newTabArray.push(tab.textContent);
@@ -256,7 +262,6 @@ function buildTabsContent(){
     activePicklist.addEventListener('click', (event) => {
         moveItem(event, inactivePicklist);
         let newTabArray = [];
-        console.log(activePicklist);
         let liElements = activePicklist.querySelectorAll('li');
         liElements.forEach(tab => {
             newTabArray.push(tab.textContent);
@@ -272,20 +277,9 @@ function buildTabsContent(){
     }
 }
 
-function createTabs(tabHeader){
-    let firstActive = false;
-    handlers["data"].findDataByNode('tabs','mypreferences').forEach(tab => {
-      let newTab = document.createElement('div');
-      newTab.setAttribute('data-type', tab);
-      if(firstActive == false){
-        newTab.classList.add('active');
-        firstActive = true;
-      }
-      tabHeader.appendChild(newTab);
-    });
-  }
+
 async function buildContent(page){
-    await handlers["data"].buildData(); // refresh memory with each entry
+    // await handlers["data"].buildData(); // refresh memory with each entry
     switch (page) {
         case "preferences-content":
             buildPreferencesContent();

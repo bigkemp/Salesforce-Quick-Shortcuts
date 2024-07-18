@@ -21,13 +21,9 @@ export async function savePreferences(handlers,type,value){ // only popup
 }
 
 export async function edit(handlers,record,oldrecord,type){ // only pop
-    console.log('old',oldrecord);
-    console.log('new',record);
     let targetData = handlers["data"].getDataFromLibrary(type);
-    console.log('targetData',targetData);
     const index = targetData.findIndex(obj => obj.name === oldrecord.name);
     if (index !== -1) {
-        console.log(JSON.stringify(targetData[index]));
         await handlers["data"].saveDataByReplace(index,record,type);
         await postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type);
         return {success:true, message: "Edit was successful"};
@@ -37,8 +33,6 @@ export async function edit(handlers,record,oldrecord,type){ // only pop
 }
 
 export async function remove(handlers,name,type){ // only pop
-    console.log('remove name');
-    console.log('remove type');
     await handlers["data"].deleteData(name,type,'name');
     await postProcessingOfSuccessfulEdit(handlers,undefined,{name: name},type);
     return {success:true, message: "Delete was successful"};
@@ -55,7 +49,6 @@ async function  postProcessingOfSuccessfulEdit(handlers,record,oldrecord,type){
         for (const data of datatype) {
             if(data.org != undefined && data.org.includes(oldrecord.name)){
                 if(record != undefined){
-                    console.log(data.org[data.org.indexOf(oldrecord.name)] );
                     data.org[data.org.indexOf(oldrecord.name)] = record.name ;
                 }else{
                     data.org.splice(data.org.indexOf(oldrecord.name), 1);
