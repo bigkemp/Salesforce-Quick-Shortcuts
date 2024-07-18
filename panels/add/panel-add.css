@@ -1,148 +1,156 @@
+.sqab_p_add_tab-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+    transition: all 0.3s ease;
+}
 
-    .sqab_p_settings_tab-container {
-        display: flex;
-        justify-content: space-around;
-        margin-top: 50px;
-        transition: all 0.3s ease;
-    }
+.sqab_p_add_tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100px;
+    flex-grow: 1;
+    margin: 0 5px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
 
-    .sqab_p_settings_tab {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100px;
-        flex-grow: 1;
-        margin: 0 5px;
-    }
+.sqab_p_add_tab:hover, .sqab_p_add_tab.active {
+    transform: scale(1.1);
+}
 
-    .sqab_p_settings_tab:hover, .sqab_p_settings_tab.active {
-        transform: scale(1.1);
-    }
+.sqab_p_add_icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
 
-    .sqab_p_settings_icon {
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
+.sqab_p_add_tab span {
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
 
-    .sqab_p_settings_tab span {
-        opacity: 0;
-        transition: opacity 0.3s;
-        white-space: nowrap;
-    }
+.sqab_p_add_tab:hover span, .sqab_p_add_tab.active span {
+    opacity: 1;
+}
 
-    .sqab_p_settings_tab:hover span, .sqab_p_settings_tab.active span {
-        opacity: 1;
-    }
+.sqab_p_add_content-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
 
-    .sqab_p_settings_content-container {
-        text-align: center;
-        margin-top: 20px;
-        padding: 20px;
-        border: 1px solid #ccc;
-    }
+.sqab_p_add_content {
+    display: none;
+}
 
-    .sqab_p_settings_content {
-        display: none;
-    }
+.sqab_p_add_content-container > div:first-child {
+    display: block;
+}
 
-    .sqab_p_settings_content-container > div:first-child {
-        display: block;
-    }
+.sqab_p_add_mypreferences fieldset, #sqab_add_section fieldset {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    border-radius: 8px;
+}
 
-    .sqab_p_settings_mypreferences fieldset, #sqab_add_section fieldset {
-        border: 1px solid #ccc;
-        padding: 10px;
-        margin-bottom: 10px;
-        text-align: left;
-    }
+.sqab_p_add_mypreferences legend, #sqab_add_section legend {
+    font-weight: bold;
+    padding: 0 10px;
+    margin-left: 10px;
+}
 
-    .sqab_p_settings_mypreferences legend, #sqab_add_section legend {
-        font-weight: bold;
-        padding: 0 10px;
-        margin-left: 10px;
-    }
+.sqab_p_add_mypreferences div, #sqab_add_section div {
+    text-align: left;
+}
 
-    .sqab_p_settings_mypreferences div, #sqab_add_section div {
-        text-align: left;
-    }
+.sqab_p_add_mypreferences input[type="checkbox"], #sqab_add_section input[type="checkbox"] {
+    margin-left: 10px;
+}
 
-    .sqab_p_settings_mypreferences input[type="checkbox"], #sqab_add_section input[type="checkbox"] {
-        margin-left: 10px;
-    }
+.sqab_p_add_mypreferences button, #sqab_add_section button {
+    margin-top: 10px;
+}
 
-    .sqab_p_settings_mypreferences button, #sqab_add_section button {
-        margin-top: 10px;
-    }
+.sqab_p_add_preferenceTitle {
+    font-weight: bold;
+}
 
-    .sqab_p_settings_preferenceTitle {
-        font-weight: bold;
-    }
+.sqab_p_add_inputClass {
+    margin-top: 10px;
+    padding: 5px;
+    width: calc(100% - 22px);
+    border-radius: 8px;
+}
 
-    .sqab_p_settings_inputClass {
-        margin-top: 10px;
-        padding: 5px;
-        width: calc(100% - 22px);
-    }
+.sqab_p_add_inputlabel,
+.sqab_p_add_inputvalue {
+    width: calc(100% - 20px);
+    border-radius: 8px;
+}
 
-    .sqab_p_settings_inputlabel,
-    .sqab_p_settings_inputvalue {
-        width: calc(100% - 20px);
-    }
+#sqab_p_add_content {
+    font-size: 18px;
+}
 
-    #sqab_p_settings_content {
-        font-size: 18px;
-    }
+.sqab_p_add_form-group {
+    margin-bottom: 15px;
+}
 
-    .sqab_p_settings_form-group {
-        margin-bottom: 15px;
-    }
+.sqab_p_add_form-group label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
 
-    .sqab_p_settings_form-group label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
+.sqab_p_add_form-group textarea#modalInput {
+    height: 100px;
+}
 
-    .sqab_p_settings_form-group textarea#modalInput {
-        height: 100px;
-    }
+.sqab_p_add_form-group textarea, .sqab_p_add_form-group input, .sqab_p_add_form-group select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
 
-    .sqab_p_settings_form-group textarea, .sqab_p_settings_form-group input, .sqab_p_settings_form-group select {
-        width: 100%;
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
+.sqab_p_add_description {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 5px;
+}
 
-    .sqab_p_settings_description {
-        font-size: 11px;
-        color: #555;
-        margin-bottom: 5px;
-    }
+.sqab_p_add_save-button-container {
+    text-align: right;
+    margin-top: 20px;
+}
 
-    .sqab_p_settings_save-button-container {
-        text-align: right;
-    }
+#sqab_p_add_add_section {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
 
-    #sqab_p_settings_add_section {
-        padding: 10px;
-    }
+.sqab_p_add_save-button-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
 
-    .sqab_p_settings_save-button-container button {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .sqab_p_settings_save-button-container button:hover {
-        background-color: #0056b3;
-    }
+.sqab_p_add_save-button-container button:hover {
+    background-color: #0056b3;
+}

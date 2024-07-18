@@ -38,7 +38,7 @@ function createTable(type) {
     let mySavedData = handlers["data"].getDataFromLibrary(type);
     myOrgs = handlers["data"].getDataFromLibrary("myorgs")
     const table = document.createElement('table');
-    table.id = 'dynamicTable';
+    table.id = 'sqab_dynamicTable';
 
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');

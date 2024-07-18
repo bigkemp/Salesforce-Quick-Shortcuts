@@ -43,6 +43,7 @@
     height: 100%; 
     background-color: rgba(0,0,0,0.4); 
 }
+
 #sqab_hotkey_input{
 margin: 0;
 }
@@ -72,7 +73,7 @@ margin: 0;
 
 
 
-.sqab_p_checkbox{
+.sqab_p_settings_checkbox{
     margin-top: 10px; 
     display: inline;
 }
@@ -108,32 +109,32 @@ margin: 0;
     display: block;
 }
 
-.mypreferences fieldset {
+.sqab_p_settings_mypreferences fieldset {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     text-align: left;
 }
 
-.mypreferences legend {
+.sqab_p_settings_mypreferences legend {
     font-weight: bold;
     padding: 0 10px;
     margin-left: 10px;
 }
 
-.mypreferences div {
+.sqab_p_settings_mypreferences div {
     text-align: left;
 }
 
-.mypreferences input[type="checkbox"] {
+.sqab_p_settings_mypreferences input[type="checkbox"] {
     margin-left: 10px;
 }
 
-.mypreferences button {
+.sqab_p_settings_mypreferences button {
     margin-top: 10px;
 }
 
-.preferenceTitle {
+.sqab_p_settings_preferenceTitle {
     font-weight: bold;
 }
 
@@ -154,7 +155,7 @@ margin: 0;
 }
 
 
-#dynamicTable {
+#sqab_dynamicTable {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ddd;
@@ -163,22 +164,22 @@ margin: 0;
     margin-bottom: 20px;
 }
 
-#dynamicTable th, #dynamicTable td {
+#sqab_dynamicTable th, #sqab_dynamicTable td {
   border: 1px solid #e0e0e0;
   padding: 10px;
   text-align: left;
 }
 
-#dynamicTable th {
+#sqab_dynamicTable th {
   background-color: #f4f6f9;
   font-weight: bold;
 }
 
-#dynamicTable tr:nth-child(even) {
+#sqab_dynamicTable tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-#dynamicTable td {
+#sqab_dynamicTable td {
     padding: 8px;
     text-align: left;
     overflow: hidden;
@@ -187,7 +188,7 @@ margin: 0;
     max-width: 0px;
 }
 
-#dynamicTable tr:hover {
+#sqab_dynamicTable tr:hover {
   background-color: #f0f5ff;
 }
 
