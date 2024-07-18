@@ -2,7 +2,9 @@
     "tips":[
         "You can travel between tabs using: Tab key or Tab + Shift key",
         "Copy a record's Id in the shortcut tab to quickly access it",
-        "Create custom shortcuts using the Pencil icon",
-        "Manage your shortcuts using in the Setting Panel"
+        "Create custom shortcuts using the ✏️ icon",
+        "Manage your shortcuts using the ⚙️ icon",
+        "Reorder your tabs using the ⚙️ icon",
+        "Monitor your org using the 🧪️ icon"
     ]
 }

@@ -243,7 +243,7 @@ function refreshTabs(){
     tabsPane[i].onclick = async function(e){
       let type = tabsPane[i].dataset.type;
       closeSidePanel();
-      resetLayout("main");
+      // resetLayout("main");
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");
@@ -395,31 +395,31 @@ function definePanel(panel) {
   }
 }
 
-function resetLayout(type){
-  const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
-  tabBody.getElementsByClassName("active")[0].classList.remove("active");
+// function resetLayout(type){
+//   const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
+//   tabBody.getElementsByClassName("active")[0].classList.remove("active");
 
-  switch (type) {
-    case "add" :
-      tabBody.getElementsByTagName("div")[1].classList.add("active");
-      for(let i=0; i < tabsPane.length; i++){
-        if(tabsPane[i].dataset.type == currentSelectedTab){
-          tabsPane[i].innerText = "Add";
-        }
-        else{
-          tabsPane[i].innerText = "-";
-        }
-      }
-      break;
+//   switch (type) {
+//     case "add" :
+//       tabBody.getElementsByTagName("div")[1].classList.add("active");
+//       for(let i=0; i < tabsPane.length; i++){
+//         if(tabsPane[i].dataset.type == currentSelectedTab){
+//           tabsPane[i].innerText = "Add";
+//         }
+//         else{
+//           tabsPane[i].innerText = "-";
+//         }
+//       }
+//       break;
   
-    default:
-      tabBody.getElementsByTagName("div")[0].classList.add("active");
-      for(let i=0; i < tabsPane.length; i++){
-        tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
-      }
-      break;
-  }
-}
+//     default:
+//       tabBody.getElementsByTagName("div")[0].classList.add("active");
+//       for(let i=0; i < tabsPane.length; i++){
+//         tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
+//       }
+//       break;
+//   }
+// }
  
 
 function defineOutsideAsCloseModal(){

@@ -199,11 +199,10 @@ const buildContentForType = (typeOfMemory) => {
 function buildTabsContent(){
     const container = document.getElementById('container_mytabs');
     container.innerHTML = "";
-    // Create container div
+
     const divContainer = document.createElement('div');
     divContainer.classList.add('sqab_p_settings_tab_container');
 
-    // Create Active section
     const activeSection = document.createElement('div');
     const activeTitle = document.createElement('h2');
     activeTitle.classList.add('sqab_p_settings_tab_h2');
@@ -215,7 +214,6 @@ function buildTabsContent(){
     activePicklist.classList.add('sqab_p_settings_tab_picklist');
     activeSection.appendChild(activePicklist);
 
-    // Create Inactive section
     const inactiveSection = document.createElement('div');
     const inactiveTitle = document.createElement('h2');
     inactiveTitle.classList.add('sqab_p_settings_tab_h2');
@@ -226,7 +224,6 @@ function buildTabsContent(){
     inactivePicklist.id = 'sqab_p_settings_tab_inactivePicklist';
     inactivePicklist.classList.add('sqab_p_settings_tab_picklist');
 
-    // Add items to Inactive picklist
     const items = handlers["data"].findDataByNode('tabs','mypreferences');
     tabs.forEach(tab => {
         const li = document.createElement('li');
@@ -240,14 +237,11 @@ function buildTabsContent(){
 
     inactiveSection.appendChild(inactivePicklist);
 
-    // Append sections to container div
     divContainer.appendChild(activeSection);
     divContainer.appendChild(inactiveSection);
 
-    // Append container div to container_mytabs
     container.appendChild(divContainer);
 
-    // Add event listeners for moving items
     inactivePicklist.addEventListener('click', (event) => {
         moveItem(event, activePicklist);
         let newTabArray = [];
@@ -279,7 +273,6 @@ function buildTabsContent(){
 
 
 async function buildContent(page){
-    // await handlers["data"].buildData(); // refresh memory with each entry
     switch (page) {
         case "preferences-content":
             buildPreferencesContent();
