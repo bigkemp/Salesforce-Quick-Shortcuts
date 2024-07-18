@@ -1,8 +1,8 @@
-# Salesforce Quick Access Bar
+# Salesforce Quick Shortcuts
 
-Salesforce Quick Access Bar is a tool that provides shortcuts to Salesforce's Setup pages and Object Manager Objects via a quick access bar on all Lightning pages. It's a simple and user-friendly UI that allows users to access important Salesforce information with ease.
+Salesforce Quick Shortcuts is a tool that provides shortcuts to Salesforce's Setup pages and Object Manager Objects via a Quick Shortcuts on all Lightning pages. It's a simple and user-friendly UI that allows users to access important Salesforce information with ease.
 
-## How Do I Open the Quick Access Bar's Modal?
+## How Do I Open the Quick Shortcuts's Modal?
 - For Windows, Open the Modal with Ctrl+q
 - For Mac, Open the Modal with Command+k
 
@@ -12,7 +12,7 @@ Lightning Pages.
 
 ## Latest Version
 
-2.0.0
+2.0.10
 
 ## Key Features
 
@@ -34,9 +34,9 @@ To open the Quick Access Modal, simply click CTRL + Q (Windows) or command + K (
 
 ## Security
 
-Salesforce Quick Access Bar is completely safe to use, as it doesn't use any user's personal Salesforce data, external libraries, or Tooling API via user cookies. All data is saved locally only.
+Salesforce Quick Shortcuts is completely safe to use, as it doesn't use any user's personal Salesforce data, external libraries, or Tooling API via user cookies. All data is saved locally only.
 
-We hope you find Salesforce Quick Access Bar helpful! Please feel free to provide feedback or report any issues you may encounter.
+We hope you find Salesforce Quick Shortcuts helpful! Please feel free to provide feedback or report any issues you may encounter.
 
 
 ## How Tos
