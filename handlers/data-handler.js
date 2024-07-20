@@ -7,7 +7,9 @@ var defaultPreferences = {
           alwaysShowFavorites:true,
           enableFloatingBtn:true,
           enableHotKey:true,
-          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles"]
+          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles"],
+          apiToggler: "API",
+          newUpdate: false
         }
 export var orgExists = {bool:false,name:"",value:""};
 buildData();
@@ -175,11 +177,18 @@ async function firstConfiguration(mydata){
   return mydata;
 }
 
-function checkUpdates(mydata){
-  if(mydata.tabs == undefined){
-    mydata.tabs = ["shortcuts","objs","listviews","flows","metadatas","profiles"];
+function checkUpdates(myprefrences){
+  if(myprefrences.newUpdate == undefined || myprefrences.newUpdate == true){
+    if(myprefrences.tabs == undefined){
+      myprefrences.tabs = ["shortcuts","objs","listviews","flows","metadatas","profiles"];
+    }
+    if(myprefrences.apiToggler == undefined){
+      myprefrences.apiToggler = "API";
+    }
+    myprefrences.newUpdate = false;
   }
-  return mydata;
+  // overrideManualData('mypreferences',myprefrences);
+  return myprefrences;
 }
 
 async function loadMyData(mySpecificData){

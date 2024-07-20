@@ -4,6 +4,7 @@ var isModalOpened = false;
 var suggestions = [];
 var tabsPane
 var inputbar
+var toggler
 var tabtypes = {
   "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name","title":"Shortcuts"},
   "objs": {"color":"#378CE7","placeholder":"Enter Object Label","title":"Objects"},
@@ -42,12 +43,12 @@ var suggestionsDropdown;
 init();
 
 async function init(){
-  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if(isModalOpened === false && message?.text == "Wake Up!"){
-      startUp();   
-      isModalOpened = true;
-    }
-  });
+  // chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+  //   if(isModalOpened === false && message?.text == "Wake Up!"){
+  //     startUp();   
+  //     isModalOpened = true;
+  //   }
+  // });
   window.onkeydown = keyPress;
   for (let [handlerKey, handlerPath] of Object.entries(handlersMap)) {
     await loadHandler(handlerKey,handlerPath);
@@ -228,6 +229,7 @@ function refreshTabs(){
   const tabIndicator = document.getElementsByClassName("sqab_tab-indicator")[0];
   createTabs(tabHeader);
   tabsPane = tabHeader.getElementsByTagName("div");
+  toggler = document.getElementById("sqab_apitoggle");
   inputbar = document.getElementById("sqab_modalInput");
   inputbar.focus();
   loadingScreen = document.getElementById("sqab_loading-screen");
@@ -236,6 +238,11 @@ function refreshTabs(){
   showSuggestions();
   inputbar.placeholder = tabtypes[tabsPane[0].dataset.type]["placeholder"];
   currentSelectedTab = tabsPane[0].dataset.type;
+  if(currentSelectedTab != 'shortcuts'){
+    toggler.classList.remove('hide');
+  }else{
+    toggler.classList.add('hide');
+  }
   tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${0})`;
   r.style.setProperty('--indicatorcolor', tabtypes[tabsPane[0].dataset.type]["color"]);
   for(let i=0; i < tabsPane.length; i++){
@@ -249,6 +256,11 @@ function refreshTabs(){
       tabsPane[i].classList.add("active");
       inputbar.placeholder = tabtypes[type]["placeholder"];
       currentSelectedTab = type;
+      if(currentSelectedTab != 'shortcuts'){
+        toggler.classList.remove('hide');
+      }else{
+        toggler.classList.add('hide');
+      }
       tabIndicator.style.left = `calc(calc(100%/${tabsPane.length})*${i})`;
       r.style.setProperty('--indicatorcolor', tabtypes[type]["color"]);
       showSuggestions();
@@ -321,12 +333,22 @@ async function openPanel(panelType) {
 }
 
 async function getRemoteData(type){
-  let res = await handlers["connector"].search(type);
+  let res = await handlers["connector"].search(type,handlers["data"].findDataByNode("apiToggler","mypreferences"));
 
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
 
 function initInput() {
+  toggler.onclick = (e) =>{
+    if(e.target.innerText == "API"){
+      e.target.innerText = "Label";
+    }else{
+      e.target.innerText = "API";
+    }
+    handlers["save"].savePreferences(handlers,"apiToggler",e.target.innerText);
+    getRemoteData(currentSelectedTab);
+  }
+
   inputbar.oninput = function() {
     const inputValue = inputbar.value.toLowerCase();
     if(inputValue.length >= 3 || inputValue.length == 0){
