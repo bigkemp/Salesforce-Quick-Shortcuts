@@ -6,12 +6,12 @@ var tabsPane
 var inputbar
 var toggler
 var tabtypes = {
-  "shortcuts": {"color":"#5356FF","placeholder":"Enter Shortcut Name","title":"Shortcuts"},
-  "objs": {"color":"#378CE7","placeholder":"Enter Object Label","title":"Objects"},
-  "listviews": {"color":"#67C6E3","placeholder":"Enter Object Label","title":"ListViews"},
-  "flows": {"color":"#67C6E3","placeholder":"Enter Flow Name","title":"Flows"},
-  "metadatas": {"color":"#67C6E3","placeholder":"Enter Metadata Type Name","title":"Metadata"},
-  "profiles": {"color":"#67C6E3","placeholder":"Enter Profile Name","title":"Profiles"}
+  "shortcuts": {"color":"#5356FF","placeholder":"Im looking for a Setup Option...","title":"Shortcuts","toggler":false},
+  "objs": {"color":"#378CE7","placeholder":"Im looking for an SObject...","title":"Objects","toggler":true},
+  "listviews": {"color":"#67C6E3","placeholder":"Im looking for an SObject's Listview...","title":"ListViews","toggler":true},
+  "flows": {"color":"#67C6E3","placeholder":"Im looking for a Flow...","title":"Flows","toggler":false},
+  "metadatas": {"color":"#67C6E3","placeholder":"Im looking for a Custom Metadata Type...","title":"Metadata","toggler":true},
+  "profiles": {"color":"#67C6E3","placeholder":"Im looking for a Profile...","title":"Profiles","toggler":false}
 }
 
 var handlersMap = {
@@ -230,6 +230,7 @@ function refreshTabs(){
   createTabs(tabHeader);
   tabsPane = tabHeader.getElementsByTagName("div");
   toggler = document.getElementById("sqab_apitoggle");
+  toggler.innerText = handlers["data"].findDataByNode("apiToggler","mypreferences");
   inputbar = document.getElementById("sqab_modalInput");
   inputbar.focus();
   loadingScreen = document.getElementById("sqab_loading-screen");
@@ -256,7 +257,7 @@ function refreshTabs(){
       tabsPane[i].classList.add("active");
       inputbar.placeholder = tabtypes[type]["placeholder"];
       currentSelectedTab = type;
-      if(currentSelectedTab != 'shortcuts'){
+      if(tabtypes[currentSelectedTab]["toggler"]){
         toggler.classList.remove('hide');
       }else{
         toggler.classList.add('hide');

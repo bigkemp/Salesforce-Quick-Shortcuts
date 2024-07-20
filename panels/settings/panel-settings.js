@@ -99,7 +99,7 @@ async function saveEdit(rowData,rowOldData,type) {
         if (newValue !== null) {
             valueCell.textContent = newValue;
             let newRowData = JSON.parse(JSON.stringify(rowData));
-            newRowData.name = newName; // Update the rowData
+            newRowData.name = newValue; // Update the rowData
             saveEdit(newRowData,rowData,type);
         }
     };

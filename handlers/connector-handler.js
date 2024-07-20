@@ -13,14 +13,16 @@ function init(){
       }
 }
 
-function convertCustomMetadata2ResponseToMap(response) {
+function convertCustomMetadata2ResponseToMap(response,togglerValue) {
     const defaults = [];
     const urls = {};
-
     if (response && response.records) {
         response.records.forEach(record => {
             const MetadataDefinitionId = record.DurableId;
-            const masterLabel = record.NamespacePrefix != null ? record.NamespacePrefix+' ' : '' + record.DeveloperName;
+            let masterLabel = togglerValue == "API" ? record.DeveloperName : record.MasterLabel;
+            if(record.NamespacePrefix != null){  
+              masterLabel = record.NamespacePrefix + masterLabel;
+            }
             defaults.push({name: masterLabel});
             if (masterLabel) {
               urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/CustomMetadata/page?address=%2F${MetadataDefinitionId}%3Fsetupid%3DCustomMetadata`;
@@ -88,7 +90,6 @@ function convertProfiles2ResponseToMap(response) {
 function convertObj2ResponseToMap(response,type,togglerValue) {
     const defaults = [];
     const urls = {};
-    console.log('togglerValue',togglerValue);
     if (response && response.records) {
       if(type == 'objs'){
         response.records.forEach(record => {
@@ -114,8 +115,6 @@ function convertObj2ResponseToMap(response,type,togglerValue) {
     return idLabelMap;
 }
 
-
-
  async function search_flows() {
     let query = `SELECT Id,ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow' `;
     let res = await rest("/services/data/v"+apiVer+"/tooling/query/?q=" + encodeURIComponent(query));
@@ -128,10 +127,10 @@ function convertObj2ResponseToMap(response,type,togglerValue) {
     return convertUser2ResponseToMap(res);
  }
 
- async function search_metadatas() {
-    let query = `SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
+ async function search_metadatas(togglerValue) {
+    let query = `SELECT DurableId, DeveloperName,MasterLabel, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`;
     let res = await rest("/services/data/v"+apiVer+"/query/?q=" + encodeURIComponent(query));
-    return convertCustomMetadata2ResponseToMap(res);
+    return convertCustomMetadata2ResponseToMap(res,togglerValue);
  }
 
  async function search_profiles() {
