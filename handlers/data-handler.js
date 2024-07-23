@@ -173,7 +173,7 @@ async function firstConfiguration(mydata){
   } else {
     mydata.HotKey = {code:81 ,name:"q"}
   }
-  await chromeStorageSet(mydata,mySpecificData);
+  await chromeStorageSet(mydata,'mypreferences');
   return mydata;
 }
 

@@ -9,7 +9,7 @@ var tabtypes = {
   "shortcuts": {"color":"#5356FF","placeholder":"Im looking for a Setup Option...","title":"Shortcuts","toggler":false},
   "objs": {"color":"#378CE7","placeholder":"Im looking for an SObject...","title":"Objects","toggler":true},
   "listviews": {"color":"#67C6E3","placeholder":"Im looking for an SObject's Listview...","title":"ListViews","toggler":true},
-  "flows": {"color":"#67C6E3","placeholder":"Im looking for a Flow...","title":"Flows","toggler":false},
+  "flows": {"color":"#67C6E3","placeholder":"Im looking for a Flow...","title":"Flows","toggler":true},
   "metadatas": {"color":"#67C6E3","placeholder":"Im looking for a Custom Metadata Type...","title":"Metadata","toggler":true},
   "profiles": {"color":"#67C6E3","placeholder":"Im looking for a Profile...","title":"Profiles","toggler":false}
 }

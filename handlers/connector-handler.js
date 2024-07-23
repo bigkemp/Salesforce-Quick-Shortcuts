@@ -33,21 +33,21 @@ function convertCustomMetadata2ResponseToMap(response,togglerValue) {
     return idLabelMap;
 }
 
-function convertFlow2ResponseToMap(response) {
+function convertFlow2ResponseToMap(response,togglerValue) {
     const defaults = [];
     const urls = {};
 
     if (response && response.records) {
         response.records.forEach(record => {
             const flowDefinitionId = record.Id;
-            const masterLabel = record.ActiveVersion.MasterLabel;
+            const masterLabel = togglerValue == "API" ? record.DeveloperName : record.ActiveVersion.MasterLabel;
             defaults.push({name: masterLabel});
             if (masterLabel) {
               urls[masterLabel.replaceAll(" ","-")] = `/lightning/setup/Flows/page?address=%2F${flowDefinitionId}%3FretUrl%3D%2Flightning%2Fsetup%2FFlows%2Fhome`;
             }
-        });
-    }
-    let idLabelMap = {defaults: defaults, urls: urls};
+          });
+        }
+        let idLabelMap = {defaults: defaults, urls: urls};
     return idLabelMap;
 }
 
@@ -115,10 +115,10 @@ function convertObj2ResponseToMap(response,type,togglerValue) {
     return idLabelMap;
 }
 
- async function search_flows() {
-    let query = `SELECT Id,ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow' `;
+ async function search_flows(togglerValue) {
+    let query = `SELECT Id,DeveloperName,ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow' `;
     let res = await rest("/services/data/v"+apiVer+"/tooling/query/?q=" + encodeURIComponent(query));
-    return convertFlow2ResponseToMap(res);
+    return convertFlow2ResponseToMap(res,togglerValue);
  }
 
  async function search_users() {
