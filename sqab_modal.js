@@ -42,17 +42,26 @@ var highlightColor = 'rgb(213 213 213 / 33%)';
 var suggestionsDropdown;
 init();
 
-async function init(){
-  // chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-  //   if(isModalOpened === false && message?.text == "Wake Up!"){
-  //     startUp();   
-  //     isModalOpened = true;
-  //   }
-  // });
-  window.onkeydown = keyPress;
+
+function setListenerForPopUpCall(){
+  chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if(isModalOpened === false && message?.text == "Wake Up!"){
+      startUp();   
+      isModalOpened = true;
+    }
+  });
+}
+
+async function loadHandlers(){
   for (let [handlerKey, handlerPath] of Object.entries(handlersMap)) {
     await loadHandler(handlerKey,handlerPath);
   }
+}
+
+async function init(){
+  setListenerForPopUpCall();
+  window.onkeydown = keyPress;
+  loadHandlers();
   if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
     createFloatingBtn();
   }
@@ -417,33 +426,6 @@ function definePanel(panel) {
       break;
   }
 }
-
-// function resetLayout(type){
-//   const tabBody = document.getElementsByClassName("sqab_tab-body")[0];
-//   tabBody.getElementsByClassName("active")[0].classList.remove("active");
-
-//   switch (type) {
-//     case "add" :
-//       tabBody.getElementsByTagName("div")[1].classList.add("active");
-//       for(let i=0; i < tabsPane.length; i++){
-//         if(tabsPane[i].dataset.type == currentSelectedTab){
-//           tabsPane[i].innerText = "Add";
-//         }
-//         else{
-//           tabsPane[i].innerText = "-";
-//         }
-//       }
-//       break;
-  
-//     default:
-//       tabBody.getElementsByTagName("div")[0].classList.add("active");
-//       for(let i=0; i < tabsPane.length; i++){
-//         tabsPane[i].innerText = tabtypes[tabsPane[i].dataset.type]["title"];
-//       }
-//       break;
-//   }
-// }
- 
 
 function defineOutsideAsCloseModal(){
   window.onclick = function(event) {
