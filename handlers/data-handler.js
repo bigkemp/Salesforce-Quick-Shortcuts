@@ -1,15 +1,16 @@
 var data_library = {};
 var startFromPopup = false;
 var currentOrg = getURLminized();
+var updatablePreferencesOptions = ["tabs"];
 var defaultPreferences = {
           linkOpenNewTab:true,
           alwaysShowCustoms:true,
           alwaysShowFavorites:true,
           enableFloatingBtn:true,
           enableHotKey:true,
-          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles"],
-          apiToggler: "API",
-          newUpdate: false
+          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps"],
+          shownTabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps"],
+          apiToggler: "API"
         }
 export var orgExists = {bool:false,name:"",value:""};
 buildData();
@@ -177,18 +178,18 @@ async function firstConfiguration(mydata){
   return mydata;
 }
 
-function checkUpdates(myprefrences){
-  if(myprefrences.newUpdate == undefined || myprefrences.newUpdate == true){
-    if(myprefrences.tabs == undefined){
-      myprefrences.tabs = ["shortcuts","objs","listviews","flows","metadatas","profiles"];
+function checkUpdates(savedPreferences){
+  let changes = false;
+  for (let key of Object.keys(defaultPreferences)) {
+    if(savedPreferences[key] == undefined || (JSON.stringify(savedPreferences[key]) != JSON.stringify(defaultPreferences[key]) && updatablePreferencesOptions.includes(key))){
+      savedPreferences[key] = defaultPreferences[key];
+      changes = true;
     }
-    if(myprefrences.apiToggler == undefined){
-      myprefrences.apiToggler = "API";
-    }
-    myprefrences.newUpdate = false;
   }
-  // overrideManualData('mypreferences',myprefrences);
-  return myprefrences;
+  if(changes){
+    chrome.storage.sync.set({['mypreferences']:savedPreferences})
+  }
+  return savedPreferences;
 }
 
 async function loadMyData(mySpecificData){

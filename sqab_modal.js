@@ -11,26 +11,22 @@ var tabtypes = {
   "listviews": {"color":"#67C6E3","placeholder":"Im looking for an SObject's Listview...","title":"ListViews","toggler":true},
   "flows": {"color":"#67C6E3","placeholder":"Im looking for a Flow...","title":"Flows","toggler":true},
   "metadatas": {"color":"#67C6E3","placeholder":"Im looking for a Custom Metadata Type...","title":"Metadata","toggler":true},
-  "profiles": {"color":"#67C6E3","placeholder":"Im looking for a Profile...","title":"Profiles","toggler":false}
+  "profiles": {"color":"#67C6E3","placeholder":"Im looking for a Profile...","title":"Profiles","toggler":false},
+  "connectedapps": {"color":"#67C6E3","placeholder":"Im looking for an App...","title":"Connected Apps","toggler":false}
 }
 
 var handlersMap = {
-  "settings": "/panels/settings/panel-settings",
-  "add": "/panels/add/panel-add",
-  "monitoring": "/panels/monitoring/panel-monitoring",
   "navigation": "handlers/navigation-handler",
   "data": "handlers/data-handler",
   "save": "handlers/save-handler",
   "favorites": "handlers/favorites-handler",
   "suggestions": "handlers/suggestions-handler",
-  "connector": "handlers/connector-handler"
+  "connector": "handlers/connector-handler",
 }
-
-
 var paneltypes =  {
-  "settings":"/panels/settings/panel-settings.html",
-  "add":"/panels/add/panel-add.html",
-  "monitoring":"/panels/monitoring/panel-monitoring.html"
+  "settings":{"html":"panel-settings.html","path":"/panels/settings/","js":"panel-settings"},
+  "add":{"html":"panel-add.html","path":"/panels/add/","js":"panel-add"},
+  "monitoring":{"html":"panel-monitoring.html","path":"/panels/monitoring/","js":"panel-monitoring"},
 }
 
 var handlers = {};
@@ -52,16 +48,17 @@ function setListenerForPopUpCall(){
   });
 }
 
-async function loadHandlers(){
-  for (let [handlerKey, handlerPath] of Object.entries(handlersMap)) {
-    await loadHandler(handlerKey,handlerPath);
+async function loadHandlers(handlers){
+  for (let [handlerKey, handlerPath] of Object.entries(handlers)) {
+    let loadedHandler = await loadHandler(handlerPath);
+    this.handlers[handlerKey] = loadedHandler;
   }
 }
 
 async function init(){
   setListenerForPopUpCall();
   window.onkeydown = keyPress;
-  loadHandlers();
+  await loadHandlers(handlersMap);
   if(handlers["data"].findDataByNode("enableFloatingBtn","mypreferences")){
     createFloatingBtn();
   }
@@ -131,9 +128,10 @@ function keyPress(e) {
 
 }
 
-async function loadHandler(handlerKey,handlerPath){
+async function loadHandler(handlerPath){
   const src = chrome.runtime.getURL(`${handlerPath}.js`);
-  handlers[handlerKey] = await import(src);
+  const savedHandler = await import(src);
+  return savedHandler;
 }
 
 async function startUp(){
@@ -220,7 +218,7 @@ function createTabs(tabHeader){
     }
   });
   let firstActive = false;
-  handlers["data"].findDataByNode('tabs','mypreferences').forEach(tab => {
+  handlers["data"].findDataByNode('shownTabs','mypreferences').forEach(tab => {
     let newTab = document.createElement('div');
     newTab.setAttribute('data-type', tab);
     if(firstActive == false){
@@ -285,9 +283,7 @@ function refreshTabs(){
 }
 
 async function initModal(){
-  definePanel("settings");
-  definePanel("monitoring");
-  definePanel("add");
+  definePanels();
   defineTipsBar();
   defineOutsideAsCloseModal();
   refreshTabs();
@@ -325,21 +321,18 @@ function selectedShortcut(){
 }
 
 async function openPanel(panelType) {
+  panelHandler = await loadHandler(paneltypes[panelType].path + paneltypes[panelType].js);
   const slideOutMenu = document.getElementById('sqab_slide-out-menu');
   const slideOutMenuBody = document.getElementById('sqab_slide-out-menu-body');
-
+  
   if (slideOutMenu.style.right === "0px") {
     closeSidePanel();
   }
+  let html = await handlers["data"].loadPopHTML(paneltypes[panelType].path + paneltypes[panelType].html);
+  slideOutMenuBody.innerHTML = html;
+  slideOutMenu.style.right = '0px';
 
-  try {
-    let html = await handlers["data"].loadPopHTML(paneltypes[panelType]);
-    slideOutMenuBody.innerHTML = html;
-    slideOutMenu.style.right = '0px';
-    handlers[panelType].init(handlers);
-  } catch (error) {
-    console.error(`Error loading panel: ${panelType}`, error);
-  }
+  panelHandler.init(handlers);
 }
 
 async function getRemoteData(type){
@@ -412,19 +405,13 @@ function initSuggesionsDropdown(){
   };
 }
 
-function definePanel(panel) {
-  let icon = document.getElementById(`sqab_${panel}_icon`);
-  switch (panel) {
-    case "settings":
-      icon.onclick = () => openPanel("settings");
-      break;
-    case "monitoring":
-      icon.onclick = () => openPanel("monitoring");
-      break;
-    case "add":
-      icon.onclick = () => openPanel("add");
-      break;
-  }
+function definePanels() {
+  for(let panel of Object.keys(paneltypes)){
+    let chosenPanel = document.getElementById(`sqab_${panel}_icon`);
+    if (chosenPanel) {
+      chosenPanel.onclick = () => openPanel(panel);
+    }
+  };
 }
 
 function defineOutsideAsCloseModal(){

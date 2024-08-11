@@ -14,8 +14,9 @@ function init(){
 }
 
 const responseMapConfig = {
-  customMetadata: {
+  metadatas: {
     idField: 'DurableId',
+    tooling:'',
     labelField: (record,togglerValue) => {
       const nameField = togglerValue === "API" ? record.DeveloperName : record.MasterLabel;
       return record.NamespacePrefix ? `${record.NamespacePrefix} ${nameField}` : nameField;
@@ -25,43 +26,56 @@ const responseMapConfig = {
   },
   flows: {
     idField: 'Id',
+    tooling:'tooling/',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.DeveloperName : record.ActiveVersion.MasterLabel,
     query: `SELECT Id, ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow'`,
     urlTemplate: (id) => `/lightning/setup/Flows/page?address=%2F${id}%3FretUrl%3D%2Flightning%2Fsetup%2FFlows%2Fhome`
   },
   users: {
     idField: 'Id',
+    tooling:'',
     labelField: 'Name',
     query:`SELECT Id, Name, Email FROM User`,
     urlTemplate: (id) => `/lightning/setup/ManageUsers/page?address=%2F${id}%3Fnoredirect%3D1%26isUserEntityOverride%3D1`
   },
   profiles: {
     idField: 'Id',
+    tooling:'',
     labelField: 'Name',
     query: `SELECT Id, Name FROM Profile`,
     urlTemplate: (id) => `/lightning/setup/EnhancedProfiles/page?address=%2F${id}`
   },
   objs: {
     idField: 'DurableId',
+    tooling:'',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.QualifiedApiName : record.MasterLabel,
     query: `SELECT DurableId, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
     urlTemplate: (id) => id
   },
   listviews: {
     idField: 'QualifiedApiName',
+    tooling:'',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.QualifiedApiName : record.MasterLabel,
     query: `SELECT DurableId, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
     urlTemplate: (label) => label
+  },
+  connectedapps: {
+    idField: 'Id',
+    tooling:'tooling/',
+    labelField: 'Name',
+    query: `SELECT Id, Name, ContactEmail, Description, StartUrl FROM ConnectedApplication`,
+    urlTemplate: (id) => `/lightning/setup/ConnectedApplication/page?address=%2Fapp%2Fmgmt%2Fforceconnectedapps%2FforceAppDetail.apexp%3FretURL%3D%252Fsetup%252FNavigationMenus%252Fhome%26connectedAppId%${id}`
   }
 };
 
 
-async function search(type) {
-  const res = await rest(`/services/data/v${apiVer}/query/?q=${encodeURIComponent(responseMapConfig[type].query)}`);
+async function query(type) {
+  debugger;
+  const res = await rest(`/services/data/v${apiVer}/${responseMapConfig[type].tooling}query/?q=${encodeURIComponent(responseMapConfig[type].query)}`);
   return convertResponseToMap(res, responseMapConfig[type]);
 }
 
-async function search_monitors() {
+async function query_monitors() {
   const res = await rest(`/services/data/v${apiVer}/limits/`);
   return res;
 }
@@ -98,14 +112,15 @@ async function getSession(sfHost) {
 export async function search(type,togglerValue){
   switch (type) {
     case "monitoring":
-      return await search_monitors();
+      return await query_monitors();
     case "flows":
     case "users":
     case "profiles":
     case "metadatas":
+    case "connectedapps":
     case "objs":
     case "listviews":
-      return await search(type,togglerValue);
+      return await query(type,togglerValue);
   }
 }
 

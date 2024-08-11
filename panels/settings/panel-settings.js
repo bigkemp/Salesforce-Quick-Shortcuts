@@ -1,6 +1,6 @@
 
-var myOrgs;
-const tabs =["shortcuts","objs","listviews","flows","metadatas","profiles"];
+var myOrgs, handlers;
+var tabs;
 function targetOrgPin(data, type, targetCell) {
     const targetOrg = document.createElement('ul');
     targetOrg.id = `orgs${type}-${data.name}`;
@@ -224,7 +224,7 @@ function buildTabsContent(){
     inactivePicklist.id = 'sqab_p_settings_tab_inactivePicklist';
     inactivePicklist.classList.add('sqab_p_settings_tab_picklist');
 
-    const items = handlers["data"].findDataByNode('tabs','mypreferences');
+    const items = handlers["data"].findDataByNode('shownTabs','mypreferences');
     tabs.forEach(tab => {
         const li = document.createElement('li');
         li.textContent = tab;
@@ -249,7 +249,7 @@ function buildTabsContent(){
         liElements.forEach(tab => {
             newTabArray.push(tab.textContent);
         });
-        handlers["save"].savePreferences(handlers,"tabs",newTabArray);
+        handlers["save"].savePreferences(handlers,"shownTabs",newTabArray);
         window.refreshTabs();
     });
 
@@ -260,7 +260,7 @@ function buildTabsContent(){
         liElements.forEach(tab => {
             newTabArray.push(tab.textContent);
         });
-        handlers["save"].savePreferences(handlers,"tabs",newTabArray);
+        handlers["save"].savePreferences(handlers,"shownTabs",newTabArray);
         window.refreshTabs();
     });
 
@@ -293,10 +293,11 @@ async function buildContent(page){
 export async function init(importedhandlers) {
     handlers = importedhandlers
     handlers["data"].doStartFromPopup(true);
-    const tabs = document.querySelectorAll('.sqab_p_settings_tab');
+    tabs = handlers["data"].findDataByNode('tabs','mypreferences');
+    const domtabs = document.querySelectorAll('.sqab_p_settings_tab');
     let activeTab = null;
 
-    tabs.forEach(tab => {
+    domtabs.forEach(tab => {
         tab.addEventListener('click', () => {
             if (activeTab) {
                 activeTab.classList.remove('active');
@@ -311,7 +312,7 @@ export async function init(importedhandlers) {
         });
 
         tab.addEventListener('mouseover', () => {
-            tabs.forEach(t => {
+            domtabs.forEach(t => {
                 if (t !== tab) {
                     t.style.flexGrow = '0.5';
                 } else {
@@ -320,10 +321,10 @@ export async function init(importedhandlers) {
             });
         });
 
-        tab.addEventListener('mouseout', () => {
-            tabs.forEach(t => {
-                t.style.flexGrow = '1';
-            });
-        });
+        // tab.addEventListener('mouseout', () => {
+        //     tabs.forEach(t => {
+        //         t.style.flexGrow = '1';
+        //     });
+        // });
     });
 }
