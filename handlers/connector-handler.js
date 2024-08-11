@@ -64,7 +64,7 @@ const responseMapConfig = {
     tooling:'tooling/',
     labelField: 'Name',
     query: `SELECT Id, Name, ContactEmail, Description, StartUrl FROM ConnectedApplication`,
-    urlTemplate: (id) => `/lightning/setup/ConnectedApplication/page?address=%2Fapp%2Fmgmt%2Fforceconnectedapps%2FforceAppDetail.apexp%3FretURL%3D%252Fsetup%252FNavigationMenus%252Fhome%26connectedAppId%${id}`
+    urlTemplate: (id) => `/lightning/setup/ConnectedApplication/page?address=%2Fapp%2Fmgmt%2Fforceconnectedapps%2FforceAppDetail.apexp%3FretURL%3D%252Fsetup%252FNavigationMenus%252Fhome%26connectedAppId%3D${id}`
   }
 };
 
