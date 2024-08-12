@@ -69,10 +69,9 @@ const responseMapConfig = {
 };
 
 
-async function query(type) {
-  debugger;
+async function query(type,togglerValue) {
   const res = await rest(`/services/data/v${apiVer}/${responseMapConfig[type].tooling}query/?q=${encodeURIComponent(responseMapConfig[type].query)}`);
-  return convertResponseToMap(res, responseMapConfig[type]);
+  return convertResponseToMap(res, responseMapConfig[type],togglerValue);
 }
 
 async function query_monitors() {
@@ -80,14 +79,13 @@ async function query_monitors() {
   return res;
 }
 
-function convertResponseToMap(response, { idField, labelField, urlTemplate }) {
+function convertResponseToMap(response, { idField, labelField, urlTemplate },togglerValue) {
   const defaults = [];
   const urls = {};
-
   if (response && response.records) {
     response.records.forEach(record => {
       const id = record[idField];
-      const masterLabel = record[labelField];
+      const masterLabel = labelField(record,togglerValue);
       defaults.push({ name: masterLabel });
       if (masterLabel) {
         urls[masterLabel.replaceAll(" ", "-")] = urlTemplate(id);

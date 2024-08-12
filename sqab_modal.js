@@ -337,7 +337,6 @@ async function openPanel(panelType) {
 
 async function getRemoteData(type){
   let res = await handlers["connector"].search(type,handlers["data"].findDataByNode("apiToggler","mypreferences"));
-
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
 }
 
