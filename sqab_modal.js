@@ -159,7 +159,7 @@ function findByClass(targetClass){
 }
 
 function loading_Start(){
-  loadingScreen.style.display = "block";
+  loadingScreen.style.display = "flex";
 }
 
 async function showSuggestions(inputValue = ''){
@@ -273,9 +273,7 @@ function refreshTabs(){
       r.style.setProperty('--indicatorcolor', tabtypes[type]["color"]);
       showSuggestions();
       if (type != "shortcuts" && handlers["data"].findDataByNode(type) == undefined){
-        loading_Start();
         getRemoteData(type);
-        loading_End();
       }
       inputbar.focus();
     }
@@ -336,8 +334,10 @@ async function openPanel(panelType) {
 }
 
 async function getRemoteData(type){
+  loading_Start();
   let res = await handlers["connector"].search(type,handlers["data"].findDataByNode("apiToggler","mypreferences"));
   handlers["data"].setTempSearchData(type.replace(" ",""),res);
+  loading_End();
 }
 
 function initInput() {

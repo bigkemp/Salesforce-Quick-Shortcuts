@@ -21,7 +21,7 @@ const responseMapConfig = {
       const nameField = togglerValue === "API" ? record.DeveloperName : record.MasterLabel;
       return record.NamespacePrefix ? `${record.NamespacePrefix} ${nameField}` : nameField;
     },
-    query:`SELECT DurableId, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`,
+    query:`SELECT DurableId,MasterLabel, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`,
     urlTemplate: (id) => `/lightning/setup/CustomMetadata/page?address=%2F${id}%3Fsetupid%3DCustomMetadata`
   },
   flows: {
@@ -34,14 +34,14 @@ const responseMapConfig = {
   users: {
     idField: 'Id',
     tooling:'',
-    labelField: 'Name',
+    labelField: (record,togglerValue) => record.Name,
     query:`SELECT Id, Name, Email FROM User`,
     urlTemplate: (id) => `/lightning/setup/ManageUsers/page?address=%2F${id}%3Fnoredirect%3D1%26isUserEntityOverride%3D1`
   },
   profiles: {
     idField: 'Id',
     tooling:'',
-    labelField: 'Name',
+    labelField: (record,togglerValue) => record.Name,
     query: `SELECT Id, Name FROM Profile`,
     urlTemplate: (id) => `/lightning/setup/EnhancedProfiles/page?address=%2F${id}`
   },
@@ -49,20 +49,20 @@ const responseMapConfig = {
     idField: 'DurableId',
     tooling:'',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.QualifiedApiName : record.MasterLabel,
-    query: `SELECT DurableId, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
+    query: `SELECT DurableId,MasterLabel, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
     urlTemplate: (id) => id
   },
   listviews: {
     idField: 'QualifiedApiName',
     tooling:'',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.QualifiedApiName : record.MasterLabel,
-    query: `SELECT DurableId, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
+    query: `SELECT DurableId,MasterLabel, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
     urlTemplate: (label) => label
   },
   connectedapps: {
     idField: 'Id',
     tooling:'tooling/',
-    labelField: 'Name',
+    labelField: (record,togglerValue) => record.Name,
     query: `SELECT Id, Name, ContactEmail, Description, StartUrl FROM ConnectedApplication`,
     urlTemplate: (id) => `/lightning/setup/ConnectedApplication/page?address=%2Fapp%2Fmgmt%2Fforceconnectedapps%2FforceAppDetail.apexp%3FretURL%3D%252Fsetup%252FNavigationMenus%252Fhome%26connectedAppId%3D${id}`
   }
@@ -79,7 +79,7 @@ async function query_monitors() {
   return res;
 }
 
-function convertResponseToMap(response, { idField, labelField, urlTemplate },togglerValue) {
+function convertResponseToMap(response, { idField, labelField, urlTemplate }, togglerValue) {
   const defaults = [];
   const urls = {};
   if (response && response.records) {
@@ -92,7 +92,6 @@ function convertResponseToMap(response, { idField, labelField, urlTemplate },tog
       }
     });
   }
-
   return { defaults, urls };
 }
 
