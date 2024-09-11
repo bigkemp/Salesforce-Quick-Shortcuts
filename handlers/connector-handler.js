@@ -28,7 +28,7 @@ const responseMapConfig = {
     idField: 'Id',
     tooling:'tooling/',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.DeveloperName : record.ActiveVersion.MasterLabel,
-    query: `SELECT Id, ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow'`,
+    query: `SELECT Id,DeveloperName, ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow'`,
     urlTemplate: (id) => `/lightning/setup/Flows/page?address=%2F${id}%3FretUrl%3D%2Flightning%2Fsetup%2FFlows%2Fhome`
   },
   users: {
