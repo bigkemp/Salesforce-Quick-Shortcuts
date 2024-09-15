@@ -8,8 +8,8 @@ var defaultPreferences = {
           alwaysShowFavorites:true,
           enableFloatingBtn:true,
           enableHotKey:true,
-          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps"],
-          shownTabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps"],
+          tabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps","customsettings"],
+          shownTabs:["shortcuts","objs","listviews","flows","metadatas","profiles","connectedapps","customsettings"],
           apiToggler: "API"
         }
 export var orgExists = {bool:false,name:"",value:""};

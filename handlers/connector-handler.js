@@ -21,14 +21,24 @@ const responseMapConfig = {
       const nameField = togglerValue === "API" ? record.DeveloperName : record.MasterLabel;
       return record.NamespacePrefix ? `${record.NamespacePrefix} ${nameField}` : nameField;
     },
-    query:`SELECT DurableId,MasterLabel, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`,
+    query:`SELECT DurableId, MasterLabel, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=false AND IsCustomizable=true AND QualifiedApiName LIKE '%__mdt'`,
     urlTemplate: (id) => `/lightning/setup/CustomMetadata/page?address=%2F${id}%3Fsetupid%3DCustomMetadata`
+  },
+  customsettings: {
+    idField: 'DurableId',
+    tooling:'',
+    labelField: (record,togglerValue) => {
+      const nameField = togglerValue === "API" ? record.DeveloperName : record.MasterLabel;
+      return record.NamespacePrefix ? `${record.NamespacePrefix} ${nameField}` : nameField;
+    },
+    query:`SELECT DurableId, MasterLabel, DeveloperName, NamespacePrefix FROM EntityDefinition WHERE IsCustomSetting=true`,
+    urlTemplate: (id) => `https://cellebrite--wi.sandbox.lightning.force.com/lightning/setup/CustomSettings/page?address=%2Fsetup%2Fui%2FviewCustomSettings.apexp%3FappLayout%3Dsetup%26ltn_app_id%3D06m7Y000000GElTQAW%26setupid%3DCustomSettings%26sfdcIFrameHost%3Dweb%26clc%3D1%26id%3D${id}`
   },
   flows: {
     idField: 'Id',
     tooling:'tooling/',
     labelField: (record,togglerValue) => togglerValue == "API" ? record.DeveloperName : record.ActiveVersion.MasterLabel,
-    query: `SELECT Id,DeveloperName, ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow'`,
+    query: `SELECT Id, DeveloperName, ActiveVersion.MasterLabel FROM FlowDefinition WHERE ActiveVersion.ProcessType != null AND ActiveVersion.ProcessType != 'Workflow'`,
     urlTemplate: (id) => `/lightning/setup/Flows/page?address=%2F${id}%3FretUrl%3D%2Flightning%2Fsetup%2FFlows%2Fhome`
   },
   users: {
@@ -117,6 +127,7 @@ export async function search(type,togglerValue){
     case "connectedapps":
     case "objs":
     case "listviews":
+    case "customsettings":
       return await query(type,togglerValue);
   }
 }
