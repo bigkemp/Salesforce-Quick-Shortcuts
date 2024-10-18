@@ -1,7 +1,7 @@
 {
     "name": "Salesforce Quick Shortcuts",
     "description": "Easy access to Salesforce's Setup page options and Object Manager's Objects via a quick access bar on all Lightning pages",
-    "version": "2.0.13",
+    "version": "3.0.3",
     "manifest_version": 3,
     "permissions": [
         "storage",
@@ -29,7 +29,7 @@
     ],
     "content_scripts": [
         {
-            "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*"],
+            "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*","https://*.sandbox.my.salesforce-setup.com/*"],
             "js": ["sqab_modal.js"],
             "css": ["sqab_modal.css","/panels/settings/panel-settings.css","/panels/monitoring/panel-monitoring.css","/panels/add/panel-add.css"],
             "all_frames": true
@@ -37,6 +37,6 @@
     ],
     "web_accessible_resources": [{
         "resources": ["data/*.json","/panels/*/*.css","/panels/*/*.html","/panels/*/*.js","handlers/*.js","sqab_modal.css","sqab_modal.html","resources/*/*.png"],
-        "matches": ["https://*.lightning.force.com/*"]
+        "matches": ["https://*.lightning.force.com/*","https://*.sandbox.my.salesforce-setup.com/*"]
     }]
 }
