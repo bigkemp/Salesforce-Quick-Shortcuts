@@ -110,15 +110,16 @@ export function getDataFromLibrary(name){
 
 
 export function getShortcuts(name){
-  if(name == 'listviews'){
-    name = 'objs';
-  }
-  const myData = data_library['my' + name];
+  // if(name == 'listviews'){
+  //   name = 'objs';
+  // }
   const data = data_library[name];
   const result = [];
-  
-  if (myData !== undefined && myData !== '') {
-    result.push(myData);
+  if(name == "shortcuts"){
+    const myData = data_library['my' + name];
+    if (myData !== undefined && myData !== '') {
+      result.push(myData);
+    }
   }
   
   if (data !== undefined && data !== '') {
@@ -229,6 +230,7 @@ export async function clearTempSearchData(type) {
 }
 export async function setTempSearchData(type,parsed) {
   try {
+    console.log(type);
     data_library[type] = parsed["defaults"];
     data_library[type]["urls"] = parsed["urls"];
   } catch (e) {
