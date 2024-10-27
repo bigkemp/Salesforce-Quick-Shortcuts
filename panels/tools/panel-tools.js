@@ -108,7 +108,7 @@ function prettifyXmlInput() {
     try {
         // Try formatting and highlighting the XML
         const prettifiedXml = prettifyXml(xmlInput.replaceAll(/>\s+</g, '><'));
-        document.getElementById("json-output").innerHTML = "<pre>" + prettifiedXml.trim() + "</pre>";
+        document.getElementById("json-output").innerHTML = '<pre style="height: 80vh; overflow: auto;">' + prettifiedXml.trim() + "</pre>";
     } catch (e) {
         document.getElementById("json-output").innerHTML = '<span style="color: red;">Invalid XML input</span>';
     }
@@ -125,6 +125,8 @@ function determineFormat() {
         try {
             if (typeof input === 'string' && (input.trim().startsWith('<') && input.trim().endsWith('>'))) {
                 prettifyXmlInput();
+            }else{
+                document.getElementById("json-output").innerHTML = '<span style="color: red;">Invalid input</span>';
             }
         } catch (error) {
             document.getElementById("json-output").innerHTML = '<span style="color: red;">Invalid input</span>';
