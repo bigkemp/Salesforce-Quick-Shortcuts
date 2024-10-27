@@ -28,6 +28,7 @@ var paneltypes =  {
   "settings":{"html":"panel-settings.html","path":"/panels/settings/","js":"panel-settings"},
   "add":{"html":"panel-add.html","path":"/panels/add/","js":"panel-add"},
   "monitoring":{"html":"panel-monitoring.html","path":"/panels/monitoring/","js":"panel-monitoring"},
+  "tools":{"html":"panel-tools.html","path":"/panels/tools/","js":"panel-tools"},
 }
 
 var handlers = {};

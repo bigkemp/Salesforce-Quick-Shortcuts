@@ -335,11 +335,17 @@
 #sqab_settings_icon {
 	top: -10px;
 }
+
 #sqab_monitoring_icon {
-	top: 23px;
+	top: 17px;
 }
+
 #sqab_add_icon {
-	top: 54px;
+	top: 40px;
+}
+
+#sqab_tools_icon {
+	top: 64px;
 }
 
 .sqab_side_icons:hover {
