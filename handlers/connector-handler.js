@@ -4,7 +4,8 @@ const apiVer = '52.0';
 init();
 
 function init(){
-  if (location.host.endsWith("my.salesforce.com") || location.host.endsWith("lightning.force.com") || location.host.endsWith("visualforce.com")) {
+  
+  if (location.host.endsWith("my.salesforce.com") || location.host.endsWith("lightning.force.com") || location.host.endsWith("my.salesforce-setup.com") || location.host.endsWith("visualforce.com")) {
       chrome.runtime.sendMessage({message: "getSfHost", url: location.href}, sfHost => {
         if (sfHost) {
           getSession(sfHost);

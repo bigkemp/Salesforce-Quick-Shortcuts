@@ -230,7 +230,6 @@ export async function clearTempSearchData(type) {
 }
 export async function setTempSearchData(type,parsed) {
   try {
-    console.log(type);
     data_library[type] = parsed["defaults"];
     data_library[type]["urls"] = parsed["urls"];
   } catch (e) {

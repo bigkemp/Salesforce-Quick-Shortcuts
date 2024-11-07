@@ -28,7 +28,7 @@ var paneltypes =  {
   "settings":{"html":"panel-settings.html","path":"/panels/settings/","js":"panel-settings"},
   "add":{"html":"panel-add.html","path":"/panels/add/","js":"panel-add"},
   "monitoring":{"html":"panel-monitoring.html","path":"/panels/monitoring/","js":"panel-monitoring"},
-  "tools":{"html":"panel-tools.html","path":"/panels/tools/","js":"panel-tools"},
+  // "tools":{"html":"panel-tools.html","path":"/panels/tools/","js":"panel-tools"},
 }
 
 var handlers = {};
@@ -68,18 +68,20 @@ async function init(){
 
 function createFloatingBtn(){
   const sfPageBody = document.getElementsByClassName("desktop")[0];
-  const myDiv = document.createElement('div');
-  myDiv.id = "sqab_mydiv";
-  const myDivHeader = document.createElement('div');
-  myDivHeader.id = "sqab_mydivheader";
-  myDiv.appendChild(myDivHeader);
-  sfPageBody.appendChild(myDiv);
-  myDiv.onclick = function() {
-    if(isModalOpened === false){
-      startUp();   
-      isModalOpened = true;
-    }
-  };
+  if(sfPageBody != undefined){
+    const myDiv = document.createElement('div');
+    myDiv.id = "sqab_mydiv";
+    const myDivHeader = document.createElement('div');
+    myDivHeader.id = "sqab_mydivheader";
+    myDiv.appendChild(myDivHeader);
+    sfPageBody.appendChild(myDiv);
+    myDiv.onclick = function() {
+      if(isModalOpened === false){
+        startUp();   
+        isModalOpened = true;
+      }
+    };
+  }
 }
 
 function hotkeyDetector(evtobj){

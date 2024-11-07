@@ -7,6 +7,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.message === "getSession") {
+    
     getSession(request, sender, sendResponse);
     return true;
   }
@@ -38,7 +39,7 @@ function getSfHost(request, sender, sendResponse) {
     }
 
     let [orgId] = cookie.value.split("!");
-    findSessionCookie(sender.tab.cookieStoreId, orgId, ["salesforce.com", "cloudforce.com"], sendResponse);
+    findSessionCookie(sender.tab.cookieStoreId, orgId, ["salesforce.com","salesforce-setup.com", "cloudforce.com"], sendResponse);
   });
 }
 
@@ -52,7 +53,6 @@ function getSession(request, sender, sendResponse) {
       sendResponse(null);
       return;
     }
-
     let session = { key: sessionCookie.value, hostname: sessionCookie.domain };
     sendResponse(session);
   });
