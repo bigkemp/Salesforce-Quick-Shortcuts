@@ -35,53 +35,66 @@
         </div>
         <div id="tool-query-content" class="sqab_p_settings_content" style="display: none;">
             <article class="ac-large">
-                <div class="container">
-                    <!-- Object Section -->
-                    <div class="field">
-                      <label for="objectInput">Object</label>
-                      <div class="input-wrapper">
-                        <input type="text" id="objectInput" placeholder="Type to filter objects">
+              <div class="sqab_tools_query_tabs-container">
+                <ul class="sqab_tools_query_tabs-nav" id="sqab_tools_query_tab-list">
+                  <li class="active" data-tab="tab-1">
+                    <span>Default Tab</span>
+                  </li>
+                </ul>
+                <div class="sqab_tools_query_tabs-content" id="sqab_tools_query_tab-content">
+                  <div class="active" id="sqab_tools_query_content-tab-1">
+                    <div class="container">
+                      <!-- Object Section -->
+                      <div class="field">
+                        <label for="objectInput">Object</label>
+                        <div class="input-wrapper">
+                          <input type="text" id="objectInput" placeholder="Type to filter objects">
+                        </div>
+                        <div class="glossary" id="objectGlossary"></div>
                       </div>
-                      <div class="glossary" id="objectGlossary"></div>
-                    </div>
-                
-                    <!-- Fields Section -->
-                    <div class="field">
-                      <label for="fieldsInput">Fields</label>
-                      <div class="input-wrapper">
-                        <div id="fieldsTags" class="tags"></div>
-                        <input type="text" id="fieldsInput" placeholder="Type to filter and select fields">
+                  
+                      <!-- Fields Section -->
+                      <div class="field">
+                        <label for="fieldsInput">Fields</label>
+                        <div class="input-wrapper">
+                          <div id="fieldsTags" class="tags"></div>
+                          <input type="text" id="fieldsInput" placeholder="Type to filter and select fields">
+                        </div>
+                        <div class="glossary" id="fieldsGlossary"></div>
                       </div>
-                      <div class="glossary" id="fieldsGlossary"></div>
+                  
+                      <!-- Conditions Section -->
+                      <div class="field">
+                        <label for="logicInput">Logic</label>
+                        <input type="text" id="logicInput" placeholder="Logic will update automatically">
+                      </div>
+                      <div class="field">
+                        <label>Conditions</label>
+                        <div id="conditionsContainer"></div>
+                        <button id="addConditionButton" class="add-button">Add Condition</button>
+                      </div>
+                  
+                      <!-- Limit Section -->
+                      <div class="field">
+                        <label for="limitInput">Limit</label>
+                        <input type="number" id="limitInput" placeholder="Enter max number of records" min="1">
+                      </div>
+                  
+                      <!-- Search Button -->
+                      <button id="searchButton" class="search-button">Preview Query</button>
+                      
+                      <!-- Output -->
+                      <div class="field">
+                        <label for="queryOutput">Preview Query</label>
+                        <textarea id="queryOutput" ></textarea>
+                      </div>
+                      <button id="startButton" class="search-button">Start</button>
                     </div>
-                
-                    <!-- Conditions Section -->
-                    <div class="field">
-                      <label for="logicInput">Logic</label>
-                      <input type="text" id="logicInput" placeholder="Logic will update automatically">
-                    </div>
-                    <div class="field">
-                      <label>Conditions</label>
-                      <div id="conditionsContainer"></div>
-                      <button id="addConditionButton" class="add-button">Add Condition</button>
-                    </div>
-                
-                    <!-- Limit Section -->
-                    <div class="field">
-                      <label for="limitInput">Limit</label>
-                      <input type="number" id="limitInput" placeholder="Enter max number of records" min="1">
-                    </div>
-                
-                    <!-- Search Button -->
-                    <button id="searchButton" class="search-button">Preview Query</button>
-                    
-                    <!-- Output -->
-                    <div class="field">
-                      <label for="queryOutput">Preview Query</label>
-                      <textarea id="queryOutput" ></textarea>
-                    </div>
-                    <button id="startButton" class="search-button">Start</button>
                   </div>
+                </div>
+                <button id="sqab_tools_query_add-tab-button">Add Tab</button>
+              </div>
+
             </article>
         </div>
         <div id="tool-base64-content" class="sqab_p_settings_content" style="display: none;">

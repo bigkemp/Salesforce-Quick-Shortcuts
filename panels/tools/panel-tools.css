@@ -205,3 +205,65 @@ button {
     background-color: #a71d2a;
   }
   
+  /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.sqab_tools_query_tabs-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* Tabs Navigation */
+.sqab_tools_query_tabs-nav {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.sqab_tools_query_tabs-nav li {
+  margin: 0;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 5px 5px 0 0;
+  background-color: #f7f7f7;
+}
+
+.sqab_tools_query_tabs-nav li.active {
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-bottom-color: #ffffff;
+}
+
+.sqab_tools_query_tabs-nav li button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+  color: red;
+}
+
+.sqab_tools_query_tabs-nav li button:hover {
+  color: darkred;
+}
+
+/* Tabs Content */
+.sqab_tools_query_tabs-content > div {
+  display: none;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.sqab_tools_query_tabs-content > div.active {
+  display: block;
+}

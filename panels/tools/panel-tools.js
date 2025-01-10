@@ -408,3 +408,59 @@ function determineFormat() {
   
 }
 
+const tabList = document.getElementById('sqab_tools_query_tab-list');
+const tabContent = document.getElementById('sqab_tools_query_tab-content');
+const addTabButton = document.getElementById('sqab_tools_query_add-tab-button');
+let tabCounter = 2; // Starts from 2 since "tab-1" exists in HTML
+
+function activateTab(tabId) {
+  document.querySelectorAll('.sqab_tools_query_tabs-nav li').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.sqab_tools_query_tabs-content > div').forEach(content => content.classList.remove('active'));
+
+  document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+  document.getElementById(`sqab_tools_query_content-${tabId}`).classList.add('active');
+}
+
+function addTab() {
+  const tabId = `tab-${tabCounter++}`;
+
+  const tabItem = document.createElement('li');
+  tabItem.setAttribute('data-tab', tabId);
+
+  const tabLink = document.createElement('span');
+  tabLink.textContent = `Tab ${tabCounter - 1}`;
+  tabLink.addEventListener('click', () => activateTab(tabId));
+
+  const closeButton = document.createElement('button');
+  closeButton.textContent = '×';
+  closeButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    removeTab(tabId);
+  });
+
+  tabItem.appendChild(tabLink);
+  tabItem.appendChild(closeButton);
+  tabList.appendChild(tabItem);
+
+  const contentItem = document.createElement('div');
+  contentItem.id = `sqab_tools_query_content-${tabId}`;
+  contentItem.textContent = `Content for Tab ${tabCounter - 1}`;
+  tabContent.appendChild(contentItem);
+
+  activateTab(tabId);
+}
+
+function removeTab(tabId) {
+  const tabItem = document.querySelector(`[data-tab="${tabId}"]`);
+  const contentItem = document.getElementById(`sqab_tools_query_content-${tabId}`);
+
+  if (tabItem) tabItem.remove();
+  if (contentItem) contentItem.remove();
+
+  const remainingTabs = document.querySelectorAll('.sqab_tools_query_tabs-nav li');
+  if (remainingTabs.length > 0) {
+    activateTab(remainingTabs[0].getAttribute('data-tab'));
+  }
+}
+
+// addTabButton.addEventListener('click', addTab);
