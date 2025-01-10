@@ -1,3 +1,93 @@
-    <textarea id="json-input" rows="2" placeholder="Enter your input here"></textarea>
-    <button id="prettify-button">Prettify</button>
-    <div id="json-output"></div>
+    <div id="sqab_pop_modal" class="sqab_pop_modal sqab_pop_hide" >
+        <div style="height:100%;">
+          <div style="padding:10px; height:100%;background:white;">
+            <input style="width:100%" class="sqab_pop_inputlabel" type="text" placeholder="Enter Label" id="addMySCtext" name="addmyShortcut"><br/>
+            <input style="width:100%" class="sqab_pop_inputvalue" type="text" placeholder="Enter Custom Url" id="addMySCtextURL" name="addmyShortcutURL">
+            <div id="orglist" class="sqab_pop_orglist"></div>
+            <button id="edit_btn_save" style="width:100%">Save</button>
+            <button id="edit_btn_cancel" style="width:100%">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="sqab_p_settings_tab-container">
+        <div class="sqab_p_settings_tab" data-target="tool-prettify-content">
+            <div class="sqab_p_settings_icon">🎀</div>
+            <span>Prettify</span>
+        </div>
+        <div class="sqab_p_settings_tab" data-target="tool-query-content">
+            <div class="sqab_p_settings_icon">🔍</div>
+            <span>Query</span>
+        </div>
+        <div class="sqab_p_settings_tab" data-target="tool-base64-content">
+            <div class="sqab_p_settings_icon">🔓</div>
+            <span>Base64</span>
+        </div>
+
+    </div>
+    
+    <div class="sqab_p_settings_content-container" style="overflow: auto;">
+        <div id="tool-prettify-content" class="sqab_p_settings_content" style="display: none;">
+            <article class="ac-small">
+                <textarea id="json-input" rows="2" placeholder="Enter your input here"></textarea>
+                <button id="prettify-button">Prettify</button>
+                <div id="json-output"></div>
+            </article>
+        </div>
+        <div id="tool-query-content" class="sqab_p_settings_content" style="display: none;">
+            <article class="ac-large">
+                <div class="container">
+                    <!-- Object Section -->
+                    <div class="field">
+                      <label for="objectInput">Object</label>
+                      <div class="input-wrapper">
+                        <input type="text" id="objectInput" placeholder="Type to filter objects">
+                      </div>
+                      <div class="glossary" id="objectGlossary"></div>
+                    </div>
+                
+                    <!-- Fields Section -->
+                    <div class="field">
+                      <label for="fieldsInput">Fields</label>
+                      <div class="input-wrapper">
+                        <div id="fieldsTags" class="tags"></div>
+                        <input type="text" id="fieldsInput" placeholder="Type to filter and select fields">
+                      </div>
+                      <div class="glossary" id="fieldsGlossary"></div>
+                    </div>
+                
+                    <!-- Conditions Section -->
+                    <div class="field">
+                      <label for="logicInput">Logic</label>
+                      <input type="text" id="logicInput" placeholder="Logic will update automatically">
+                    </div>
+                    <div class="field">
+                      <label>Conditions</label>
+                      <div id="conditionsContainer"></div>
+                      <button id="addConditionButton" class="add-button">Add Condition</button>
+                    </div>
+                
+                    <!-- Limit Section -->
+                    <div class="field">
+                      <label for="limitInput">Limit</label>
+                      <input type="number" id="limitInput" placeholder="Enter max number of records" min="1">
+                    </div>
+                
+                    <!-- Search Button -->
+                    <button id="searchButton" class="search-button">Preview Query</button>
+                    
+                    <!-- Output -->
+                    <div class="field">
+                      <label for="queryOutput">Preview Query</label>
+                      <textarea id="queryOutput" ></textarea>
+                    </div>
+                    <button id="startButton" class="search-button">Start</button>
+                  </div>
+            </article>
+        </div>
+        <div id="tool-base64-content" class="sqab_p_settings_content" style="display: none;">
+            <article class="ac-medium">
+                
+            </article>
+        </div>
+    </div>
+    

@@ -63,6 +63,20 @@ const responseMapConfig = {
     query: `SELECT DurableId,MasterLabel, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true AND (NOT QualifiedApiName LIKE '%__mdt')`,
     urlTemplate: (id) => id
   },
+  fields: {
+    idField: '*',
+    tooling:'',
+    labelField: (record,togglerValue) => togglerValue == "API" ? record.name : record.name,
+    query: ``,
+    urlTemplate: (id) => id
+  },
+  records: {
+    idField: 'Id',
+    tooling:'',
+    labelField: (record,togglerValue) => record,
+    query: ``,
+    urlTemplate: (id) => id
+  },
   listviews: {
     idField: 'QualifiedApiName',
     tooling:'',
@@ -81,8 +95,14 @@ const responseMapConfig = {
 
 
 async function query(type,togglerValue) {
-  const res = await rest(`/services/data/v${apiVer}/${responseMapConfig[type].tooling}query/?q=${encodeURIComponent(responseMapConfig[type].query)}`);
-  return convertResponseToMap(res, responseMapConfig[type],togglerValue);
+  const res = await rest(`/services/data/v${apiVer}/${responseMapConfig[type]?.tooling}query/?q=${encodeURIComponent(responseMapConfig[type].query)}`);
+  return convertResponseToMap(res.records, responseMapConfig[type],togglerValue);
+}
+
+async function query_fields(data,togglerValue) {
+  const res = await rest(`/services/data/v${apiVer}/sobjects/${data}/describe`);
+  console.log(res);
+  return convertResponseToMap(res.fields, responseMapConfig["fields"],togglerValue);
 }
 
 async function query_monitors() {
@@ -93,8 +113,8 @@ async function query_monitors() {
 function convertResponseToMap(response, { idField, labelField, urlTemplate }, togglerValue) {
   const defaults = [];
   const urls = {};
-  if (response && response.records) {
-    response.records.forEach(record => {
+  if (response) {
+    response.forEach(record => {
       const id = record[idField];
       const masterLabel = labelField(record,togglerValue);
       defaults.push({ name: masterLabel });
@@ -117,10 +137,19 @@ async function getSession(sfHost) {
 
 //TODO: need to support more then 2k records (next url from response)
 
-export async function search(type,togglerValue){
+export async function search_records(NoneToolingQuery){
+  console.log(NoneToolingQuery);
+  const res = await rest(`/services/data/v${apiVer}/${NoneToolingQuery?.tooling}query/?q=${encodeURIComponent(NoneToolingQuery.query)}`);
+  console.log(res);
+  return await convertResponseToMap(res.records, responseMapConfig["records"],false);
+}
+
+export async function search(type,togglerValue, data = undefined){
   switch (type) {
     case "monitoring":
       return await query_monitors();
+    case "fields":
+      return await query_fields(data,togglerValue);
     case "flows":
     case "users":
     case "profiles":
