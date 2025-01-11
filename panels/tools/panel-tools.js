@@ -34,6 +34,7 @@ export async function init(importedhandlers){
     //     });
     // });
 });
+
   document.getElementById("prettify-button").addEventListener("click", determineFormat);
   let values = await getRemoteData('objs');
   const objectGlossaryData = values["defaults"].map(item => item.name);
@@ -52,7 +53,7 @@ export async function init(importedhandlers){
   const queryOutput = document.getElementById('queryOutput');
   const startButton = document.getElementById('startButton');
   const searchButton = document.getElementById('searchButton');
-
+  runBase64();
   let selectedObject = '';
   let selectedFields = [];
   let conditionCount = 0;
@@ -505,4 +506,45 @@ function createTable(data,tabContent) {
       tbody.appendChild(row);
   });
   table.appendChild(tbody);
+}
+
+function runBase64(){
+  document.getElementById('tool-base64-process-button').addEventListener('click', () => {
+    const inputField = document.getElementById('tool-base64-input');
+    const resultField = document.getElementById('tool-base64-result-output');
+    const inputText = inputField.value.trim();
+  
+    // Function to check if a string is valid Base64
+    function isBase64(str) {
+      try {
+        return btoa(atob(str)) === str; // Try encoding it back and check if it's valid Base64
+      } catch (e) {
+        return false; // Not a valid base64 string
+      }
+    }
+  
+    // Process the input
+    if (inputText === '') {
+      resultField.textContent = 'Please enter a value to process.';
+      return;
+    }
+  
+    if (isBase64(inputText)) {
+      // Decrypt (Decode base64 to original string)
+      try {
+        const decoded = atob(inputText);
+        resultField.textContent = `Decoded: ${decoded}`;
+      } catch (error) {
+        resultField.textContent = 'Error decoding the base64 string.';
+      }
+    } else {
+      // Encrypt (Encode string to base64)
+      try {
+        const encoded = btoa(inputText);
+        resultField.textContent = `Encoded: ${encoded}`;
+      } catch (error) {
+        resultField.textContent = 'Error encoding the string.';
+      }
+    }
+  });
 }
