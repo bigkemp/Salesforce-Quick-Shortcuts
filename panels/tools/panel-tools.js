@@ -3,7 +3,14 @@ export async function init(importedhandlers){
   // Event listener for the button
   const domtabs = document.querySelectorAll('.sqab_p_settings_tab');
   let activeTab = null;
-
+      // Salesforce IDs are typically 15 or 18 characters long and contain alphanumeric characters
+      let currentUrl = window.location.href;  // Get the current URL
+      const salesforceRecordPattern = /\/lightning\/r\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9]{15,18})/;
+      var matched = currentUrl.match(salesforceRecordPattern);
+      matched ? { objectType: matched[1], salesforceId: matched[2] } : null;
+      if(matched == null){
+        autoCompleteSection.style.display = "none";
+      }
   domtabs.forEach(tab => {
     tab.addEventListener('click', () => {
         if (activeTab) {
@@ -44,6 +51,8 @@ export async function init(importedhandlers){
   const objectGlossary = document.getElementById('objectGlossary');
   const fieldsGlossary = document.getElementById('fieldsGlossary');
   const objectInput = document.getElementById('objectInput');
+  const autoComplete = document.getElementById('autoComplete');
+  const autoCompleteSection = document.getElementById('autoCompleteSection');
   const fieldsInput = document.getElementById('fieldsInput');
   const fieldsTags = document.getElementById('fieldsTags');
   const objTag = document.getElementById('objTag');
@@ -54,10 +63,12 @@ export async function init(importedhandlers){
   const queryOutput = document.getElementById('queryOutput');
   const startButton = document.getElementById('startButton');
   const searchButton = document.getElementById('searchButton');
+  var urlReord = "";
   runBase64();
   let selectedObject = '';
   let selectedFields = [];
   let conditionCount = 0;
+  
 
   const renderGlossary = (data, container, callback) => {
     container.innerHTML = '';
@@ -90,6 +101,8 @@ const updateLogic = () => {
     fieldInput.classList.add('condition-field-input');
 
     const operatorSelect = document.createElement('select');
+    operatorSelect.classList.add('condition-select-input');
+
     soqlOperators.forEach(op => {
       const option = document.createElement('option');
       option.value = op;
@@ -98,6 +111,7 @@ const updateLogic = () => {
     });
 
     const valueInput = document.createElement('input');
+    valueInput.classList.add('condition-value-input');
     valueInput.type = 'text';
     valueInput.placeholder = 'Value';
 
@@ -318,6 +332,46 @@ const updateLogic = () => {
   addConditionButton.addEventListener('click', createConditionRow);
   searchButton.addEventListener('click', buildSOQLQuery);
   startButton.addEventListener('click', searchRecords);
+  autoComplete.addEventListener('click', () =>{
+      console.log(matched);
+      if(matched != null){
+      // Example usage
+      urlReord =  matched;  // You can now perform any other logic based on the Salesforce ID
+      //set obj
+          const tagObj = document.createElement('div');
+          tagObj.classList.add('tag');
+          tagObj.textContent = matched[1];
+          selectedObject = matched[1];
+          tagObj.addEventListener('click', () => {
+            queryOutput.value = "";
+            conditionsContainer.innerHTML = ""
+            updateLogic();
+            selectedObject = "";
+            selectedFields = [];
+            fieldsTags.innerHTML = '';
+            tagObj.remove();
+          });
+          objTag.appendChild(tagObj);
+        //set field
+      selectedFields.push("Id");
+      const tag = document.createElement('div');
+      tag.classList.add('tag');
+      tag.textContent = "Id";
+      tag.addEventListener('click', () => {
+        selectedFields = selectedFields.filter(f => f !== "Id");
+        tag.remove();
+      });
+      fieldsTags.appendChild(tag);
+      createConditionRow();
+      document.getElementsByClassName("condition-field-input")[0].value = "Id";
+      document.getElementsByClassName("condition-select-input")[0].querySelector("select").selectedIndex = 0;      ;
+      document.getElementsByClassName("condition-value-input")[0].value = matched[2];
+
+      }
+    } 
+  );
+
+    
 };
 
 async function getRemoteData(type,data = undefined){
@@ -329,16 +383,16 @@ function syntaxHighlight(json) {
       json = JSON.stringify(json, undefined, 4); // Indents with 4 spaces
   }
   json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (match) {
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g, function (matched) {
       let cls = 'json-value-number';
-      if (/^"/.test(match)) {
-          cls = /:$/.test(match) ? 'json-key' : 'json-value-string';
-      } else if (/true|false/.test(match)) {
+      if (/^"/.test(matched)) {
+          cls = /:$/.test(matched) ? 'json-key' : 'json-value-string';
+      } else if (/true|false/.test(matched)) {
           cls = 'json-value-boolean';
-      } else if (/null/.test(match)) {
+      } else if (/null/.test(matched)) {
           cls = 'json-value-null';
       }
-      return '<span class="' + cls + '">' + match + '</span>';
+      return '<span class="' + cls + '">' + matched + '</span>';
   });
 }
 
@@ -364,7 +418,7 @@ function prettifyXml(xmlString) {
 
   // Highlight XML with colors using regex for different parts
   return formattedXml
-      .replace(/(<!--[\s\S]*?-->)|(<\?xml[^>]*\?>)|(<\/?[a-zA-Z][^>]*>)|("[^"]*")|([a-zA-Z0-9-:]+)(\s*=\s*)/g, function (match, comment, declaration, tag, value, attrName, equalSign) {
+      .replace(/(<!--[\s\S]*?-->)|(<\?xml[^>]*\?>)|(<\/?[a-zA-Z][^>]*>)|("[^"]*")|([a-zA-Z0-9-:]+)(\s*=\s*)/g, function (matched, comment, declaration, tag, value, attrName, equalSign) {
           if (comment) {
               return `<span class="xml-comment">${escapeHtml(comment)}</span>`;
           } else if (declaration) {
@@ -376,7 +430,7 @@ function prettifyXml(xmlString) {
           } else if (attrName) {
               return `<span class="xml-attribute">${escapeHtml(attrName)}</span>${escapeHtml(equalSign)}`;
           }
-          return escapeHtml(match);
+          return escapeHtml(matched);
       });
 }
 
@@ -393,15 +447,15 @@ function formatXml(xml) {
   // Split by lines and add appropriate indentation
   xml.split('\n').forEach(function (node) {
       let indent = 0;
-      if (node.match(/.+<\/\w[^>]*>$/)) {
+      if (node.matched(/.+<\/\w[^>]*>$/)) {
           // If the tag is a self-contained single line tag (e.g., <tag>content</tag>)
           indent = 0;
-      } else if (node.match(/^<\/\w/)) {
+      } else if (node.matched(/^<\/\w/)) {
           // Closing tag, reduce padding
           if (pad !== 0) {
               pad -= 1;
           }
-      } else if (node.match(/^<\w([^>]*[^\/])?>.*$/)) {
+      } else if (node.matched(/^<\w([^>]*[^\/])?>.*$/)) {
           // Opening tag, increase padding
           indent = 1;
       }
