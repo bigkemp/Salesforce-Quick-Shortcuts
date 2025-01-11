@@ -5,12 +5,14 @@
 }
 
 #tool-prettify-content #json-input {
-    text-align: left;
     width: 100%;
     margin-bottom: 20px;
     font-family: monospace;
     font-size: 14px;
     padding: 10px;
+}
+#tool-prettify-content #json-output {
+  text-align: left;
 }
 
 #tool-prettify-content button {
@@ -210,13 +212,6 @@
   #tool-query-content .remove-button:hover {
     background-color: #a71d2a;
   }
-  
-
-#tool-query-content .sqab_tools_query_tabs-container {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-}
 
 /* Tabs Navigation */
 #tool-query-content .sqab_tools_query_tabs-nav {
@@ -357,7 +352,7 @@
   height: 100vh;
 } */
 
-.tool-base64-container {
+.tool-base64-container, .tool-pretiffy-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
