@@ -286,6 +286,9 @@
 #tool-query-content [id^="sqab_tools_query_content-"]{
   overflow: auto;
 }
+#sqab_tools_query_tab-content [id^="sqab_tools_query_content-count-"]{
+  display: block !important;
+}
 
 
 [id^="sqab_tools_query_content-"] table {

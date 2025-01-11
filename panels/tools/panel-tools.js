@@ -46,6 +46,7 @@ export async function init(importedhandlers){
   const objectInput = document.getElementById('objectInput');
   const fieldsInput = document.getElementById('fieldsInput');
   const fieldsTags = document.getElementById('fieldsTags');
+  const objTag = document.getElementById('objTag');
   const conditionsContainer = document.getElementById('conditionsContainer');
   const addConditionButton = document.getElementById('addConditionButton');
   const logicInput = document.getElementById('logicInput');
@@ -162,20 +163,21 @@ const updateLogic = () => {
 
 
   const searchRecords = async () =>{
-    buildSOQLQuery();
-    const records = await handlers["connector"].search_records({query:queryOutput.value, tooling: ""});
-    console.log('records',records);
-    addTab(records);
+    const canIcontinue = buildSOQLQuery();
+    if(canIcontinue){
+      const records = await handlers["connector"].search_records({query:queryOutput.value, tooling: ""});
+      addTab(records);
+    }
   }
 
   const buildSOQLQuery = () => {
     if (!selectedObject) {
       queryOutput.value = 'Please select an Object.';
-      return;
+      return false;
     }
     if (selectedFields.length === 0) {
       queryOutput.value = 'Please select at least one Field.';
-      return;
+      return false;
     }
   
     const conditions = Array.from(conditionsContainer.children)
@@ -202,6 +204,7 @@ const updateLogic = () => {
                   limit;
   
     queryOutput.value = query;
+    return true;
   };
 
   objectInput.addEventListener('input', () => {
@@ -209,8 +212,23 @@ const updateLogic = () => {
     const filteredObjects = objectGlossaryData.filter(obj => obj.toLowerCase().includes(query));
     objectGlossary.style.display = filteredObjects.length > 0 ? 'block' : 'none';
     renderGlossary(filteredObjects, objectGlossary, async (obj) => {
-      objectInput.value = obj;
+      queryOutput.value = "";
+      selectedFields = [];
+      fieldsTags.innerHTML = '';
+      objectInput.value = "";
+      objTag.innerHTML = '';
+      const tag = document.createElement('div');
+      tag.classList.add('tag');
+      tag.textContent = obj;
       selectedObject = obj;
+      tag.addEventListener('click', () => {
+        queryOutput.value = "";
+        selectedObject = "";
+        selectedFields = [];
+        fieldsTags.innerHTML = '';
+        tag.remove();
+      });
+      objTag.appendChild(tag);
       objectGlossary.style.display = 'none';
       let values = await getRemoteData('fields',selectedObject);
       fieldsGlossaryData = values["defaults"].map(item => item.name);
@@ -222,8 +240,23 @@ const updateLogic = () => {
     const filteredObjects = objectGlossaryData.filter(obj => obj.toLowerCase().includes(query));
     objectGlossary.style.display = filteredObjects.length > 0 ? 'block' : 'none';
     renderGlossary(filteredObjects, objectGlossary, async (obj) => {
-      objectInput.value = obj;
+      selectedFields = [];
+      queryOutput.value = "";
+      fieldsTags.innerHTML = '';
+      objectInput.value = "";
+      objTag.innerHTML = '';
+      const tag = document.createElement('div');
+      tag.classList.add('tag');
+      tag.textContent = obj;
       selectedObject = obj;
+      tag.addEventListener('click', () => {
+        queryOutput.value = "";
+        selectedObject = "";
+        selectedFields = [];
+        fieldsTags.innerHTML = '';
+        tag.remove();
+      });
+      objTag.appendChild(tag);
       objectGlossary.style.display = 'none';
       let values = await getRemoteData('fields',selectedObject);
       fieldsGlossaryData = values["defaults"].map(item => item.name);
@@ -236,12 +269,14 @@ const updateLogic = () => {
     fieldsGlossary.style.display = filteredFields.length > 0 ? 'block' : 'none';
     renderGlossary(filteredFields, fieldsGlossary, field => {
       if (!selectedFields.includes(field)) {
+        queryOutput.value = "";
         selectedFields.push(field);
         const tag = document.createElement('div');
         tag.classList.add('tag');
         tag.textContent = field;
         tag.addEventListener('click', () => {
           selectedFields = selectedFields.filter(f => f !== field);
+          queryOutput.value = "";
           tag.remove();
         });
         fieldsTags.appendChild(tag);
@@ -444,14 +479,16 @@ function addTab(records) {
   tabList.appendChild(tabItem);
 
   const contentItem = document.createElement('div');
+  const contentItemCout = document.createElement('div');
   contentItem.id = `sqab_tools_query_content-${tabId}`;
   // contentItem.textContent = ` ${createTable(records)}`;
+  contentItemCout.id = `sqab_tools_query_content-count-${tabId}`;
+  contentItemCout.textContent = `Found ${records.length} Records`;
   contentItem.textContent = ``;
+  tabContent.appendChild(contentItemCout);
   tabContent.appendChild(contentItem);
   if(records.length > 0){
     createTable(records,contentItem);
-  }else{
-    contentItem.textContent = `Found 0 Results`;
   }
   activateTab(tabId);
 }
@@ -459,9 +496,11 @@ function addTab(records) {
 function removeTab(tabId) {
   const tabItem = document.querySelector(`[data-tab="${tabId}"]`);
   const contentItem = document.getElementById(`sqab_tools_query_content-${tabId}`);
+  const contentItemCout = document.getElementById(`sqab_tools_query_content-count-${tabId}`);
 
   if (tabItem) tabItem.remove();
   if (contentItem) contentItem.remove();
+  if (contentItemCout) contentItemCout.remove();
 
   const remainingTabs = document.querySelectorAll('.sqab_tools_query_tabs-nav li');
   tabCounter = remainingTabs.length +1;
