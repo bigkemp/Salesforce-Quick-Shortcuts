@@ -8,9 +8,7 @@ export async function init(importedhandlers){
       const salesforceRecordPattern = /\/lightning\/r\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9]{15,18})/;
       var matched = currentUrl.match(salesforceRecordPattern);
       matched ? { objectType: matched[1], salesforceId: matched[2] } : null;
-      if(matched == null){
-        autoCompleteSection.style.display = "none";
-      }
+
   domtabs.forEach(tab => {
     tab.addEventListener('click', () => {
         if (activeTab) {
@@ -68,7 +66,9 @@ export async function init(importedhandlers){
   let selectedObject = '';
   let selectedFields = [];
   let conditionCount = 0;
-  
+  if(matched == null){
+    autoCompleteSection.style.display = "none";
+  }
 
   const renderGlossary = (data, container, callback) => {
     container.innerHTML = '';
