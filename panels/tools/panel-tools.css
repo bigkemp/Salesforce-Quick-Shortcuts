@@ -286,3 +286,61 @@ body {
 #sqab_tools_query_table-container th {
   background-color: #f4f4f4;
 }
+
+[id^="sqab_tools_query_content-"]{
+  overflow: auto;
+}
+
+
+[id^="sqab_tools_query_content-"] table {
+  width: 80%;
+  margin: 50px auto;
+  border-collapse: collapse; /* Collapses borders to have a cleaner look */
+  border-radius: 8px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensures rounded corners are visible */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for the table */
+  background-color: #ffffff; /* White background for the table */
+}
+
+[id^="sqab_tools_query_content-"] th,[id^="sqab_tools_query_content-"] td {
+  padding: 15px 20px; /* Increased padding for better readability */
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0; /* Light gray bottom border */
+  font-size: 14px; /* Slightly smaller font size for cleaner look */
+}
+
+[id^="sqab_tools_query_content-"] th {
+  background-color: #0070d2; /* Salesforce's brand blue */
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase; /* Uppercase text for headers */
+}
+
+[id^="sqab_tools_query_content-"] td {
+  background-color: #ffffff;
+  color: #333; /* Dark text for readability */
+}
+
+[id^="sqab_tools_query_content-"] tr:nth-child(even) td {
+  background-color: #f7f9fc; /* Light blue-gray for even rows */
+}
+
+[id^="sqab_tools_query_content-"] tr:hover {
+  background-color: #e9f1fe; /* Soft hover effect with light blue */
+}
+
+/* Border-radius for rounded corners on individual cells */
+[id^="sqab_tools_query_content-"] th,[id^="sqab_tools_query_content-"] td {
+  border-radius: 6px;
+}
+
+[id^="sqab_tools_query_content-"] tr:first-child th {
+  border-top-left-radius: 8px; /* Rounded top-left corner for the table header */
+  border-top-right-radius: 8px; /* Rounded top-right corner for the table header */
+}
+
+[id^="sqab_tools_query_content-"] tr:last-child td {
+  border-bottom-left-radius: 8px; /* Rounded bottom-left corner for the last row */
+  border-bottom-right-radius: 8px; /* Rounded bottom-right corner for the last row */
+}
+

@@ -66,17 +66,17 @@ const responseMapConfig = {
   fields: {
     idField: '*',
     tooling:'',
-    labelField: (record,togglerValue) => togglerValue == "API" ? record.name : record.name,
+    labelField: (record,togglerValue) =>  record.name,
     query: ``,
     urlTemplate: (id) => id
   },
-  records: {
-    idField: 'Id',
-    tooling:'',
-    labelField: (record,togglerValue) => record,
-    query: ``,
-    urlTemplate: (id) => id
-  },
+  // records: {
+  //   idField: 'Id',
+  //   tooling:'',
+  //   labelField: (record,togglerValue) => record,
+  //   query: ``,
+  //   urlTemplate: (id) => id
+  // },
   listviews: {
     idField: 'QualifiedApiName',
     tooling:'',

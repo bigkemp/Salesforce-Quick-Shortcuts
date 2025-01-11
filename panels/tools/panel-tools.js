@@ -277,7 +277,7 @@ const updateLogic = () => {
 };
 
 async function getRemoteData(type,data = undefined){
-  return await handlers["connector"].search(type,false,data);
+  return await handlers["connector"].search(type,"API",data);
 }
 // Function to prettify the JSON
 function syntaxHighlight(json) {
@@ -445,9 +445,11 @@ function addTab(records) {
   const contentItem = document.createElement('div');
   contentItem.id = `sqab_tools_query_content-${tabId}`;
   // contentItem.textContent = ` ${createTable(records)}`;
-  contentItem.textContent = ``;
+  contentItem.textContent = `Found 0 Results`;
   tabContent.appendChild(contentItem);
-  createTable(records,tabContent);
+  if(records.length > 0){
+    createTable(records,contentItem);
+  }
   activateTab(tabId);
 }
 
@@ -459,6 +461,7 @@ function removeTab(tabId) {
   if (contentItem) contentItem.remove();
 
   const remainingTabs = document.querySelectorAll('.sqab_tools_query_tabs-nav li');
+  tabCounter = remainingTabs.length +1;
   if (remainingTabs.length > 0) {
     activateTab(remainingTabs[0].getAttribute('data-tab'));
   }
