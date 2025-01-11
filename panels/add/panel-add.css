@@ -135,14 +135,15 @@
     margin-top: 20px;
 }
 
-#sqab_p_add_add_section {
+.sqab_p_add_add_box {
+    margin-top: 10%;
+    margin-bottom: 10%;
     padding: 20px;
     border-radius: 8px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 400px;
     justify-self: center;
-    margin: 0px;
 }
 
 .sqab_p_add_save-button-container button {
