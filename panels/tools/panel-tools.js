@@ -213,7 +213,7 @@ const updateLogic = () => {
     objectGlossary.style.display = filteredObjects.length > 0 ? 'block' : 'none';
     renderGlossary(filteredObjects, objectGlossary, async (obj) => {
       queryOutput.value = "";
-      conditionsContainer = [];
+      conditionsContainer.innerHTML = ""
       updateLogic();
       selectedFields = [];
       fieldsTags.innerHTML = '';
@@ -226,7 +226,7 @@ const updateLogic = () => {
       tag.addEventListener('click', () => {
         queryOutput.value = "";
         selectedObject = "";
-        conditionsContainer = [];
+        conditionsContainer.innerHTML = ""
         updateLogic();
         selectedFields = [];
         fieldsTags.innerHTML = '';
@@ -245,7 +245,7 @@ const updateLogic = () => {
     objectGlossary.style.display = filteredObjects.length > 0 ? 'block' : 'none';
     renderGlossary(filteredObjects, objectGlossary, async (obj) => {
       selectedFields = [];
-      conditionsContainer = [];
+      conditionsContainer.innerHTML = ""
       updateLogic();
       queryOutput.value = "";
       fieldsTags.innerHTML = '';
@@ -257,7 +257,7 @@ const updateLogic = () => {
       selectedObject = obj;
       tag.addEventListener('click', () => {
         queryOutput.value = "";
-        conditionsContainer = [];
+        conditionsContainer.innerHTML = ""
         updateLogic();
         selectedObject = "";
         selectedFields = [];
