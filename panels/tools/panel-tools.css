@@ -246,7 +246,9 @@ body {
   border: none;
   font-size: 16px;
   cursor: pointer;
-  margin-left: 10px;
+  /* margin-left: 10px; */
+  margin-left: 0px;
+  padding: 5px;
   color: red;
 }
 
@@ -266,4 +268,21 @@ body {
 
 .sqab_tools_query_tabs-content > div.active {
   display: block;
+}
+
+#sqab_tools_query_table-container table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#sqab_tools_query_table-container th,
+#sqab_tools_query_table-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#sqab_tools_query_table-container th {
+  background-color: #f4f4f4;
 }

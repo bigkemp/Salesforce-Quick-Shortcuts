@@ -141,7 +141,12 @@ export async function search_records(NoneToolingQuery){
   console.log(NoneToolingQuery);
   const res = await rest(`/services/data/v${apiVer}/${NoneToolingQuery?.tooling}query/?q=${encodeURIComponent(NoneToolingQuery.query)}`);
   console.log(res);
-  return await convertResponseToMap(res.records, responseMapConfig["records"],false);
+  if(res.totalSize == 0){
+    return [];
+  }else{
+    return res.records;
+  }
+  //return await convertResponseToMap(res.records, responseMapConfig["records"],false);
 }
 
 export async function search(type,togglerValue, data = undefined){

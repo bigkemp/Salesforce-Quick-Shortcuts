@@ -163,7 +163,8 @@ const updateLogic = () => {
   const searchRecords = async () =>{
     buildSOQLQuery();
     const records = await handlers["connector"].search_records({query:queryOutput.value, tooling: ""});
-    console.log(records);
+    console.log('records',records);
+    addTab(records);
   }
 
   const buildSOQLQuery = () => {
@@ -408,9 +409,6 @@ function determineFormat() {
   
 }
 
-const tabList = document.getElementById('sqab_tools_query_tab-list');
-const tabContent = document.getElementById('sqab_tools_query_tab-content');
-const addTabButton = document.getElementById('sqab_tools_query_add-tab-button');
 let tabCounter = 2; // Starts from 2 since "tab-1" exists in HTML
 
 function activateTab(tabId) {
@@ -421,8 +419,10 @@ function activateTab(tabId) {
   document.getElementById(`sqab_tools_query_content-${tabId}`).classList.add('active');
 }
 
-function addTab() {
+function addTab(records) {
   const tabId = `tab-${tabCounter++}`;
+  const tabList = document.getElementById('sqab_tools_query_tab-list');
+  const tabContent = document.getElementById('sqab_tools_query_tab-content');
 
   const tabItem = document.createElement('li');
   tabItem.setAttribute('data-tab', tabId);
@@ -444,9 +444,10 @@ function addTab() {
 
   const contentItem = document.createElement('div');
   contentItem.id = `sqab_tools_query_content-${tabId}`;
-  contentItem.textContent = `Content for Tab ${tabCounter - 1}`;
+  // contentItem.textContent = ` ${createTable(records)}`;
+  contentItem.textContent = ``;
   tabContent.appendChild(contentItem);
-
+  createTable(records,tabContent);
   activateTab(tabId);
 }
 
@@ -463,4 +464,42 @@ function removeTab(tabId) {
   }
 }
 
-// addTabButton.addEventListener('click', addTab);
+// Function to create a dynamic table
+function createTable(data,tabContent) {
+  // Get the container where the table will be placed
+  // const container = document.getElementById('sqab_tools_query_table-container');
+  const container = tabContent;
+
+  // Create the table element
+  const table = document.createElement('table');
+  table.id = 'sqab_tools_query_data-table'; // Prefix added to the table ID
+  container.appendChild(table);
+
+  // Extract keys dynamically, excluding the 'attributes' key
+  const keys = Object.keys(data[0]).filter(key => key !== 'attributes');
+
+  // Create table header
+  const thead = document.createElement('thead');
+  const headerRow = document.createElement('tr');
+  keys.forEach(key => {
+      const th = document.createElement('th');
+      th.textContent = key;
+      headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Create table body
+  const tbody = document.createElement('tbody');
+  data.forEach(item => {
+      const row = document.createElement('tr');
+      row.className = 'sqab_tools_query_row'; // Prefix added to the row class
+      keys.forEach(key => {
+          const td = document.createElement('td');
+          td.textContent = item[key] || ''; // Handle missing keys gracefully
+          row.appendChild(td);
+      });
+      tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+}
