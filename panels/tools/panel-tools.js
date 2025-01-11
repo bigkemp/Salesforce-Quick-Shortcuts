@@ -429,7 +429,7 @@ function addTab(records) {
   tabItem.setAttribute('data-tab', tabId);
 
   const tabLink = document.createElement('span');
-  tabLink.textContent = `Tab ${tabCounter - 1}`;
+  tabLink.textContent = `Result`;
   tabLink.addEventListener('click', () => activateTab(tabId));
 
   const closeButton = document.createElement('button');
@@ -446,10 +446,12 @@ function addTab(records) {
   const contentItem = document.createElement('div');
   contentItem.id = `sqab_tools_query_content-${tabId}`;
   // contentItem.textContent = ` ${createTable(records)}`;
-  contentItem.textContent = `Found 0 Results`;
+  contentItem.textContent = ``;
   tabContent.appendChild(contentItem);
   if(records.length > 0){
     createTable(records,contentItem);
+  }else{
+    contentItem.textContent = `Found 0 Results`;
   }
   activateTab(tabId);
 }

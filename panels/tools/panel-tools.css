@@ -4,7 +4,8 @@
     padding: 20px;
 }
 
-#json-input {
+#tool-prettify-content #json-input {
+    text-align: left;
     width: 100%;
     margin-bottom: 20px;
     font-family: monospace;
@@ -12,7 +13,7 @@
     padding: 10px;
 }
 
-button {
+#tool-prettify-content button {
   padding: 10px 20px;
   background-color: #0070d2;
   color: white;
@@ -24,33 +25,33 @@ button {
     
 }
 
-.json-key {
+#tool-prettify-content .json-key {
     color: brown;
 }
 
-.json-value-string {
+#tool-prettify-content .json-value-string {
     color: green;
 }
 
-.json-value-number {
+#tool-prettify-content .json-value-number {
     color: darkorange;
 }
 
-.json-value-boolean {
+#tool-prettify-content .json-value-boolean {
     color: blue;
 }
 
-.json-value-null {
+#tool-prettify-content .json-value-null {
     color: red;
 }
 
-.json-brace {
+#tool-prettify-content .json-brace {
     color: black;
 }
 
 
 
-#xml-input {
+#tool-prettify-content #xml-input {
     width: 100%;
     height: 200px;
     margin-bottom: 20px;
@@ -59,27 +60,27 @@ button {
     padding: 10px;
 }
 
-.xml-tag {
+#tool-prettify-content .xml-tag {
     color: blue;
 }
 
-.xml-attribute {
+#tool-prettify-content .xml-attribute {
     color: red;
 }
 
-.xml-attribute-value {
+#tool-prettify-content .xml-attribute-value {
     color: green;
 }
 
-.xml-text {
+#tool-prettify-content .xml-text {
     color: darkorange;
 }
 
-.xml-declaration {
+#tool-prettify-content .xml-declaration {
     color: purple;
 }
 
-.xml-comment {
+#tool-prettify-content .xml-comment {
     color: gray;
 }
 
@@ -88,7 +89,7 @@ button {
 /* query */
 
 
-.container {
+#tool-query-content .container {
     max-width: 800px;
     margin: auto;
     background: #fff;
@@ -97,30 +98,30 @@ button {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   
-  .field {
+  #tool-query-content .field {
     margin-bottom: 20px;
   }
   
-  label {
+#tool-query-content  label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
   }
   
-  .input-wrapper {
+  #tool-query-content .input-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
     margin-bottom: 10px;
   }
   
-  .tags {
+  #tool-query-content .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
   }
   
-  .tag {
+  #tool-query-content .tag {
     background-color: #007bff;
     color: #fff;
     padding: 5px 10px;
@@ -129,12 +130,12 @@ button {
     font-size: 0.9em;
   }
   
-  .tag:hover {
+  #tool-query-content .tag:hover {
     background-color: #0056b3;
   }
   
-  input[type="text"], input[type="number"],
-  textarea {
+  #tool-query-content input[type="text"], #tool-query-content input[type="number"],
+  #tool-query-content textarea {
     width: 100%;
     padding: 8px;
     border: 1px solid #ddd;
@@ -142,12 +143,12 @@ button {
     box-sizing: border-box;
   }
   
-  textarea {
+  #tool-query-content textarea {
     resize: none;
     height: 100px;
   }
   
-  .glossary {
+  #tool-query-content .glossary {
     max-height: 150px;
     overflow-y: auto;
     border: 1px solid #ddd;
@@ -156,7 +157,7 @@ button {
     background-color: #f9f9f9;
   }
   
-  .tag-button {
+  #tool-query-content .tag-button {
     display: inline-block;
     margin: 5px 5px 0 0;
     padding: 5px 10px;
@@ -166,12 +167,12 @@ button {
     cursor: pointer;
   }
   
-  .tag-button:hover {
+  #tool-query-content .tag-button:hover {
     background-color: #e2e6ea;
   }
   
-  .add-button,
-  .search-button {
+  #tool-query-content .add-button,
+  #tool-query-content .search-button {
     padding: 8px 15px;
     background-color: #007bff;
     color: white;
@@ -181,23 +182,23 @@ button {
     font-size: 1em;
   }
   
-  .add-button:hover,
-  .search-button:hover {
+  #tool-query-content .add-button:hover,
+  #tool-query-content .search-button:hover {
     background-color: #0056b3;
   }
   
-  .condition-row {
+  #tool-query-content .condition-row {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
   }
   
-  .condition-row select,
-  .condition-row input {
+  #tool-query-content .condition-row select,
+  #tool-query-content .condition-row input {
     flex: 1;
   }
   
-  .remove-button {
+  #tool-query-content .remove-button {
     background-color: #dc3545;
     color: white;
     border: none;
@@ -206,24 +207,19 @@ button {
     cursor: pointer;
   }
   
-  .remove-button:hover {
+  #tool-query-content .remove-button:hover {
     background-color: #a71d2a;
   }
   
-  /* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
 
-.sqab_tools_query_tabs-container {
+#tool-query-content .sqab_tools_query_tabs-container {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
 }
 
 /* Tabs Navigation */
-.sqab_tools_query_tabs-nav {
+#tool-query-content .sqab_tools_query_tabs-nav {
   list-style: none;
   display: flex;
   margin: 0;
@@ -231,7 +227,7 @@ body {
   border-bottom: 1px solid #ccc;
 }
 
-.sqab_tools_query_tabs-nav li {
+#tool-query-content .sqab_tools_query_tabs-nav li {
   margin: 0;
   padding: 10px 15px;
   cursor: pointer;
@@ -240,13 +236,13 @@ body {
   background-color: #f7f7f7;
 }
 
-.sqab_tools_query_tabs-nav li.active {
+#tool-query-content .sqab_tools_query_tabs-nav li.active {
   background-color: #ffffff;
   border-color: #ccc;
   border-bottom-color: #ffffff;
 }
 
-.sqab_tools_query_tabs-nav li button {
+#tool-query-content .sqab_tools_query_tabs-nav li button {
   background: none;
   border: none;
   font-size: 16px;
@@ -257,12 +253,12 @@ body {
   color: red;
 }
 
-.sqab_tools_query_tabs-nav li button:hover {
+#tool-query-content .sqab_tools_query_tabs-nav li button:hover {
   color: darkred;
 }
 
 /* Tabs Content */
-.sqab_tools_query_tabs-content > div {
+#tool-query-content .sqab_tools_query_tabs-content > div {
   display: none;
   padding: 20px;
   background-color: #ffffff;
@@ -271,28 +267,28 @@ body {
   border-radius: 0 0 5px 5px;
 }
 
-.sqab_tools_query_tabs-content > div.active {
+#tool-query-content .sqab_tools_query_tabs-content > div.active {
   display: block;
 }
 
-#sqab_tools_query_table-container table {
+#tool-query-content #sqab_tools_query_table-container table {
   border-collapse: collapse;
   width: 100%;
   margin-top: 20px;
 }
 
-#sqab_tools_query_table-container th,
-#sqab_tools_query_table-container td {
+#tool-query-content #sqab_tools_query_table-container th,
+#tool-query-content #sqab_tools_query_table-container td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-#sqab_tools_query_table-container th {
+#tool-query-content #sqab_tools_query_table-container th {
   background-color: #f4f4f4;
 }
 
-[id^="sqab_tools_query_content-"]{
+#tool-query-content [id^="sqab_tools_query_content-"]{
   overflow: auto;
 }
 
