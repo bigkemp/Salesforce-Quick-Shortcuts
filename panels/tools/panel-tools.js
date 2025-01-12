@@ -50,10 +50,11 @@ export async function init(importedhandlers){
   const fieldsGlossary = document.getElementById('fieldsGlossary');
   const objectInput = document.getElementById('objectInput');
   const autoComplete = document.getElementById('autoComplete');
-  const autoCompleteSection = document.getElementById('autoCompleteSection');
+  // const autoCompleteSection = document.getElementById('autoCompleteSection');
   const fieldsInput = document.getElementById('fieldsInput');
   const fieldsTags = document.getElementById('fieldsTags');
   const objTag = document.getElementById('objTag');
+  const ClearBtn = document.getElementById('ClearBtn');
   const conditionsContainer = document.getElementById('conditionsContainer');
   const addConditionButton = document.getElementById('addConditionButton');
   const logicInput = document.getElementById('logicInput');
@@ -67,7 +68,7 @@ export async function init(importedhandlers){
   let selectedFields = [];
   let conditionCount = 0;
   if(matched == null){
-    autoCompleteSection.style.display = "none";
+    autoComplete.style.display = "none";
   }
 
   const renderGlossary = (data, container, callback) => {
@@ -332,7 +333,7 @@ const updateLogic = () => {
   addConditionButton.addEventListener('click', createConditionRow);
   searchButton.addEventListener('click', buildSOQLQuery);
   startButton.addEventListener('click', searchRecords);
-  autoComplete.addEventListener('click', () =>{
+  autoComplete.addEventListener('click', async () =>{
       console.log(matched);
       if(matched != null){
       // Example usage
@@ -342,6 +343,8 @@ const updateLogic = () => {
           tagObj.classList.add('tag');
           tagObj.textContent = matched[1];
           selectedObject = matched[1];
+          let values = await getRemoteData('fields',selectedObject);
+          fieldsGlossaryData = values["defaults"].map(item => item.name);
           tagObj.addEventListener('click', () => {
             queryOutput.value = "";
             conditionsContainer.innerHTML = ""
@@ -364,12 +367,23 @@ const updateLogic = () => {
       fieldsTags.appendChild(tag);
       createConditionRow();
       document.getElementsByClassName("condition-field-input")[0].value = "Id";
-      document.getElementsByClassName("condition-select-input")[0].querySelector("select").selectedIndex = 0;      ;
+      document.getElementsByClassName("condition-select-input")[0].getElementsByTagName("option");
       document.getElementsByClassName("condition-value-input")[0].value = matched[2];
 
       }
     } 
   );
+
+  ClearBtn.addEventListener('click', async () =>{
+    queryOutput.value = "";
+    fieldsTags.innerHTML = '';
+    objTag.innerHTML = '';
+    objectInput.value = "";
+    selectedObject = "";
+    conditionsContainer.innerHTML = ""
+    selectedFields = [];
+    updateLogic();
+  });
 
     
 };
