@@ -1,4 +1,3 @@
-
 var r = document.querySelector(':root');
 var isModalOpened = false;
 var suggestions = [];
@@ -57,7 +56,14 @@ async function loadHandlers(handlers){
   }
 }
 
+async function importModule(modulePath){
+ return await import(chrome.runtime.getURL(modulePath));
+}
+
+
 async function init(){
+  const handler = await importModule("handlers/handlers.js");
+  handler.hanlders("yay");
   setListenerForPopUpCall();
   window.onkeydown = keyPress;
   await loadHandlers(handlersMap);

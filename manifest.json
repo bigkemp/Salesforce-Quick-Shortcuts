@@ -31,6 +31,7 @@
         {
             "matches": ["https://*.lightning.force.com/*","https://*/lightning/setup/*","https://*.sandbox.my.salesforce-setup.com/*"],
             "js": ["sqab_modal.js"],
+            "type": "module" ,
             "css": ["sqab_modal.css","/panels/settings/panel-settings.css","/panels/monitoring/panel-monitoring.css","/panels/add/panel-add.css","/panels/tools/panel-tools.css"],
             "all_frames": true
         }
