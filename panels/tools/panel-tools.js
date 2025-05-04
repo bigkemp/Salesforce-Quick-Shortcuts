@@ -334,11 +334,8 @@ const updateLogic = () => {
   searchButton.addEventListener('click', buildSOQLQuery);
   startButton.addEventListener('click', searchRecords);
   autoComplete.addEventListener('click', async () =>{
-      console.log(matched);
       if(matched != null){
-      // Example usage
-      urlReord =  matched;  // You can now perform any other logic based on the Salesforce ID
-      //set obj
+      urlReord =  matched; 
           const tagObj = document.createElement('div');
           tagObj.classList.add('tag');
           tagObj.textContent = matched[1];

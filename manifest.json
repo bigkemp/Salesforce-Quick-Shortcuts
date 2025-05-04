@@ -1,7 +1,7 @@
 {
     "name": "Salesforce Quick Shortcuts",
     "description": "Easy access to Salesforce's Setup page options and Object Manager's Objects via a quick access bar on all Lightning pages",
-    "version": "3.0.6",
+    "version": "3.0.7",
     "manifest_version": 3,
     "permissions": [
         "storage",

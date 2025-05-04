@@ -268,7 +268,6 @@ function refreshTabs(){
     tabsPane[i].onclick = async function(e){
       let type = tabsPane[i].dataset.type;
       closeSidePanel();
-      // resetLayout("main");
       inputbar.value = "";
       tabHeader.getElementsByClassName("active")[0].classList.remove("active");
       tabsPane[i].classList.add("active");

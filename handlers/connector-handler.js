@@ -101,7 +101,6 @@ async function query(type,togglerValue) {
 
 async function query_fields(data,togglerValue) {
   const res = await rest(`/services/data/v${apiVer}/sobjects/${data}/describe`);
-  console.log(res);
   return convertResponseToMap(res.fields, responseMapConfig["fields"],togglerValue);
 }
 
@@ -138,9 +137,7 @@ async function getSession(sfHost) {
 //TODO: need to support more then 2k records (next url from response)
 
 export async function search_records(NoneToolingQuery){
-  console.log(NoneToolingQuery);
   const res = await rest(`/services/data/v${apiVer}/${NoneToolingQuery?.tooling}query/?q=${encodeURIComponent(NoneToolingQuery.query)}`);
-  console.log(res);
   if(res.totalSize == 0){
     return [];
   }else{

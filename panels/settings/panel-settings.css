@@ -51,7 +51,7 @@ margin: 0;
 .sqab_p_settings_tab-container {
     display: flex;
     justify-content: space-around;
-    margin-top: 50px;
+    margin-top: 20px;
     transition: all 0.3s ease;
 }
 
